@@ -61,7 +61,7 @@ function getPlaylistIdFromLink(link) {
 async function revealSongs(playlistId) {
     // Clear the existing song list
     var songListContainer = document.getElementById('songListContainer');
-    songListContainer.innerHTML = '<span style="margin-left: 35%;margin-right: 6px;color: white;font-size: larger;">SONGS</span><button onclick="clearplistsong()" style="margin: 11px;height: 30px;padding: 4px;width: 33px;"><span class="material-symbols-outlined">cancel</span></button>';
+    songListContainer.innerHTML = '<div class="cut"><span>SONGS</span><button onclick="clearplistsong()"><span class="material-symbols-outlined">cancel</span></button></div>';
 
     var apiKey = getRandomAPIKey(); // Replace 'YOUR_API_KEY' with your actual YouTube Data API key
     var pageToken = ''; // Initialize page token for pagination

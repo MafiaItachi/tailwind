@@ -161,7 +161,7 @@ function playVideoFromId(videoId) {
 // Function to display favorite artist's songs
 function displayFavoriteArtistSongs(items) {
     var favoriteArtistSongsDiv = document.getElementById("favoriteArtistSongs");
-    favoriteArtistSongsDiv.innerHTML = "<span style='margin-left: 35%;margin-right: 6px;color: white;font-size: larger;'>SONGS</span><button onclick='clearfavsong()'style='margin: 11px;height: 30px;padding: 4px;width: 33px;'><span class='material-symbols-outlined'>cancel</span></button>";
+    favoriteArtistSongsDiv.innerHTML = '<div class="cut"><span>SONGS</span><button onclick="clearfavsong()"><span class="material-symbols-outlined">cancel</span></button>';
 
     for (var i = 0; i < items.length; i++) {
         var video = items[i];

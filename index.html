@@ -93,7 +93,7 @@
                     <div class="playlist">
                         <div id="plistbylink">
                             <input type="text" id="playlistLinkInput" placeholder="Enter YouTube Playlist Link">
-                            <button style="width: 202px;  margin: 0;" id="myplist" onclick="addPlaylist()"><span
+                            <button style="width: 208px;  margin: 0;" id="myplist" onclick="addPlaylist()"><span
                                     class="material-symbols-outlined">
                                     add
                                 </span></button>
@@ -126,7 +126,7 @@
                     <button onclick="backupLocalStorage()"><span class="material-symbols-outlined">
                             edit_document
                         </span></button>
-                    <h4>BACKUP — RESTORE</h4>
+                    <h4>BACKUP -- RESTORE</h4>
                     <button onclick="document.getElementById('fileInput').click()"><span class="material-symbols-outlined">
                             restore_page
                         </span></button>
@@ -152,17 +152,18 @@
                 <div class="seekbar2">
                     <div class="progress-bar2"></div>
                 </div>
-                <div id="mini-player" class="mini-player" style =" transform: translateY(100%)">
+                <div id="mini-player" class="mini-player">
                     <div class="youtube">
                         <div id="lyrics-container" style="display: none;"></div>
                         <div id="player"></div>
                     </div>
                     <div class="bottom">
                         <div class="player-controls">
+                            <div class="video-title2"></div>
                             <div id="seek-bar">
                                 <div id="progress-bar"></div>
-                            </div><br>
-                            <div class="video-title2"></div>
+                            </div>
+                            
                         </div>
                         <div class="mini-player-buttons">
                             <div class="bbutton">
