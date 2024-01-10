@@ -548,7 +548,7 @@ video {
 
 /* Hide scrollbar for IE, Edge and Firefox */
 
-.tra{
+.tra {
   transform: translateY(100%);
 }
 
@@ -1000,6 +1000,16 @@ body {
   color: rgb(24 28 40 / var(--tw-text-opacity));
 }
 
+.bookmarklink input::-moz-placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgb(24 28 40 / var(--tw-placeholder-opacity));
+}
+
+.bookmarklink input::placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgb(24 28 40 / var(--tw-placeholder-opacity));
+}
+
 .bookmarklink input:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
@@ -1008,24 +1018,27 @@ body {
 /* YOUR PLAYLIST */
 
 .added-playlists-container {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+  max-width: 100%;
   overflow-x: auto;
   white-space: nowrap;
 }
 
 .added-playlists {
   display: inline-block;
+  flex-wrap: wrap;
   white-space: nowrap;
-  border-radius: 0.5rem;
 }
 
 .playlist {
   margin-right: 0.25rem;
   display: inline-block;
-  overflow: hidden;
   border-radius: 0.5rem;
   --tw-bg-opacity: 1;
   background-color: rgb(69 81 116 / var(--tw-bg-opacity));
   padding: 0.5rem;
+  vertical-align: top;
 }
 
 .playlist img {
@@ -1045,6 +1058,8 @@ body {
 .playlist-title {
   width: 100%;
   align-items: center;
+  overflow: hidden;
+  white-space: nowrap;
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
@@ -1128,6 +1143,16 @@ body {
   padding: 0.75rem;
   --tw-text-opacity: 1;
   color: rgb(24 28 40 / var(--tw-text-opacity));
+}
+
+#plistbylink input[type="text"]::-moz-placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgb(24 28 40 / var(--tw-placeholder-opacity));
+}
+
+#plistbylink input[type="text"]::placeholder {
+  --tw-placeholder-opacity: 1;
+  color: rgb(24 28 40 / var(--tw-placeholder-opacity));
 }
 
 #myplist {
@@ -1226,6 +1251,7 @@ body {
 
 .favorite-artist img {
   height: 10rem;
+  width: 10rem;
   border-radius: 0.375rem;
   -o-object-fit: cover;
      object-fit: cover;
@@ -1544,9 +1570,15 @@ body {
 
 #lyrics-container {
   margin-top: 1.25rem;
-  height: 24rem;
+  height: 20rem;
   overflow-y: auto;
   text-wrap: wrap;
   text-align: center;
   line-height: 1.5;
+}
+
+/* ALERT */
+
+.playlist {
+  width: 224px;
 }
