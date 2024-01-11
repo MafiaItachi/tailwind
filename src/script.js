@@ -11,6 +11,6 @@ window.addEventListener('resize', function() {
         document.getElementById('bottom-navbar').style.display = 'none';// Replace 'controls' with the ID of your controls div
     } else {
         document.getElementById('controls').style.display = 'block'; 
-        document.getElementById('bottom-navbar').style.display = 'block';// Show the controls if the window size changes back
+        document.getElementById('bottom-navbar').style.display = 'flex';// Show the controls if the window size changes back
     }
 });
