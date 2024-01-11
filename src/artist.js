@@ -104,7 +104,7 @@ function addFavoriteArtist(channelName, channelId, channelImage) {
     var channelImg = document.createElement("img");
     channelImg.src = channelImage;
     channelImg.alt = "Channel Image";
-    channelImg.style.width = "50px"; // Adjust image size if needed
+     // channelImg.style.width = "50px";Adjust image size if needed
 
     // Create a paragraph element for the channel name
     var channelParagraph = document.createElement("p");
@@ -201,7 +201,10 @@ function loadFavoriteArtistsOnLoad() {
     var favoriteArtists = JSON.parse(localStorage.getItem("favoriteArtists")) || [];
     var favoriteArtistsDiv = document.getElementById("favoriteArtists");
     favoriteArtistsDiv.innerHTML = "";
-
+    if (favoriteArtists.length === 0) {
+        // Display a message when no favorite artists are added
+        favoriteArtistsDiv.innerHTML = "<p>Search Your Favorite Artists To Add Them Here.</p>";
+    } else {
     for (var i = 0; i < favoriteArtists.length; i++) {
         var artist = favoriteArtists[i];
         var artistDiv = document.createElement("div");
@@ -250,6 +253,7 @@ function loadFavoriteArtistsOnLoad() {
 
         favoriteArtistsDiv.appendChild(artistDiv);
     }
+}
 }
 
 loadFavoriteArtistsOnLoad();

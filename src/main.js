@@ -877,9 +877,9 @@ function shareCurrentVideo() {
     if (currentVideoId) {
         var videoUrl = `https://www.youtube.com/watch?v=${currentVideoId}`;
         copyToClipboard(videoUrl);
-        alert("Video link has been copied to the clipboard!");
+        showAlert("Video link has been copied to the clipboard!");
     } else {
-        alert("Unable to get the current video ID.");
+        showAlert("Unable to get the current video ID.");
     }
 }
 
@@ -975,3 +975,33 @@ function updateRepeatModeButton() {
         // Modify the button's appearance for other modes if needed
     }
 }
+
+function showAlert(message) {
+    var modal = document.getElementById("radixAlert");
+    var alertMessage = document.getElementById("alertMessage");
+    var okButton = document.getElementById("okButton");
+  
+    alertMessage.textContent = message;
+    modal.style.display = "block";
+  
+    okButton.onclick = function() {
+      modal.style.display = "none";
+    };
+  
+    window.onclick = function(event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    };
+  }
+
+  // Add this code to your existing script
+var searchInput = document.getElementById('searchInput');
+
+searchInput.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+        event.preventDefault(); // Prevent the default Enter behavior (e.g., submitting a form)
+        searchInput.blur(); // Blur the input to dismiss the keyboard
+        // Add any additional functionality you want to perform when Enter is pressed
+    }
+});
