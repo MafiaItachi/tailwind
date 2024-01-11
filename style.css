@@ -622,11 +622,22 @@ button:active {
 }
 
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins", sans-serif ;
   --tw-bg-opacity: 1;
   background-color: rgb(24 28 40 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
 }
 
 .h1 {
@@ -875,33 +886,35 @@ body {
 
 /* BOOKMARK */
 
+.h2 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+  font-weight: 500;
+}
+
 .shuffle {
   display: flex;
   height: 3.5rem;
   width: 100%;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   border-radius: 0.5rem;
   --tw-bg-opacity: 1;
   background-color: rgb(69 81 116 / var(--tw-bg-opacity));
-  padding-left: 0.25rem;
-  padding-right: 0.25rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 }
 
 .shuffle button {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
-  height: 100%;
-  width: 100%;
   border-radius: 0.5rem;
   --tw-bg-opacity: 1;
   background-color: rgb(35 169 145 / var(--tw-bg-opacity));
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.25rem;
   --tw-text-opacity: 1;
   color: rgb(24 28 40 / var(--tw-text-opacity));
 }
@@ -1034,6 +1047,7 @@ body {
 .playlist {
   margin-right: 0.25rem;
   display: inline-block;
+  width: 14rem;
   border-radius: 0.5rem;
   --tw-bg-opacity: 1;
   background-color: rgb(69 81 116 / var(--tw-bg-opacity));
@@ -1353,7 +1367,7 @@ body {
 
 #controls {
   position: fixed;
-  bottom: 0.25rem;
+  bottom: 4rem;
   right: 0.5rem;
   left: 0.5rem;
   z-index: 10;
@@ -1510,7 +1524,7 @@ body {
   margin-top: 2.5rem;
 }
 
-.bbutton button {
+.bbutton  button {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
   height: 100%;
@@ -1525,13 +1539,37 @@ body {
   color: rgb(24 28 40 / var(--tw-text-opacity));
 }
 
-.bbutton button:focus {
+.bbutton  button:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.tndrow {
+  margin-bottom: 2.5rem;
+}
+
+.tndrow button {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+  height: 100%;
+  border-radius: 0.5rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(35 169 145 / var(--tw-bg-opacity));
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.25rem;
+  --tw-text-opacity: 1;
+  color: rgb(24 28 40 / var(--tw-text-opacity));
+}
+
+.tndrow button:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
 
 .ppnbutton {
-  margin-bottom: 2.5rem;
+  margin-bottom: 1rem;
   display: flex;
   width: 100%;
   align-items: center;
@@ -1579,6 +1617,42 @@ body {
 
 /* ALERT */
 
-.playlist {
-  width: 224px;
+/* NAV BAR */
+
+#bottom-navbar {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  z-index: 0;
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  --tw-bg-opacity: 1;
+  background-color: rgb(38 45 65 / var(--tw-bg-opacity));
+  padding: 0.5rem;
+}
+
+#bottom-navbar button {
+  height: 2.5rem;
+  width: 5rem;
+  border-radius: 1.5rem;
+  border-width: 0px;
+  background-color: transparent;
+  padding-top: 0.25rem;
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+  --tw-shadow: 0 0 #0000;
+  --tw-shadow-colored: 0 0 #0000;
+  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 300ms;
+}
+
+#bottom-navbar button:hover,
+#bottom-navbar button.active {
+  --tw-bg-opacity: 1;
+  background-color: rgb(69 81 116 / var(--tw-bg-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(35 169 145 / var(--tw-text-opacity));
 }

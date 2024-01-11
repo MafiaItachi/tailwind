@@ -37,6 +37,7 @@
         <div class="faded">
             <div class="lefthf">
                 <h1 class="h1" >PHOTON PLAYER</h1>
+                <div id="search-section" style="display: none;">
                 <div class="sxq "><input id="searchInput" class="searchInput" placeholder="search" >
                     <button class="" id="clearSearchResults " onclick="clearSearchResults()"><span class="material-symbols-outlined">
                             cancel
@@ -57,50 +58,6 @@
                 <div id="artistChannel"></div>
                 <div id="artistVideos" style="display: none;"></div>
                 <div id="results"></div>
-            
-                <h1 class=" h1">BOOKMARK</h1>
-                <div class=" shuffle ">
-                    <button class=" " onclick="clearPlaylist()"><span class="material-symbols-outlined">
-                            delete
-                        </span></button>
-                        <button id="repeat-toggle" class="repeat-option" onclick="toggleRepeatMode()"><span class="material-icons">
-                            repeat
-                            </span></button>
-                    <button class=" " onclick="shuffleAndPlay()"><span class="material-symbols-outlined">
-                            shuffle
-                        </span></button>
-                    <button class=" " id="fullscreen-button"><span class="material-symbols-outlined">
-                            phone_iphone
-                        </span></button>
-                    <button class=" " id="toggle-timer-btn" onclick="toggleTimer()"><span class="material-symbols-outlined">
-                            timer
-                        </span></button>
-            
-                </div>
-            
-                <div id="playlist"></div>
-                <div class="bookmarklink"><input type="text" id="2playlistLinkInput" placeholder="Enter YouTube Playlist Link">
-                    <button id="mybm" onclick="addPlaylistByLink()"><span class="material-symbols-outlined">
-                            add
-                        </span></button>
-                </div>
-               
-            
-                <h1 class="h1">YOUR PLAYLIST</h1>
-                <div class="added-playlists-container snap-inline">
-                    <div id="addedPlaylists" class="added-playlists snap-inline">
-                    </div>
-                    <div class="playlist">
-                        <div id="plistbylink">
-                            <input type="text" id="playlistLinkInput" placeholder="Enter YouTube Playlist Link">
-                            <button style="width: 208px;  margin: 0;" id="myplist" onclick="addPlaylist()"><span
-                                    class="material-symbols-outlined">
-                                    add
-                                </span></button>
-                        </div>
-                    </div>
-                </div>
-                <div id="songListContainer"></div>
                 <div class="trending-songs">
                     <h1 class="h1" >TRENDING SONG</h1>
                     <div class="trending-songs-container snap-inline">
@@ -117,11 +74,60 @@
                         </div>
                     </div>
                 </div>
+                <div id="quick-pick-section">
+                    <!-- Quick pick items will be displayed here -->
+                </div>
+                <div id="new-releases-section" >
+                    <h2>New Releases</h2>
+                    <div id="new-releases"></div>
+                </div>
+                <button class=" " onclick="clearPlaylist()"><span class="material-symbols-outlined">
+                    delete
+                </span></button>
+                <button id="repeat-toggle" class="repeat-option" onclick="toggleRepeatMode()"><span class="material-icons">
+                    repeat
+                    </span></button>
+            </div>
+            <div id="playlist-section">
+                
+                <div class=" shuffle ">
+                    <h1 class=" h2">BOOKMARK</h1>
+                    <button class=" " onclick="shuffleAndPlay()"><span class="material-symbols-outlined">
+                            shuffle
+                        </span></button>
+                    
+                </div>
+            
+                <div id="playlist"></div>
+                <div class="bookmarklink"><input type="text" id="2playlistLinkInput" placeholder="Enter YouTube Playlist Link">
+                    <button id="mybm" onclick="addPlaylistByLink()"><span class="material-symbols-outlined">
+                            add
+                        </span></button>
+                </div>
+            </div>
+            <div id="library-section" style="display: none;">
+                <h1 class="h1">YOUR PLAYLIST</h1>
+                <div class="added-playlists-container snap-inline">
+                    <div id="addedPlaylists" class="added-playlists snap-inline">
+                    </div>
+                    <div class="playlist">
+                        <div id="plistbylink">
+                            <input type="text" id="playlistLinkInput" placeholder="Enter YouTube Playlist Link">
+                            <button style="width: 208px;  margin: 0;" id="myplist" onclick="addPlaylist()"><span
+                                    class="material-symbols-outlined">
+                                    add
+                                </span></button>
+                        </div>
+                    </div>
+                </div>
+                <div id="songListContainer"></div>
                 <h1 class="h1">FAVORITE ARTISTS</h1>
                 <div id="favoriteArtistsContainer">
-                    <div id="favoriteArtists"></div>
+                    <div id="favoriteArtists"><h4>your favorite artist to add them here</h4>
+                    </div>
                 </div>
                 <div id="favoriteArtistSongs" style="display: none;"></div>
+               
                 <div class="backup-restore">
                     <button onclick="backupLocalStorage()"><span class="material-symbols-outlined">
                             edit_document
@@ -131,7 +137,8 @@
                             restore_page
                         </span></button>
                     <input type="file" id="fileInput" style="display: none" onchange="restoreLocalStorage(event)">
-                </div>
+                </div> 
+            </div>
                 <div class="fullscreen-div" id="green-div"></div>
                 <br></br><br></br><br></br><br></br>
             </div>
@@ -174,9 +181,6 @@
                                 <button id="share-video" onclick="shareCurrentVideo()"><span class="material-symbols-outlined">
                                         share
                                     </span></button>
-                                <button onclick=" downloadCurrentSong() "><span class="material-symbols-outlined">
-                                        download
-                                    </span></button>
                                     <button id="repeat-button" onclick="toggleRepeatOneMode()"><span class="material-icons">
                                         repeat
                                     </span></button>
@@ -184,6 +188,18 @@
                                         class="material-symbols-outlined">
                                         lyrics
                                     </span></button>
+                            </div>
+                            <div class="tndrow">
+                                <button class=" " id="toggle-timer-btn" onclick="toggleTimer()"><span class="material-symbols-outlined">
+                                    timer
+                                </span></button> 
+                                <button onclick=" downloadCurrentSong() "><span class="material-symbols-outlined">
+                                    download
+                                </span></button>
+                                <button class=" " id="fullscreen-button"><span class="material-symbols-outlined">
+                                    phone_iphone
+                                </span></button>
+                                  
                             </div>
                             <div class="ppnbutton">
                                 <button class="mini-player-previous-button" onclick="playPreviousTrack()"><span
@@ -204,9 +220,34 @@
                 </div>
             </div>
         </div>
-
       </div>
-
+      <!-- <div id="radixAlert" class="modal">
+        <div class="modal-content">
+          <p id="alertMessage"></p>
+          <button id="okButton">OK</button>
+        </div>
+      </div>
+      <div class="radixAlert flex items-center p-4 mb-4 text-sm text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800" role="alert">
+        <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+        </svg>
+        <span class="sr-only">Info</span>
+        <div>
+          <span id="alertMessage" class="font-medium">Success alert!</span> 
+        </div>
+      </div> -->
+      
+      <div id="bottom-navbar">
+        <button onclick="toggleSection('playlist')" id="playlist-button"><span class="material-symbols-outlined">
+            home
+            </span></button>
+        <button onclick="toggleSection('search')" id="search-button"><span class="material-symbols-outlined">
+            search
+            </span></button>
+        <button id="library-button" onclick="toggleSection('library')"><span class="material-symbols-outlined">
+            library_music
+            </span></button>
+        </div>  
 
 
     <script src="src/apikeys.js"></script>
@@ -217,6 +258,7 @@
     <script src="src/artist.js"></script>
     <script src="src/script.js"></script>
     <script src="src/lyrics.js"></script>
+    <script src="src/nav.js"></script>
    
 </body>
 
