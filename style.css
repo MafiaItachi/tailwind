@@ -622,7 +622,7 @@ button:active {
 }
 
 body {
-  font-family: "Poppins", sans-serif ;
+  font-family: "Poppins", sans-serif;
   --tw-bg-opacity: 1;
   background-color: rgb(24 28 40 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
@@ -1524,7 +1524,7 @@ body {
   margin-top: 1.5rem;
 }
 
-.bbutton  button {
+.bbutton button {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
   height: 100%;
@@ -1539,7 +1539,7 @@ body {
   color: rgb(24 28 40 / var(--tw-text-opacity));
 }
 
-.bbutton  button:focus {
+.bbutton button:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
 }
