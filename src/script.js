@@ -7,8 +7,10 @@ window.addEventListener('resize', function() {
 
     // If the window height changes significantly (keyboard appeared), hide the controls
     if (newWindowHeight < windowHeight - 100) { // Adjust the value (-100) as needed
-        document.getElementById('controls').style.display = 'none'; // Replace 'controls' with the ID of your controls div
+        document.getElementById('controls').style.display = 'none';
+        document.getElementById('bottom-navbar').style.display = 'none';// Replace 'controls' with the ID of your controls div
     } else {
-        document.getElementById('controls').style.display = 'block'; // Show the controls if the window size changes back
+        document.getElementById('controls').style.display = 'block'; 
+        document.getElementById('bottom-navbar').style.display = 'block';// Show the controls if the window size changes back
     }
 });
