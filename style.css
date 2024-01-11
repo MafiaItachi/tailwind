@@ -1471,7 +1471,7 @@ body {
   margin: 0px;
   margin-top: 2.5rem;
   display: flex;
-  height: 60%;
+  height: 50%;
   width: 100%;
   flex-direction: column;
   align-items: center;
@@ -1484,7 +1484,6 @@ body {
 }
 
 .player-controls {
-  margin-top: 1.25rem;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1514,14 +1513,15 @@ body {
 
 .mini-player-buttons {
   display: flex;
+  width: 100%;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
 }
 
 .bbutton {
-  margin-bottom: 2.5rem;
-  margin-top: 2.5rem;
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
 }
 
 .bbutton  button {
@@ -1545,7 +1545,7 @@ body {
 }
 
 .tndrow {
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .tndrow button {

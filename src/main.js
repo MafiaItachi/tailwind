@@ -785,6 +785,7 @@ input.addEventListener("keyup", function (event) {
         event.preventDefault();
         // Trigger the button element with a click
         document.getElementById("myBtn").click();
+        input.blur();
     }
 });
 
@@ -801,6 +802,7 @@ input.addEventListener("keyup", function (event) {
         event.preventDefault();
         // Trigger the button element with a click
         document.getElementById("myplist").click();
+        input.blur();
     }
 });
 var input = document.getElementById("2playlistLinkInput");
@@ -814,6 +816,7 @@ input.addEventListener("keyup", function (event) {
         event.preventDefault();
         // Trigger the button element with a click
         document.getElementById("mybm").click();
+        input.blur();
     }
 });
 
@@ -996,12 +999,3 @@ function showAlert(message) {
   }
 
   // Add this code to your existing script
-var searchInput = document.getElementById('searchInput');
-
-searchInput.addEventListener('keydown', function (event) {
-    if (event.key === 'Enter') {
-        event.preventDefault(); // Prevent the default Enter behavior (e.g., submitting a form)
-        searchInput.blur(); // Blur the input to dismiss the keyboard
-        // Add any additional functionality you want to perform when Enter is pressed
-    }
-});
