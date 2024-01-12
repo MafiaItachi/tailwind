@@ -82,7 +82,7 @@ async function revealSongs(playlistId) {
   
     // Clear the existing song list
     var songListContainer = document.getElementById('songListContainer');
-    songListContainer.innerHTML = '<div class="cut" ><span>SONGS</span><button onclick="clearplistsong()"><span class="material-symbols-outlined">cancel</span></button></div>';
+    songListContainer.innerHTML = '<div class="cut"><span>SONGS</span><button onclick="clearplistsong()"><span class="material-symbols-outlined">cancel</span></button></div>';
 
       // Toggle the visibility of the added-playlists-container
     isPlaylistContainerVisible = false;
@@ -104,25 +104,20 @@ async function revealSongs(playlistId) {
         clickedPlaylistThumbnail.src = clickedPlaylist.thumbnail;
         clickedPlaylistThumbnail.alt = clickedPlaylist.title;
 
-        var playlistDetails = document.createElement('div');
-        playlistDetails.classList.add('playlist-details');
-
         var clickedPlaylistTitle = document.createElement('div');
         clickedPlaylistTitle.classList.add('clicked-playlist-title');
         clickedPlaylistTitle.textContent = clickedPlaylist.title;
 
         var shuffleButton = document.createElement('button');
-        shuffleButton.innerHTML = '<span class="material-symbols-outlined">play_arrow</span>';
+        shuffleButton.innerHTML = '<span class="material-symbols-outlined">play_arrow</span> Shuffle and Play';
         shuffleButton.classList.add('shuffle-button');
         shuffleButton.addEventListener('click', function () {
             shuffleAndPlaySongs(playlistId);
         });
 
-        playlistDetails.appendChild(clickedPlaylistTitle);
-        playlistDetails.appendChild(shuffleButton);
-
         clickedPlaylistInfo.appendChild(clickedPlaylistThumbnail);
-        clickedPlaylistInfo.appendChild(playlistDetails);
+        clickedPlaylistInfo.appendChild(clickedPlaylistTitle);
+        clickedPlaylistInfo.appendChild(shuffleButton);
 
         // Append the clicked playlist info before the song list
         songListContainer.appendChild(clickedPlaylistInfo);
@@ -215,8 +210,7 @@ function clearplistsong() {
     if (songListContainer) {
         songListContainer.innerHTML = '';
         // Restore the visibility of the added-playlists-container
-        isPlaylistContainerVisible = true;
-        togglePlaylistContainerVisibility();
+        
         // Optionally, you can hide the song list container as well by setting its display to 'none'
         // songListContainer.style.display = 'none';
     }
