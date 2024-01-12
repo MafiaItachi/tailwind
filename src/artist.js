@@ -474,8 +474,6 @@ function clearArtistSearchResults() {
      document.getElementById("artistSearchInput").value = "";
 }
 
-
-document.addEventListener('DOMContentLoaded', function() {
 // For example, you can call it in your clearfavsong() function
 window.addEventListener('popstate', function(event) {
     // Check if the event is due to a navigation back
@@ -503,13 +501,13 @@ function clearfavsong() {
     // Simulate the back gesture
     simulateBackGesture();
 }
-});
+
 
 // You can call simulateBackGesture() when the back gesture is detected, e.g., on swipe or button press
 // For example, you can call it in your clearfavsong() function
 // function clearfavsong() {
 //     document.getElementById("favoriteArtistSongs").innerHTML = "";
-    
+
 // }
 
 // window.addEventListener('popstate', function(event) {
