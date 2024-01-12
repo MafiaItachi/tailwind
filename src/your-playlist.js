@@ -62,7 +62,29 @@ async function revealSongs(playlistId) {
     // Clear the existing song list
     var songListContainer = document.getElementById('songListContainer');
     songListContainer.innerHTML = '<div class="cut"><span>SONGS</span><button onclick="clearplistsong()"><span class="material-symbols-outlined">cancel</span></button></div>';
+    var savedPlaylists = JSON.parse(localStorage.getItem('savedPlaylists')) || [];
+    var clickedPlaylist = savedPlaylists.find(playlist => playlist.id === playlistId);
 
+    // Display the clicked playlist thumbnail and title before the song list
+    if (clickedPlaylist) {
+        var clickedPlaylistInfo = document.createElement('div');
+        clickedPlaylistInfo.classList.add('clicked-playlist-info');
+
+        var clickedPlaylistThumbnail = document.createElement('img');
+        clickedPlaylistThumbnail.classList.add('clicked-playlist-thumbnail');
+        clickedPlaylistThumbnail.src = clickedPlaylist.thumbnail;
+        clickedPlaylistThumbnail.alt = clickedPlaylist.title;
+
+        var clickedPlaylistTitle = document.createElement('div');
+        clickedPlaylistTitle.classList.add('clicked-playlist-title');
+        clickedPlaylistTitle.textContent = clickedPlaylist.title;
+
+        clickedPlaylistInfo.appendChild(clickedPlaylistThumbnail);
+        clickedPlaylistInfo.appendChild(clickedPlaylistTitle);
+
+        // Append the clicked playlist info before the song list
+        songListContainer.appendChild(clickedPlaylistInfo);
+    }
     var apiKey = getRandomAPIKey(); // Replace 'YOUR_API_KEY' with your actual YouTube Data API key
     var pageToken = ''; // Initialize page token for pagination
 
@@ -139,6 +161,7 @@ async function revealSongs(playlistId) {
 
 
 
+
 function clearplistsong() {
     var songListContainer = document.getElementById('songListContainer');
     if (songListContainer) {
@@ -146,7 +169,26 @@ function clearplistsong() {
         // Optionally, you can hide the song list container as well by setting its display to 'none'
         // songListContainer.style.display = 'none';
     }
+
 }
+window.addEventListener('popstate', function(event) {
+    clearSongListOnBackGesture();
+});
+
+// Function to clear the song list container
+function clearSongListOnBackGesture() {
+    var songListContainer = document.getElementById('songListContainer');
+    if (songListContainer) {
+        songListContainer.innerHTML = '';
+    }
+}
+
+// Function to navigate back in history and trigger the popstate event
+function goBack() {
+    history.back();
+}
+
+
 function displaySavedPlaylists() {
     var savedPlaylists = JSON.parse(localStorage.getItem('savedPlaylists')) || [];
     var playlistsSection = document.getElementById('addedPlaylists');
