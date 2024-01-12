@@ -1035,7 +1035,6 @@ body {
 /* YOUR PLAYLIST */
 
 .added-playlists-container {
-  margin-top: 1.25rem;
   margin-bottom: 1.25rem;
   max-width: 100%;
   overflow-x: auto;

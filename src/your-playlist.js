@@ -65,14 +65,18 @@ function getPlaylistIdFromLink(link) {
 
 // Global variable to track the visibility state
 var isPlaylistContainerVisible = true;
+var isFavoriteArtistsContainerVisible = true;
 
 document.addEventListener('DOMContentLoaded', function () {
     // Add event listener to the added-playlists element
     var addedPlaylistsElement = document.getElementByClassName('yourplaylist-thumbnail');
     addedPlaylistsElement.addEventListener('click', function () {
-        // Toggle the visibility of the added-playlists-container
+        // Toggle the visibility of the yourplaylist
         isPlaylistContainerVisible = !isPlaylistContainerVisible;
         togglePlaylistContainerVisibility();
+         // Toggle the visibility of the favoriteArtistsContainer
+         isFavoriteArtistsContainerVisible = true; // Ensure it's visible when clicking on a playlist
+         toggleFavoriteArtistsContainerVisibility();
     });
 });
 
@@ -82,11 +86,16 @@ async function revealSongs(playlistId) {
   
     // Clear the existing song list
     var songListContainer = document.getElementById('songListContainer');
-    songListContainer.innerHTML = '<div class="cut" ><span>SONGS</span><button onclick="clearplistsong()"><span class="material-symbols-outlined">cancel</span></button></div>';
+    songListContainer.innerHTML = '<div class="cut" style="display: none;" ><span>SONGS</span><button onclick="clearplistsong()"><span class="material-symbols-outlined">cancel</span></button></div>';
 
-      // Toggle the visibility of the added-playlists-container
+      // Toggle the visibility of the yourplaylist
     isPlaylistContainerVisible = false;
     togglePlaylistContainerVisibility();
+
+    // Toggle the visibility of the favoriteArtistsContainer
+    isFavoriteArtistsContainerVisible = false;
+    toggleFavoriteArtistsContainerVisibility();
+
 
    
 
@@ -200,11 +209,19 @@ async function revealSongs(playlistId) {
         songListContainer.innerHTML = 'Error fetching songs. Please try again later.';
     }
 }
+
 function togglePlaylistContainerVisibility() {
-    var addedPlaylistsContainer = document.querySelector('.added-playlists-container');
+    var addedPlaylistsContainer = document.querySelector('.yourplaylist');
     addedPlaylistsContainer.style.display = isPlaylistContainerVisible ? 'block' : 'none';
 }
 
+function toggleFavoriteArtistsContainerVisibility() {
+    // Replace 'favoriteArtistsContainer' with the actual ID or class of your container
+    var favoriteArtistsContainer = document.getElementById('favArtists');
+    if (favoriteArtistsContainer) {
+        favoriteArtistsContainer.style.display = isFavoriteArtistsContainerVisible ? 'block' : 'none';
+    }
+}
 // Call the function to display saved playlists on page load
 displaySavedPlaylists();
 
@@ -214,16 +231,21 @@ function clearplistsong() {
     var songListContainer = document.getElementById('songListContainer');
     if (songListContainer) {
         songListContainer.innerHTML = '';
-        // Restore the visibility of the added-playlists-container
+        // Restore the visibility of the yourplaylist
         isPlaylistContainerVisible = true;
         togglePlaylistContainerVisibility();
         // Optionally, you can hide the song list container as well by setting its display to 'none'
         // songListContainer.style.display = 'none';
+         // Restore the visibility of the favoriteArtistsContainer
+         isFavoriteArtistsContainerVisible = true;
+         toggleFavoriteArtistsContainerVisibility();
+ 
     }
 }
 
 window.addEventListener('popstate', function(event) {
     clearSongListOnBackGesture();
+  
 });
 
 // Function to clear the song list container
@@ -233,6 +255,10 @@ function clearSongListOnBackGesture() {
         songListContainer.innerHTML = '';
         isPlaylistContainerVisible = true;
         togglePlaylistContainerVisibility();
+         // Restore the visibility of the favoriteArtistsContainer
+         isFavoriteArtistsContainerVisible = true;
+         toggleFavoriteArtistsContainerVisibility();
+ 
     }
 }
 
