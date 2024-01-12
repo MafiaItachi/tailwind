@@ -473,7 +473,31 @@ function clearArtistSearchResults() {
 }
 
 
+
+// Add an event listener for the popstate event
+window.addEventListener('popstate', function(event) {
+    // Check if the event is due to a navigation back
+    if (event.state && event.state.backGesture) {
+        // Perform the desired function (clearfavsong() in this case)
+        clearfavsong();
+    }
+});
+
+// Function to simulate a back gesture
+function simulateBackGesture() {
+    // Push a state with a custom property to indicate the back gesture
+    window.history.pushState({ backGesture: true }, document.title, location.href);
+    
+    // Optionally, you can also trigger the popstate event manually
+    var popStateEvent = new PopStateEvent('popstate', { state: { backGesture: true } });
+    window.dispatchEvent(popStateEvent);
+}
+
+// You can call simulateBackGesture() when the back gesture is detected, e.g., on swipe or button press
+// For example, you can call it in your clearfavsong() function
 function clearfavsong() {
     document.getElementById("favoriteArtistSongs").innerHTML = "";
-
+    
+    // Simulate the back gesture
+    simulateBackGesture();
 }

@@ -573,6 +573,8 @@ video {
 .song-list-container,
 .favorite-artist,
 .favorite-artist-song,
+.song-list-item,
+#artistVideos div,
 .trending-song-list li img,
 .favorite-artist img,
 .result-item img,
@@ -887,6 +889,8 @@ body {
 /* BOOKMARK */
 
 .h2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   font-size: 1.5rem;
   line-height: 2rem;
   font-weight: 500;
@@ -1241,6 +1245,52 @@ body {
 .snap-inline > * {
   scroll-snap-align: start;
   scroll-snap-stop: always;
+}
+
+.home-songs-container {
+  width: 100%;
+  --tw-scroll-snap-strictness: mandatory;
+  overflow: auto;
+  white-space: nowrap;
+}
+
+.home-song-row {
+  --tw-scroll-snap-strictness: mandatory;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.home-song-list {
+  display: flex;
+  --tw-scroll-snap-strictness: mandatory;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.column {
+  margin-bottom: 0.25rem;
+  margin-left: 0px;
+}
+
+.home-song-list  li {
+  margin-right: 0.25rem;
+  display: flex;
+  --tw-scroll-snap-strictness: mandatory;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  align-items: center;
+  border-radius: 0.5rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(69 81 116 / var(--tw-bg-opacity));
+  padding: 0.5rem;
+  font-weight: 500;
+  min-width: 90vw;
+}
+
+.home-song-list li img {
+  margin-right: 0.5rem;
+  height: 3.5rem;
+  border-radius: 0.375rem;
 }
 
 /* FAVORITE ARTIST */

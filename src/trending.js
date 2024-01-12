@@ -1,11 +1,11 @@
        // Define the trending playlist IDPL4fGSI1pDJn77aK7sAW2AT0oOzo5inWY8
-       var trendingPlaylistId = 'PL-DfNcB3lim_rZ_yGk5lr75PMD8fZpq3G';
-
+       
        // Function to load trending songs from the playlist
        // Function to load trending songs from the playlist
        // Function to load trending songs from the playlist
-function loadTrendingSongs() {
-   var trendingSongLists = document.querySelectorAll('.trending-song-list.column');
+       function loadTrendingSongs() {
+           var trendingSongLists = document.querySelectorAll('.trending-song-list.column');
+           var trendingPlaylistId = getRendomPlaylist3();
    var apiKey = getRandomAPIKey();
    // Fetch the playlist items using the YouTube Data API
    var playlistItemsUrl =

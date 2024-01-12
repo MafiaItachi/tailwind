@@ -84,7 +84,7 @@ document.getElementById('playlist-button').classList.add('active');
 
    
         function fetchAndDisplayPlaylist() {
-            var playlistId = 'PLVn0x_fJ3ZS8cJ-ZIKZhSjSBn2XBh-E0K';
+            var playlistId = getRendomPlaylist2();
             var apiKey = getRandomAPIKey();// Replace with your actual YouTube API key
     
             var playlistUrl = 'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=' + playlistId + '&key=' + apiKey;
