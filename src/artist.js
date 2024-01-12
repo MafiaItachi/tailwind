@@ -474,29 +474,32 @@ function clearArtistSearchResults() {
      document.getElementById("artistSearchInput").value = "";
 }
 
-// Add an event listener for the popstate event
-window.addEventListener('popstate', function (event) {
-    // Check if the favoriteArtistSongs div is currently displayed
-    var favoriteArtistSongsDiv = document.getElementById("favoriteArtistSongs");
-    if (favoriteArtistSongsDiv.style.display === "block") {
-        // If displayed, clear the favoriteArtistSongs
+// For example, you can call it in your clearfavsong() function
+window.addEventListener('popstate', function(event) {
+    // Check if the event is due to a navigation back
+    if (event.state && event.state.backGesture) {
+        // Perform the desired function (clearfavsong() in this case)
         clearfavsong();
     }
 });
 
-// Function to clear favoriteArtistSongs
-function clearfavsong() {
-    document.getElementById("favoriteArtistSongs").innerHTML = "";
+// Function to simulate a back gesture
+function simulateBackGesture() {
+    // Push a state with a custom property to indicate the back gesture
+    window.history.pushState({ backGesture: true }, document.title, location.href);
+
+    // Optionally, you can also trigger the popstate event manually
+    var popStateEvent = new PopStateEvent('popstate', { state: { backGesture: true } });
+    window.dispatchEvent(popStateEvent);
 }
 
+// You can call simulateBackGesture() when the back gesture is detected, e.g., on swipe or button press
+// For example, you can call it in your clearfavsong() function
+function clearfavsong() {
+    document.getElementById("favoriteArtistSongs").innerHTML = "";
 
-
-// You can trigger the goBack function when needed, for example, with a button click
-var backButton = document.getElementById("backButton"); // Replace with the actual ID or selector of your back button
-if (backButton) {
-    backButton.addEventListener("click", function () {
-        goBack();
-    });
+    // Simulate the back gesture
+    simulateBackGesture();
 }
 
 
