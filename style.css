@@ -1127,20 +1127,17 @@ body {
 .cut {
   margin-bottom: 0.5rem;
   display: flex;
-  width: 100%;
   align-items: center;
-  justify-content: center;
-  text-align: center;
 }
 
 .cut button {
-  margin-left: 0.5rem;
+  margin-right: 0.5rem;
   border-radius: 0.25rem;
   --tw-bg-opacity: 1;
   background-color: rgb(35 169 145 / var(--tw-bg-opacity));
   padding-left: 0.5rem;
   padding-right: 0.5rem;
-  padding-top: 0.25rem;
+  padding-top: 0.375rem;
   --tw-text-opacity: 1;
   color: rgb(24 28 40 / var(--tw-text-opacity));
 }
@@ -1388,6 +1385,43 @@ body {
 
 .remove-btn {
   margin-right: 0.25rem;
+}
+
+.favorite-artist2 img {
+  width: 11rem;
+  border-radius: 0.375rem;
+}
+
+.favorite-artist2 {
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  display: flex;
+  width: 12rem;
+  flex-direction: column;
+  border-radius: 0.5rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(69 81 116 / var(--tw-bg-opacity));
+  padding: 0.5rem;
+}
+
+.favorite-artist2 div {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.favorite-artist2 button {
+  width: 3rem;
+  border-radius: 0.375rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(35 169 145 / var(--tw-bg-opacity));
+  padding-top: 0.5rem;
+  padding-bottom: 0.25rem;
+  --tw-text-opacity: 1;
+  color: rgb(24 28 40 / var(--tw-text-opacity));
 }
 
 .favorite-artist-song {
