@@ -40,7 +40,7 @@ items.forEach(function (item, index) {
     var video = item.snippet;
     var videoId = video.resourceId.videoId;
     var videoTitle = video.title;
-    var videoThumbnailUrl = video.thumbnails.default.url;
+    var videoThumbnailUrl = video.thumbnails.medium.url;
 
     // Determine the column for each song
     var column = homeSongLists[index % 3];

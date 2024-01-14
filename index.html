@@ -17,12 +17,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
     <!-- <link rel="stylesheet" href="src/style.css">
     <link rel="stylesheet" href="src/pc_style.css"> -->
-    <!-- npx tailwindcss -i ./main.css -o ./style.css --watch -->
+    <!-- npx tailwindcss -i ./src/main.css -o ./src/tw_style.css --watch -->
    
+    <!-- <link rel="stylesheet" href="src/main.css"> -->
 
 
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="src/tw_style.css">
     <script src="https://cdn.tailwindcss.com"></script>
 
 
@@ -43,7 +43,7 @@
                             cancel
                         </span></button>
             
-                    <button class="search" id="myBtn" onclick="search();searchArtistChannel()"><span class="material-symbols-outlined">
+                    <button class="search" id="myBtn" onclick="search();searchArtistChannel();searchplist()"><span class="material-symbols-outlined">
                             search
                         </span></button>
                 </div>
@@ -58,6 +58,7 @@
                 <div id="artistChannel"></div>
                 <div id="artistVideos" style="display: none;"></div>
                 <div id="results"></div>
+                <div id="plistresults"></div>
                 <div class="trending-songs">
                     <h1 class="h2" >TRENDING SONG</h1>
                     <div class="trending-songs-container snap-inline">
@@ -281,6 +282,7 @@
     <script src="src/script.js"></script>
     <script src="src/lyrics.js"></script>
     <script src="src/nav.js"></script>
+    <script src="src/searchplist.js"></script>
    
 </body>
 

@@ -297,7 +297,7 @@ function displayResults(response) {
         var video = response.items[i];
         var videoId = video.id.videoId;
         var videoTitle = video.snippet.title;
-        var thumbnailUrl = video.snippet.thumbnails.default.url;
+        var thumbnailUrl = video.snippet.thumbnails.medium.url;
 
         var div = document.createElement("div");
         div.className = "result-item";
@@ -374,7 +374,7 @@ function playVideos(videoId) {
             var truncatedTitle = videoTitle.split(' ').splice(0, 5).join(' ');
 
             videoTitleElement.textContent = truncatedTitle;
-            videoThumbnailElement.src = "https://img.youtube.com/vi/" + videoId + "/default.jpg";
+            videoThumbnailElement.src = "https://img.youtube.com/vi/" + videoId + "/mqdefault.jpg";
         }
     }
 }
@@ -395,7 +395,7 @@ function displayPlaylist() {
             var playlistItem = document.createElement("div");
             playlistItem.className = "playlist-item";
             var thumbnail = document.createElement("img");
-            thumbnail.src = "https://img.youtube.com/vi/" + playlistItems[i].videoId + "/default.jpg";
+            thumbnail.src = "https://img.youtube.com/vi/" + playlistItems[i].videoId + "/mqdefault.jpg";
             playlistItem.setAttribute("onclick", "playVideos('" + playlistItems[i].videoId + "')");
 
             var listItem = document.createElement("p");
@@ -760,7 +760,7 @@ function updateVideoTitleAndThumbnail(title, videoId) {
 
     // Set the new video title and thumbnail
     videoTitleElement.textContent = title;
-    videoThumbnailElement.src = "https://img.youtube.com/vi/" + videoId + "/default.jpg";
+    videoThumbnailElement.src = "https://img.youtube.com/vi/" + videoId + "/mqdefault.jpg";
 }
 
 function updateMiniPlayer(videoId, videoTitle) {
@@ -771,7 +771,7 @@ function updateMiniPlayer(videoId, videoTitle) {
     var words = videoTitle.split(' ').slice(0, 5);
     var truncatedTitle = words.join(' ');
 
-    miniThumbnail.src = `https://img.youtube.com/vi/${videoId}/default.jpg`;
+    miniThumbnail.src = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
     miniTitle.textContent = truncatedTitle;
 }
 // Get the input field
@@ -865,7 +865,7 @@ function updateVideoTitleAndThumbnail(title, videoId) {
 
     // Set the new video title and thumbnail
     videoTitleElement.textContent = title;
-    videoThumbnailElement.src = "https://img.youtube.com/vi/" + videoId + "/default.jpg";
+    videoThumbnailElement.src = "https://img.youtube.com/vi/" + videoId + "/mqdefault.jpg";
 }
 
 // Load the YouTube IFrame Player API asynchronously

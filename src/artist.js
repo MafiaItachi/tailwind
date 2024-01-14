@@ -275,7 +275,7 @@ favoriteArtistSongsDiv.appendChild(clickedArtistContainer);
         titleElement.textContent = videoTitle;
 
         var videoThumbnail = document.createElement("img");
-        videoThumbnail.src = `https://img.youtube.com/vi/${videoId}/default.jpg`;
+        videoThumbnail.src = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
         videoThumbnail.alt = "Video Thumbnail";
 
         videoDiv.appendChild(videoThumbnail);

@@ -170,7 +170,7 @@ async function revealSongs(playlistId) {
                 if (video.thumbnails && video.thumbnails.default && video.thumbnails.default.url) {
                     var videoId = video.resourceId.videoId;
                     var videoTitle = video.title;
-                    var videoThumbnailUrl = video.thumbnails.default.url;
+                    var videoThumbnailUrl = video.thumbnails.medium.url;
             
                     var listItem = document.createElement('li');
                     listItem.classList.add('song-list-item');
@@ -496,7 +496,7 @@ async function playVideosShuffled(videoIds) {
 //             var video = item.snippet;
 //             var videoId = video.resourceId.videoId;
 //             var videoTitle = video.title;
-//             var videoThumbnailUrl = video.thumbnails.default.url;
+//             var videoThumbnailUrl = video.thumbnails.medium.url;
 
 //             var listItem = document.createElement('li');
 //             listItem.classList.add('song-list-item');

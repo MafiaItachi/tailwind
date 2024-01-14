@@ -69,7 +69,7 @@ document.getElementById('playlist-button').classList.add('active');
                 releaseItem.className = "playlist-item";
 
                 var thumbnail = document.createElement("img");
-                thumbnail.src = newReleasesData[i].snippet.thumbnails.default.url;
+                thumbnail.src = newReleasesData[i].snippet.thumbnails.medium.url;
                 thumbnail.setAttribute("onclick", "playVideo('" + newReleasesData[i].id + "')");
 
                 var listItem = document.createElement("p");
@@ -108,7 +108,7 @@ document.getElementById('playlist-button').classList.add('active');
                 var video = playlistItems[i].snippet;
                 var videoId = video.resourceId.videoId;
                 var videoTitle = video.title;
-                var thumbnailUrl = video.thumbnails.default.url;
+                var thumbnailUrl = video.thumbnails.medium.url;
     
                 var div = document.createElement("div");
                 div.className = "song-list-item";
