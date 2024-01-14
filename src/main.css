@@ -12,6 +12,9 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+  .bottom-15 {
+    bottom:  60px ;
+}
   .vw-90 {
     min-width: 90vw;
   }
@@ -383,7 +386,7 @@ body {
 /* MINIPLAYER */
 
 #controls {
-  @apply fixed bottom-16 right-2 left-2 rounded-lg bg-mini z-10 pb-1;
+  @apply fixed bottom-15 right-2 left-2 rounded-lg bg-mini z-10 pb-1;
 }
 .con {
   @apply w-full h-full flex justify-between items-center;

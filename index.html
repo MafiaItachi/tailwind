@@ -122,6 +122,16 @@
         </div>
     </div>
 </div>
+<div class="backup-restore">
+                    <button onclick="backupLocalStorage()"><span class="material-symbols-outlined">
+                            edit_document
+                        </span></button>
+                    <h4>BACKUP -- RESTORE</h4>
+                    <button onclick="document.getElementById('fileInput').click()"><span class="material-symbols-outlined">
+                            restore_page
+                        </span></button>
+                    <input type="file" id="fileInput" style="display: none" onchange="restoreLocalStorage(event)">
+                </div> <br></br><br></br><br></br><br></br>
 
             </div>
             <div id="library-section" style="display: none;">
@@ -143,6 +153,7 @@
                 </div>
                 <div id="songListContainer"></div>
                 <div id="favArtists">
+                    <br>
                     <h1 class="h2">FAVORITE ARTISTS</h1>
                 <div id="favoriteArtistsContainer">
                     <div id="favoriteArtists"><h4>your favorite artist to add them here</h4>
@@ -151,19 +162,10 @@
                 </div>
                 <div id="favoriteArtistSongs" style="display: none;"></div>
                
-                <div class="backup-restore">
-                    <button onclick="backupLocalStorage()"><span class="material-symbols-outlined">
-                            edit_document
-                        </span></button>
-                    <h4>BACKUP -- RESTORE</h4>
-                    <button onclick="document.getElementById('fileInput').click()"><span class="material-symbols-outlined">
-                            restore_page
-                        </span></button>
-                    <input type="file" id="fileInput" style="display: none" onchange="restoreLocalStorage(event)">
-                </div> 
+                
             </div>
                 <div class="fullscreen-div" id="green-div"></div>
-                <br></br><br></br><br></br><br></br>
+                
             </div>
         </div>
         <div class="righthf">

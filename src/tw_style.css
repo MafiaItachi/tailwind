@@ -1490,7 +1490,6 @@ body {
 
 #controls {
   position: fixed;
-  bottom: 4rem;
   right: 0.5rem;
   left: 0.5rem;
   z-index: 10;
@@ -1498,6 +1497,7 @@ body {
   --tw-bg-opacity: 1;
   background-color: rgb(38 45 65 / var(--tw-bg-opacity));
   padding-bottom: 0.25rem;
+  bottom:  60px ;
 }
 
 .con {
