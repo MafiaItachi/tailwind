@@ -166,33 +166,39 @@ async function revealSongs(playlistId) {
 
             items.forEach(function (item) {
                 var video = item.snippet;
-                var videoId = video.resourceId.videoId;
-                var videoTitle = video.title;
-                var videoThumbnailUrl = video.thumbnails.default.url;
-
-                var listItem = document.createElement('li');
-                listItem.classList.add('song-list-item');
-
-                var thumbnail = document.createElement('img');
-                thumbnail.classList.add('song-thumbnail');
-                thumbnail.src = videoThumbnailUrl;
-                thumbnail.alt = videoTitle;
-
-                var title = document.createElement('div');
-                title.classList.add('song-title');
-                title.textContent = videoTitle;
-
-                listItem.appendChild(thumbnail);
-                listItem.appendChild(title);
-
-                // Add click event to play the song
-                listItem.addEventListener('click', function () {
-                    playVideo(videoId);
-                });
-
-                songList.appendChild(listItem);
+            
+                // Check if the 'default' thumbnail is available
+                if (video.thumbnails && video.thumbnails.default && video.thumbnails.default.url) {
+                    var videoId = video.resourceId.videoId;
+                    var videoTitle = video.title;
+                    var videoThumbnailUrl = video.thumbnails.default.url;
+            
+                    var listItem = document.createElement('li');
+                    listItem.classList.add('song-list-item');
+            
+                    var thumbnail = document.createElement('img');
+                    thumbnail.classList.add('song-thumbnail');
+                    thumbnail.src = videoThumbnailUrl;
+                    thumbnail.alt = videoTitle;
+            
+                    var title = document.createElement('div');
+                    title.classList.add('song-title');
+                    title.textContent = videoTitle;
+            
+                    listItem.appendChild(thumbnail);
+                    listItem.appendChild(title);
+            
+                    // Add click event to play the song
+                    listItem.addEventListener('click', function () {
+                        playVideo(videoId);
+                    });
+            
+                    songList.appendChild(listItem);
+                } else {
+                    console.warn('Video thumbnail information not available for video:', video);
+                }
             });
-
+            
             // Append fetched songs to the song list container
             songListContainer.appendChild(songList);
 
@@ -204,10 +210,10 @@ async function revealSongs(playlistId) {
                 break;
             }
         }
-    } catch (error) {
-        console.error('Error fetching playlist items:', error);
-        songListContainer.innerHTML = 'Error fetching songs. Please try again later.';
-    }
+    }   catch (error) {
+        console.error('An error occurred:', error);
+    songListContainer.innerHTML = 'Error fetching songs. Please try again later. ' + error.message;
+}
 }
 
 function togglePlaylistContainerVisibility() {

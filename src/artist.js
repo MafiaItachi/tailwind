@@ -132,7 +132,72 @@ function addFavoriteArtist(channelName, channelId, channelImage) {
     });
 }
 
-function loadFavoriteArtistSongs(channelId) {
+function playVideoFromId(videoId) {
+    // Function to play a video using the YouTube Player API
+    if (player) {
+        player.loadVideoById(videoId);
+        player.playVideo();
+    }
+}
+function loadFavoriteArtistsOnLoad() {
+    var favoriteArtists = JSON.parse(localStorage.getItem("favoriteArtists")) || [];
+    var favoriteArtistsDiv = document.getElementById("favoriteArtists");
+    favoriteArtistsDiv.innerHTML = "";
+    if (favoriteArtists.length === 0) {
+        // Display a message when no favorite artists are added
+        favoriteArtistsDiv.innerHTML = "<p>Search Your Favorite Artists To Add Them Here.</p>";
+    } else {
+        for (var i = 0; i < favoriteArtists.length; i++) {
+            var artist = favoriteArtists[i];
+            var artistDiv = document.createElement("div");
+            artistDiv.className = "favorite-artist";
+
+            var channelImg = document.createElement("img");
+            channelImg.src = artist.image;
+            channelImg.alt = "Channel Image";
+
+            var channelParagraph = document.createElement("p");
+            channelParagraph.textContent = artist.name;
+
+            var playButton = document.createElement("button");
+            playButton.innerHTML = '<span class="material-symbols-outlined">play_arrow</span>';
+            playButton.className = "play-artist-videos";
+            playButton.title = "Play All Videos";
+            playButton.addEventListener("click", function (id) {
+                return function () {
+                    playFavoriteArtistVideos(id);
+                };
+            }(artist.id));
+
+            var removeButton = document.createElement("button");
+            removeButton.innerHTML = '<span class="material-symbols-outlined">cancel</span>';
+            removeButton.className = "remove-btn";
+
+            // Add click event to load the channel's videos when clicked
+            channelImg.addEventListener("click", function (artistId, artistItem) {
+                return function () {
+                    loadFavoriteArtistSongs(artistId, artistItem);
+                };
+            }(artist.id, artist));
+
+            // Add click event to remove the artist when clicked
+            removeButton.addEventListener("click", function (index) {
+                return function () {
+                    removeFavoriteArtist(index);
+                };
+            }(i));
+
+            artistDiv.appendChild(channelImg);
+            artistDiv.appendChild(channelParagraph);
+            artistDiv.appendChild(removeButton);
+            artistDiv.appendChild(playButton);
+
+            favoriteArtistsDiv.appendChild(artistDiv);
+        }
+    }
+}
+
+function loadFavoriteArtistSongs(channelId, artist) {
     var apiKey = getRandomAPIKey(); // Replace with your YouTube API key
     var apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&type=video&maxResults=100&key=${apiKey}`;
 
@@ -140,7 +205,7 @@ function loadFavoriteArtistSongs(channelId) {
         .then(response => response.json())
         .then(data => {
             if (data.items && data.items.length > 0) {
-                displayFavoriteArtistSongs(data.items);
+                displayFavoriteArtistSongs(data.items, artist);
             } else {
                 alert("No videos found for the artist.");
             }
@@ -150,19 +215,47 @@ function loadFavoriteArtistSongs(channelId) {
         });
 }
 
-function playVideoFromId(videoId) {
-    // Function to play a video using the YouTube Player API
-    if (player) {
-        player.loadVideoById(videoId);
-        player.playVideo();
-    }
-}
-
-// Function to display favorite artist's songs
-function displayFavoriteArtistSongs(items) {
+function displayFavoriteArtistSongs(items, artist) {
+          // Toggle the visibility of the yourplaylist
+          isPlaylistContainerVisible = false;
+          togglePlaylistContainerVisibility();
+      
+          // Toggle the visibility of the favoriteArtistsContainer
+          isFavoriteArtistsContainerVisible = false;
+          toggleFavoriteArtistsContainerVisibility();
+      
     var favoriteArtistSongsDiv = document.getElementById("favoriteArtistSongs");
     favoriteArtistSongsDiv.innerHTML = '<div class="cut"><span>SONGS</span><button onclick="clearfavsong()"><span class="material-symbols-outlined">cancel</span></button>';
 
+    // Create a container to hold the clicked favorite-artist item
+    var clickedArtistContainer = document.createElement("div");
+    clickedArtistContainer.className = "favorite-artist";
+
+    var channelImg = document.createElement("img");
+    channelImg.src = artist.image;
+    channelImg.alt = "Channel Image";
+
+    var channelParagraph = document.createElement("p");
+    channelParagraph.textContent = artist.name;
+
+    var playButton = document.createElement("button");
+    playButton.innerHTML = '<span class="material-symbols-outlined">play_arrow</span>';
+    playButton.className = "play-artist-videos";
+    playButton.title = "Play All Videos";
+    playButton.addEventListener("click", function (id) {
+        return function () {
+            playFavoriteArtistVideos(id);
+        };
+    }(artist.id));
+
+    clickedArtistContainer.appendChild(channelImg);
+    clickedArtistContainer.appendChild(channelParagraph);
+    clickedArtistContainer.appendChild(playButton);
+
+    // Append the clicked favorite-artist item to the favoriteArtistSongsDiv
+    favoriteArtistSongsDiv.appendChild(clickedArtistContainer);
+
+    // Continue with displaying videos as before
     for (var i = 0; i < items.length; i++) {
         var video = items[i];
         var videoId = video.id.videoId;
@@ -195,68 +288,6 @@ function displayFavoriteArtistSongs(items) {
     favoriteArtistSongsDiv.style.display = "block";
 }
 
-// Call the function to load favorite artists on page load
-loadFavoriteArtistsOnLoad();
-
-
-function loadFavoriteArtistsOnLoad() {
-    var favoriteArtists = JSON.parse(localStorage.getItem("favoriteArtists")) || [];
-    var favoriteArtistsDiv = document.getElementById("favoriteArtists");
-    favoriteArtistsDiv.innerHTML = "";
-    if (favoriteArtists.length === 0) {
-        // Display a message when no favorite artists are added
-        favoriteArtistsDiv.innerHTML = "<p>Search Your Favorite Artists To Add Them Here.</p>";
-    } else {
-    for (var i = 0; i < favoriteArtists.length; i++) {
-        var artist = favoriteArtists[i];
-        var artistDiv = document.createElement("div");
-        artistDiv.className = "favorite-artist";
-
-        var channelImg = document.createElement("img");
-        channelImg.src = artist.image;
-        channelImg.alt = "Channel Image";
-        //channelImg.style.width = "150px";  Adjust image size if needed
-
-        var channelParagraph = document.createElement("p");
-        channelParagraph.textContent = artist.name;
-
-        var playButton = document.createElement("button");
-        playButton.innerHTML = '<span class="material-symbols-outlined">play_arrow</span>'; // Font Awesome icon for play
-        playButton.className = "play-artist-videos";
-        playButton.title = "Play All Videos";
-        playButton.addEventListener("click", function (id) {
-            return function () {
-                playFavoriteArtistVideos(id);
-            };
-        }(artist.id));
-
-
-        var removeButton = document.createElement("button");
-        removeButton.innerHTML = '<span class="material-symbols-outlined">cancel</span>';
-        removeButton.className = "remove-btn";
-        // Add event listener to load the channel's videos when clicked
-         channelImg.addEventListener("click", function (artistId) {
-            return function () {
-                loadFavoriteArtistSongs(artistId);
-            };
-        }(artist.id));
-
-        // Add click event to remove the artist when clicked
-        removeButton.addEventListener("click", function (index) {
-            return function () {
-                removeFavoriteArtist(index);
-            };
-        }(i));
-
-        artistDiv.appendChild(channelImg);
-        artistDiv.appendChild(channelParagraph);
-        artistDiv.appendChild(removeButton);
-        artistDiv.appendChild(playButton);
-
-        favoriteArtistsDiv.appendChild(artistDiv);
-    }
-}
-}
 
 loadFavoriteArtistsOnLoad();
 
@@ -526,3 +557,5 @@ function clearfavsong() {
 // function goBack() {
 //     history.back();
 // }
+
+
