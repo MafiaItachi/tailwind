@@ -225,35 +225,42 @@ function displayFavoriteArtistSongs(items, artist) {
           toggleFavoriteArtistsContainerVisibility();
       
     var favoriteArtistSongsDiv = document.getElementById("favoriteArtistSongs");
-    favoriteArtistSongsDiv.innerHTML = '<div class="cut"><span>SONGS</span><button onclick="clearfavsong()"><span class="material-symbols-outlined">cancel</span></button>';
-
+    favoriteArtistSongsDiv.innerHTML = '<div class="cut"><button onclick="clearfavsong()"><span class="material-symbols-outlined">keyboard_backspace</span></button><span>Back</span>';
     // Create a container to hold the clicked favorite-artist item
-    var clickedArtistContainer = document.createElement("div");
-    clickedArtistContainer.className = "favorite-artist";
+var clickedArtistContainer = document.createElement("div");
+clickedArtistContainer.className = "favorite-artist2";
 
-    var channelImg = document.createElement("img");
-    channelImg.src = artist.image;
-    channelImg.alt = "Channel Image";
+var channelImg = document.createElement("img");
+channelImg.src = artist.image;
+channelImg.alt = "Channel Image";
 
-    var channelParagraph = document.createElement("p");
-    channelParagraph.textContent = artist.name;
+// Create a new div to hold the paragraph and play button
+var infoContainer = document.createElement("div");
 
-    var playButton = document.createElement("button");
-    playButton.innerHTML = '<span class="material-symbols-outlined">play_arrow</span>';
-    playButton.className = "play-artist-videos";
-    playButton.title = "Play All Videos";
-    playButton.addEventListener("click", function (id) {
-        return function () {
-            playFavoriteArtistVideos(id);
-        };
-    }(artist.id));
+var channelParagraph = document.createElement("p");
+channelParagraph.textContent = artist.name;
 
-    clickedArtistContainer.appendChild(channelImg);
-    clickedArtistContainer.appendChild(channelParagraph);
-    clickedArtistContainer.appendChild(playButton);
 
-    // Append the clicked favorite-artist item to the favoriteArtistSongsDiv
-    favoriteArtistSongsDiv.appendChild(clickedArtistContainer);
+var playButton = document.createElement("button");
+playButton.innerHTML = '<span class="material-symbols-outlined">play_arrow</span>';
+playButton.className = "play-artist-videos";
+playButton.title = "Play All Videos";
+playButton.addEventListener("click", function (id) {
+    return function () {
+        playFavoriteArtistVideos(id);
+    };
+}(artist.id));
+
+// Append the paragraph and play button to the new div
+infoContainer.appendChild(channelParagraph);
+infoContainer.appendChild(playButton);
+
+// Append the image and the new div to the main container
+clickedArtistContainer.appendChild(channelImg);
+clickedArtistContainer.appendChild(infoContainer);
+
+// Append the clicked favorite-artist item to the favoriteArtistSongsDiv
+favoriteArtistSongsDiv.appendChild(clickedArtistContainer);
 
     // Continue with displaying videos as before
     for (var i = 0; i < items.length; i++) {

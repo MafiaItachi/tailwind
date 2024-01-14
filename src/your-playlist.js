@@ -86,8 +86,7 @@ async function revealSongs(playlistId) {
   
     // Clear the existing song list
     var songListContainer = document.getElementById('songListContainer');
-    songListContainer.innerHTML = '<div class="cut" style="display: none;" ><span>SONGS</span><button onclick="clearplistsong()"><span class="material-symbols-outlined">cancel</span></button></div>';
-
+    songListContainer.innerHTML = '<div class="cut"><button onclick="clearplistsong()"><span class="material-symbols-outlined">keyboard_backspace</span></button><span>Back</span>';
       // Toggle the visibility of the yourplaylist
     isPlaylistContainerVisible = false;
     togglePlaylistContainerVisibility();
