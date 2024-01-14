@@ -512,57 +512,37 @@ function clearArtistSearchResults() {
      document.getElementById("artistSearchInput").value = "";
 }
 
-// For example, you can call it in your clearfavsong() function
-window.addEventListener('popstate', function(event) {
-    // Check if the event is due to a navigation back
-    if (event.state && event.state.backGesture) {
-        // Perform the desired function (clearfavsong() in this case)
-        clearfavsong();
-    }
-});
-
-// Function to simulate a back gesture
 function simulateBackGesture() {
-    // Push a state with a custom property to indicate the back gesture
-    window.history.pushState({ backGesture: true }, document.title, location.href);
-
-    // Optionally, you can also trigger the popstate event manually
-    var popStateEvent = new PopStateEvent('popstate', { state: { backGesture: true } });
-    window.dispatchEvent(popStateEvent);
+  // Push a state with a custom property to indicate the back gesture
+  window.history.pushState(
+    { backGesture: true },
+    document.title,
+    location.href
+  );
 }
+
+// Update the popstate event listener to check for the backGesture property
+window.addEventListener("popstate", function (event) {
+  // Check if the event is due to a navigation back and if the backGesture property is set
+  if (event.state && event.state.backGesture) {
+    // Perform the desired function (clearfavsong() in this case)
+    clearfavsong();
+  }
+});
 
 // You can call simulateBackGesture() when the back gesture is detected, e.g., on swipe or button press
 // For example, you can call it in your clearfavsong() function
 function clearfavsong() {
-    document.getElementById("favoriteArtistSongs").innerHTML = "";
-
-    // Simulate the back gesture
-    simulateBackGesture();
+  document.getElementById("favoriteArtistSongs").innerHTML = "";
+  isPlaylistContainerVisible = true;
+  togglePlaylistContainerVisibility();
+  // Restore the visibility of the favoriteArtistsContainer
+  isFavoriteArtistsContainerVisible = true;
+  toggleFavoriteArtistsContainerVisibility();
+  // Simulate the back gesture
+  simulateBackGesture();
 }
 
 
-// You can call simulateBackGesture() when the back gesture is detected, e.g., on swipe or button press
-// For example, you can call it in your clearfavsong() function
-// function clearfavsong() {
-//     document.getElementById("favoriteArtistSongs").innerHTML = "";
-
-// }
-
-// window.addEventListener('popstate', function(event) {
-//     clearfavSongOnBackGesture();
-// });
-
-// Function to clear the song list container
-// function clearfavSongOnBackGesture() {
-//     var songListContainer = document.getElementById('favoriteArtistSongs');
-//     if (songListContainer) {
-//         songListContainer.innerHTML = '';
-//     }
-// }
-
-// Function to navigate back in history and trigger the popstate event
-// function goBack() {
-//     history.back();
-// }
 
 
