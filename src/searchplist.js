@@ -57,27 +57,33 @@ $.ajax({
 }
 
 function displayResultItem(playlistTitle, playlistId, thumbnailUrl) {
-var div = document.createElement("div");
-div.className = "result-item";
+    var div = document.createElement("div");
+    div.className = "result-item";
 
-var thumbnailImg = document.createElement("img");
-thumbnailImg.src = thumbnailUrl;
+    var thumbnailImg = document.createElement("img");
+    thumbnailImg.src = thumbnailUrl;
 
-var title = document.createElement("p");
-title.className = "result-title";
-title.innerHTML = "<strong>Playlist:</strong> " + playlistTitle;
+    // Create a div for title and addButton
+    var titleAndButtonDiv = document.createElement("div");
 
-var addButton = document.createElement("button");
-addButton.textContent = "Add to Playlist";
-addButton.setAttribute("onclick", "addToSavedPlaylists('" + playlistId + "', '" + playlistTitle + "', '" + thumbnailUrl + "')");
+    var title = document.createElement("p");
+    title.className = "result-title";
+    title.innerHTML = "<strong>Playlist:</strong> " + playlistTitle;
 
-div.appendChild(thumbnailImg);
-div.appendChild(title);
-div.appendChild(addButton);
+    var addButton = document.createElement("button");
+    addButton.textContent = "Add to Playlist";
+    addButton.setAttribute("onclick", "addToSavedPlaylists('" + playlistId + "', '" + playlistTitle + "', '" + thumbnailUrl + "')");
 
-var results = document.getElementById("results");
-results.appendChild(div);
+    titleAndButtonDiv.appendChild(title);
+    titleAndButtonDiv.appendChild(addButton);
+
+    div.appendChild(thumbnailImg);
+    div.appendChild(titleAndButtonDiv);
+
+    var results = document.getElementById("results");
+    results.appendChild(div);
 }
+
 
 function addToSavedPlaylists(playlistId, playlistTitle, thumbnailUrl) {
 var storedPlaylists = JSON.parse(localStorage.getItem('savedPlaylists')) || [];

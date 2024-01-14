@@ -19,7 +19,7 @@
     width: 49%;
   }
   .w-47p {
-    width: 47%;
+    width: 46%;
   }
   .translate-y-1px {
     transform: translateY(1px);
@@ -99,20 +99,20 @@ body {
   @apply bg-body text-white no-scrollbar;
 }
 .h1 {
-  @apply text-white text-center text-3xl font-extrabold py-4;
+  @apply text-primary text-center text-3xl font-extrabold py-4;
 }
 .sxq {
-  @apply items-center h-14 flex rounded-md shadow-sm  w-full py-1;
+  @apply items-center h-12 flex rounded-md shadow-sm  w-full py-1;
 }
 
 .sxq input {
   @apply bg-primary  block w-full h-full rounded-l-md focus:outline-none pl-3 text-body placeholder-body;
 }
 .sxq button {
-  @apply bg-primary  h-full focus:outline-none text-body font-medium rounded-r-md    px-4 py-2;
+  @apply bg-primary  h-full focus:outline-none text-body font-medium rounded-r-md    px-4 pt-1.5;
 }
 .search {
-  @apply bg-primary  h-full focus:outline-none text-body font-medium rounded-md    px-4 py-2 ml-2;
+  @apply bg-primary  h-full focus:outline-none text-body font-medium rounded-md    px-4 pt-1.5 ml-2;
 }
 
 /* SEARCH RESULT */
@@ -164,6 +164,12 @@ body {
 #artistVideos p {
   @apply flex whitespace-nowrap   text-white ml-2;
 }
+.result-item div {
+  @apply ml-1
+}
+.result-item div button {
+  @apply bg-primary px-3 rounded-md my-1
+}
 
 /* BOOKMARK */
 .h2 {
@@ -173,7 +179,7 @@ body {
   @apply flex justify-between items-center h-14 rounded-lg  px-2 w-full;
 }
 .shuffle button {
-  @apply bg-primary  mx-1 focus:outline-none    text-body rounded-lg    px-4 pt-2 pb-1;
+  @apply bg-primary  mx-1 focus:outline-none    text-body rounded-lg    px-4 pt-2.5 pb-1;
 }
 
 .playlist-item {
@@ -186,19 +192,19 @@ body {
   @apply text-white w-full font-medium text-ellipsis overflow-hidden whitespace-nowrap;
 }
 .playlist-item p {
-  @apply text-body flex;
+  @apply text-white flex;
 }
 .more-dropdown {
-  @apply hidden   text-body;
+  @apply hidden  pt-1.5 text-white;
 }
 
 /* YOUTUBE PLAYLIST BY LINK  */
 
 .bookmarklink {
-  @apply items-center h-14 flex rounded-lg shadow-sm  w-full p-1;
+  @apply items-center h-12 flex rounded-lg shadow-sm  w-full p-1;
 }
 .bookmarklink button {
-  @apply bg-primary  h-full focus:outline-none text-body font-medium rounded-md px-4 pt-1 ml-1;
+  @apply bg-primary  h-full focus:outline-none text-body font-medium rounded-md px-4 pt-1.5 ml-1;
 }
 .bookmarklink input {
   @apply bg-primary  block w-full h-full pl-3 rounded-md focus:outline-none  text-body  placeholder-body;
@@ -228,7 +234,7 @@ body {
   @apply flex justify-normal items-center;
 }
 .playlist-buttons button {
-  @apply bg-primary  h-full focus:outline-none text-body font-medium rounded-full px-3 pt-2.5 pb-1.5  align-middle ml-2 mt-2;
+  @apply bg-primary  h-full focus:outline-none text-body font-medium rounded-full px-3 pt-3 pb-1.5  align-middle ml-2 mt-2;
 }
 
 .song-list-item {
@@ -255,17 +261,17 @@ body {
   @apply bg-primary rounded-md text-body pt-1;
 }
 .clicked-playlist-info {
-  @apply flex flex-col bg-secondary p-2 mx-10 my-2 rounded-lg
+  @apply flex flex-col bg-secondary p-2 mx-10 my-2 rounded-lg;
 }
-.clicked-playlist-info img{
-  @apply rounded-md
+.clicked-playlist-info img {
+  @apply rounded-md;
 }
 
-.playlist-details{
-  @apply flex justify-between mt-2 items-center pl-1
+.playlist-details {
+  @apply flex justify-between mt-2 items-center pl-1;
 }
-.playlist-details button{
- @apply bg-primary rounded-md pt-2 pb-1 w-12 text-body
+.playlist-details button {
+  @apply bg-primary rounded-md pt-2 pb-1 w-20 text-body;
 }
 
 /* TRENDING SONG */
@@ -313,10 +319,10 @@ body {
 .column {
   @apply mb-1 ml-0;
 }
-.home-song-list  li {
+.home-song-list li {
   @apply p-1 bg-secondary vw-90 flex items-center rounded-lg font-medium snap-start snap-mandatory mr-1 snap-always;
 }
- .home-song-list li img {
+.home-song-list li img {
   @apply h-14 rounded-md   mr-2;
 }
 
@@ -340,20 +346,20 @@ body {
 .remove-btn {
   @apply mr-1;
 }
-.favorite-artist2 img{
-  @apply w-44  rounded-md
+.favorite-artist2 img {
+  @apply w-44  rounded-md;
 }
 .favorite-artist2 {
-  @apply w-48 flex flex-col bg-secondary p-2 mx-auto my-2 rounded-lg
+  @apply w-48 flex flex-col bg-secondary p-2 mx-auto my-2 rounded-lg;
 }
 .favorite-artist2 div {
-  @apply  flex justify-between mt-2 items-center
+  @apply flex justify-between mt-2 items-center;
 }
 
-.favorite-artist2 button{
-  @apply bg-primary rounded-md pt-2 pb-1 w-12 text-body
- }
- 
+.favorite-artist2 button {
+  @apply bg-primary rounded-md pt-2 pb-1 w-12 text-body;
+}
+
 .favorite-artist-song {
   @apply flex bg-secondary rounded-lg mb-1 items-center;
 }
@@ -383,13 +389,13 @@ body {
   @apply w-full h-full flex justify-between items-center;
 }
 .video-thumbnail {
-  @apply m-1 object-cover rounded-md h-14;
+  @apply m-1.5 object-cover rounded-md h-14;
 }
 .video-title {
-  @apply text-ellipsis overflow-hidden whitespace-nowrap;
+  @apply  overflow-hidden whitespace-nowrap w-fit;
 }
 #play-pause {
-  @apply bg-primary  focus:outline-none text-body font-medium rounded-md pt-3 pb-2 w-14 m-2;
+  @apply bg-primary  focus:outline-none text-body font-medium rounded-md pt-3 pb-2 w-14 h-full m-2;
 }
 .seekbar2 {
   @apply h-1 absolute bottom-px right-1 left-1 rounded-xl bg-secondary;
@@ -431,25 +437,25 @@ body {
   @apply mb-6 mt-6;
 }
 .bbutton button {
-  @apply bg-primary  mx-1 focus:outline-none  h-full   text-body rounded-lg    px-5 pt-2 pb-1;
+  @apply bg-primary mx-1 focus:outline-none  h-full   text-body rounded-lg    px-5 pt-2 pb-0.5;
 }
 .tndrow {
   @apply mb-6;
 }
 .tndrow button {
-  @apply bg-primary   mx-1 focus:outline-none  h-full   text-body rounded-lg    px-5 pt-2 pb-1;
+  @apply bg-primary   mx-1 focus:outline-none  h-full   text-body rounded-lg    px-5 pt-2 pb-0.5;
 }
 .ppnbutton {
   @apply flex w-full justify-evenly items-center mb-4;
 }
 .mini-player-play-button {
-  @apply rounded-full h-20 w-20 bg-primary text-body;
+  @apply rounded-full h-20 w-20 bg-primary text-body pt-1;
 }
 .mini-player-previous-button {
-  @apply rounded-full h-14 w-14 bg-primary text-body;
+  @apply rounded-full h-14 w-14 bg-primary text-body pt-1;
 }
 .mini-player-next-button {
-  @apply rounded-full h-14 w-14 bg-primary text-body;
+  @apply rounded-full h-14 w-14 bg-primary text-body pt-1;
 }
 #lyrics-container {
   @apply text-wrap mt-5 leading-normal overflow-y-auto h-80 text-center;
@@ -463,7 +469,7 @@ body {
   @apply fixed bottom-0 left-0 w-full bg-mini flex justify-around p-2 z-0;
 }
 #bottom-navbar button {
-  @apply bg-transparent border-0 text-white transition-colors duration-300 h-10 w-20 rounded-3xl pt-1 shadow-none;
+  @apply bg-transparent border-0 text-white transition-colors duration-300 h-10 w-20 rounded-3xl pt-1.5 shadow-none;
 }
 #bottom-navbar button:hover,
 #bottom-navbar button.active {

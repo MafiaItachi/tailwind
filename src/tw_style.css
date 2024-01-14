@@ -650,12 +650,12 @@ body {
   line-height: 2.25rem;
   font-weight: 800;
   --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
+  color: rgb(35 169 145 / var(--tw-text-opacity));
 }
 
 .sxq {
   display: flex;
-  height: 3.5rem;
+  height: 3rem;
   width: 100%;
   align-items: center;
   border-radius: 0.375rem;
@@ -702,8 +702,7 @@ body {
   background-color: rgb(35 169 145 / var(--tw-bg-opacity));
   padding-left: 1rem;
   padding-right: 1rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-top: 0.375rem;
   font-weight: 500;
   --tw-text-opacity: 1;
   color: rgb(24 28 40 / var(--tw-text-opacity));
@@ -722,8 +721,7 @@ body {
   background-color: rgb(35 169 145 / var(--tw-bg-opacity));
   padding-left: 1rem;
   padding-right: 1rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-top: 0.375rem;
   font-weight: 500;
   --tw-text-opacity: 1;
   color: rgb(24 28 40 / var(--tw-text-opacity));
@@ -852,7 +850,7 @@ body {
   padding-top: 0.25rem;
   --tw-text-opacity: 1;
   color: rgb(24 28 40 / var(--tw-text-opacity));
-  width: 47%;
+  width: 46%;
 }
 
 .result-buttons button:focus {
@@ -885,6 +883,20 @@ body {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+.result-item div {
+  margin-left: 0.25rem;
+}
+
+.result-item div button {
+  margin-top: 0.25rem;
+  margin-bottom: 0.25rem;
+  border-radius: 0.375rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(35 169 145 / var(--tw-bg-opacity));
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+}
+
 /* BOOKMARK */
 
 .h2 {
@@ -914,7 +926,7 @@ body {
   background-color: rgb(35 169 145 / var(--tw-bg-opacity));
   padding-left: 1rem;
   padding-right: 1rem;
-  padding-top: 0.5rem;
+  padding-top: 0.625rem;
   padding-bottom: 0.25rem;
   --tw-text-opacity: 1;
   color: rgb(24 28 40 / var(--tw-text-opacity));
@@ -954,20 +966,21 @@ body {
 .playlist-item p {
   display: flex;
   --tw-text-opacity: 1;
-  color: rgb(24 28 40 / var(--tw-text-opacity));
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 .more-dropdown {
   display: none;
+  padding-top: 0.375rem;
   --tw-text-opacity: 1;
-  color: rgb(24 28 40 / var(--tw-text-opacity));
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 /* YOUTUBE PLAYLIST BY LINK  */
 
 .bookmarklink {
   display: flex;
-  height: 3.5rem;
+  height: 3rem;
   width: 100%;
   align-items: center;
   border-radius: 0.5rem;
@@ -985,7 +998,7 @@ body {
   background-color: rgb(35 169 145 / var(--tw-bg-opacity));
   padding-left: 1rem;
   padding-right: 1rem;
-  padding-top: 0.25rem;
+  padding-top: 0.375rem;
   font-weight: 500;
   --tw-text-opacity: 1;
   color: rgb(24 28 40 / var(--tw-text-opacity));
@@ -1087,7 +1100,7 @@ body {
   background-color: rgb(35 169 145 / var(--tw-bg-opacity));
   padding-left: 0.75rem;
   padding-right: 0.75rem;
-  padding-top: 0.625rem;
+  padding-top: 0.75rem;
   padding-bottom: 0.375rem;
   vertical-align: middle;
   font-weight: 500;
@@ -1195,7 +1208,7 @@ body {
 }
 
 .playlist-details button {
-  width: 3rem;
+  width: 5rem;
   border-radius: 0.375rem;
   --tw-bg-opacity: 1;
   background-color: rgb(35 169 145 / var(--tw-bg-opacity));
@@ -1295,7 +1308,7 @@ body {
   margin-left: 0px;
 }
 
-.home-song-list  li {
+.home-song-list li {
   margin-right: 0.25rem;
   display: flex;
   --tw-scroll-snap-strictness: mandatory;
@@ -1496,7 +1509,7 @@ body {
 }
 
 .video-thumbnail {
-  margin: 0.25rem;
+  margin: 0.375rem;
   height: 3.5rem;
   border-radius: 0.375rem;
   -o-object-fit: cover;
@@ -1504,13 +1517,15 @@ body {
 }
 
 .video-title {
+  width: -moz-fit-content;
+  width: fit-content;
   overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 #play-pause {
   margin: 0.5rem;
+  height: 100%;
   width: 3.5rem;
   border-radius: 0.375rem;
   --tw-bg-opacity: 1;
@@ -1644,7 +1659,7 @@ body {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
   padding-top: 0.5rem;
-  padding-bottom: 0.25rem;
+  padding-bottom: 0.125rem;
   --tw-text-opacity: 1;
   color: rgb(24 28 40 / var(--tw-text-opacity));
 }
@@ -1668,7 +1683,7 @@ body {
   padding-left: 1.25rem;
   padding-right: 1.25rem;
   padding-top: 0.5rem;
-  padding-bottom: 0.25rem;
+  padding-bottom: 0.125rem;
   --tw-text-opacity: 1;
   color: rgb(24 28 40 / var(--tw-text-opacity));
 }
@@ -1692,6 +1707,7 @@ body {
   border-radius: 9999px;
   --tw-bg-opacity: 1;
   background-color: rgb(35 169 145 / var(--tw-bg-opacity));
+  padding-top: 0.25rem;
   --tw-text-opacity: 1;
   color: rgb(24 28 40 / var(--tw-text-opacity));
 }
@@ -1702,6 +1718,7 @@ body {
   border-radius: 9999px;
   --tw-bg-opacity: 1;
   background-color: rgb(35 169 145 / var(--tw-bg-opacity));
+  padding-top: 0.25rem;
   --tw-text-opacity: 1;
   color: rgb(24 28 40 / var(--tw-text-opacity));
 }
@@ -1712,6 +1729,7 @@ body {
   border-radius: 9999px;
   --tw-bg-opacity: 1;
   background-color: rgb(35 169 145 / var(--tw-bg-opacity));
+  padding-top: 0.25rem;
   --tw-text-opacity: 1;
   color: rgb(24 28 40 / var(--tw-text-opacity));
 }
@@ -1748,7 +1766,7 @@ body {
   border-radius: 1.5rem;
   border-width: 0px;
   background-color: transparent;
-  padding-top: 0.25rem;
+  padding-top: 0.375rem;
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
   --tw-shadow: 0 0 #0000;
