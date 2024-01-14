@@ -1,298 +1,267 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <link rel="icon" href="image/songicon.jpg" type="image/icon">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>PHOTON PLAYER</title>
-    <script src="https://kit.fontawesome.com/bac1e9dfb2.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
-    <script src="https://www.youtube.com/iframe_api"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
-    <!-- <link rel="stylesheet" href="src/style.css">
-    <link rel="stylesheet" href="src/pc_style.css"> -->
-    <!-- npx tailwindcss -i ./src/main.css -o ./src/tw_style.css --watch -->
-   
-    <!-- <link rel="stylesheet" href="src/main.css"> -->
-
-
-    <link rel="stylesheet" href="src/tw_style.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-
-
-    <style>
-
-
-    </style>
-</head>
-
-<body class="mx-2 ">
+   <head>
+      <link rel="icon" href="image/songicon.jpg" type="image/icon">
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+      <title>PHOTON PLAYER</title>
+      <script src="https://kit.fontawesome.com/bac1e9dfb2.js" crossorigin="anonymous"></script>
+      <link rel="stylesheet"
+         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+      <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+      <script src="https://www.youtube.com/iframe_api"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+      <!-- <link rel="stylesheet" href="src/style.css">
+         <link rel="stylesheet" href="src/pc_style.css"> -->
+      <!-- npx tailwindcss -i ./src/main.css -o ./src/tw_style.css --watch -->
+      <!-- <link rel="stylesheet" href="src/main.css"> -->
+      <link rel="stylesheet" href="src/tw_style.css">
+      <script src="https://cdn.tailwindcss.com"></script>
+      <style>
+      </style>
+   </head>
+   <body class="mx-2 ">
       <div id="pc">
-        <div class="faded">
+         <div class="faded">
             <div class="lefthf">
-                <h1 class="h1" >PHOTON PLAYER</h1>
-                <div id="search-section" style="display: none;">
-                <div class="sxq "><input id="searchInput" class="searchInput" placeholder="search" >
-                    <button class="" id="clearSearchResults " onclick="clearSearchResults()"><span class="material-symbols-outlined">
-                            cancel
-                        </span></button>
-            
-                    <button class="search" id="myBtn" onclick="search();searchArtistChannel();searchplist()"><span class="material-symbols-outlined">
-                            search
-                        </span></button>
-                </div>
-                <div id="searchinfo" style="display: none;">
-                    <div id="searchinfo2">
+               <h1 class="h1" >PHOTON PLAYER</h1>
+               <div id="search-section" style="display: none;">
+                  <div class="sxq "><input id="searchInput" class="searchInput" placeholder="search" >
+                     <button class="" id="clearSearchResults " onclick="clearSearchResults()"><span class="material-symbols-outlined">
+                     cancel
+                     </span></button>
+                     <button class="search" id="myBtn" onclick="search();searchArtistChannel();searchplist()"><span class="material-symbols-outlined">
+                     search
+                     </span></button>
+                  </div>
+                  <div id="searchinfo" style="display: none;">
+                     <div id="searchinfo2">
                         <h3>YOUR SEARCH RESULT</h3>
                         <button id="toggleTopic" onclick="toggleTopic()"><span class="material-symbols-outlined">
-                                videocam
-                            </span></button>
-                    </div>
-                </div>
-                <div id="artistChannel"></div>
-                <div id="artistVideos" style="display: none;"></div>
-                <div id="results"></div>
-                <div id="plistresults"></div>
-                <div class="trending-songs">
-                    <h1 class="h2" >TRENDING SONG</h1>
-                    <div class="trending-songs-container snap-inline">
+                        videocam
+                        </span></button>
+                     </div>
+                  </div>
+                  <div id="artistChannel"></div>
+                  <div id="artistVideos" style="display: none;"></div>
+                  <div id="results"></div>
+                  <div id="plistresults"></div>
+                  <div class="trending-songs">
+                     <h1 class="h2" >TRENDING SONG</h1>
+                     <div class="trending-songs-container snap-inline">
                         <div class="trending-song-row snap-inline">
-                            <!-- First Column -->
-                            <ul class="trending-song-list column snap-inline">
-                            </ul>
-                            <!-- Second Column -->
-                            <ul class="trending-song-list column snap-inline">
-                            </ul>
-                            <!-- Third Column -->
-                            <ul class="trending-song-list column snap-inline">
-                            </ul>
+                           <!-- First Column -->
+                           <ul class="trending-song-list column snap-inline">
+                           </ul>
+                           <!-- Second Column -->
+                           <ul class="trending-song-list column snap-inline">
+                           </ul>
+                           <!-- Third Column -->
+                           <ul class="trending-song-list column snap-inline">
+                           </ul>
                         </div>
-                    </div>
-                </div>
-                <div id="quick-pick-section">
-                    <!-- Quick pick items will be displayed here -->
-                </div>
-                <div id="new-releases-section" >
-                    <h2>New Releases</h2>
-                    <div id="new-releases"></div>
-                </div>
-                <button class=" " onclick="clearPlaylist()"><span class="material-symbols-outlined">
-                    delete
-                </span></button>
-                <button id="repeat-toggle" class="repeat-option" onclick="toggleRepeatMode()"><span class="material-icons">
-                    repeat
-                    </span></button>
-            </div>
-            <div id="playlist-section">
-                
-                <div class=" shuffle ">
-                    <h1 class=" h2">BOOKMARK</h1>
-                    <button class=" " onclick="shuffleAndPlay()"><span class="material-symbols-outlined">
-                            shuffle
-                        </span></button>
-                    
-                </div>
-            
-                <div id="playlist"></div>
-                <div class="bookmarklink"><input type="text" id="2playlistLinkInput" placeholder="Enter YouTube Playlist Link">
-                    <button id="mybm" onclick="addPlaylistByLink()"><span class="material-symbols-outlined">
-                            add
-                        </span></button>
-                </div>
-                
-<div class="home-songs">
-    <h1 class="h2" >QUICK PICK SONG</h1>
-    <div class="home-songs-container snap-inline">
-        <div class="home-song-row snap-inline">
-            <!-- First Column -->
-            <ul class="home-song-list column snap-inline">
-            </ul>
-            <!-- Second Column -->
-            <ul class="home-song-list column snap-inline">
-            </ul>
-            <!-- Third Column -->
-            <ul class="home-song-list column snap-inline">
-            </ul>
-        </div>
-    </div>
-</div>
-<div class="backup-restore">
-                    <button onclick="backupLocalStorage()"><span class="material-symbols-outlined">
-                            edit_document
-                        </span></button>
-                    <h4>BACKUP -- RESTORE</h4>
-                    <button onclick="document.getElementById('fileInput').click()"><span class="material-symbols-outlined">
-                            restore_page
-                        </span></button>
-                    <input type="file" id="fileInput" style="display: none" onchange="restoreLocalStorage(event)">
-                </div> <br></br><br></br><br></br><br></br>
-
-            </div>
-            <div id="library-section" style="display: none;">
-                <div class="yourplaylist">
-                    <h1 class="h2 ">YOUR PLAYLIST</h1>
-                <div class="added-playlists-container snap-inline">
-                    <div id="addedPlaylists" class="added-playlists snap-inline">
-                    </div>
-                    <div class="playlist">
-                        <div id="plistbylink">
-                            <input type="text" id="playlistLinkInput" placeholder="Enter YouTube Playlist Link">
-                            <button style="width: 208px;  margin: 0;" id="myplist" onclick="addPlaylist()"><span
-                                    class="material-symbols-outlined">
-                                    add
-                                </span></button>
+                     </div>
+                  </div>
+                  <div id="quick-pick-section">
+                     <!-- Quick pick items will be displayed here -->
+                  </div>
+                  <div id="new-releases-section" >
+                     <h2>New Releases</h2>
+                     <div id="new-releases"></div>
+                  </div>
+                  <button class=" " onclick="clearPlaylist()"><span class="material-symbols-outlined">
+                  delete
+                  </span></button>
+                  <button id="repeat-toggle" class="repeat-option" onclick="toggleRepeatMode()"><span class="material-icons">
+                  repeat
+                  </span></button>
+               </div>
+               <div id="playlist-section">
+                  <div class=" shuffle ">
+                     <h1 class=" h2">BOOKMARK</h1>
+                     <button class=" " onclick="shuffleAndPlay()"><span class="material-symbols-outlined">
+                     shuffle
+                     </span></button>
+                  </div>
+                  <div id="playlist"></div>
+                  <div class="bookmarklink"><input type="text" id="2playlistLinkInput" placeholder="Enter YouTube Playlist Link">
+                     <button id="mybm" onclick="addPlaylistByLink()"><span class="material-symbols-outlined">
+                     add
+                     </span></button>
+                  </div>
+                  <div class="home-songs">
+                     <h1 class="h2" >QUICK PICK SONG</h1>
+                     <div class="home-songs-container snap-inline">
+                        <div class="home-song-row snap-inline">
+                           <!-- First Column -->
+                           <ul class="home-song-list column snap-inline">
+                           </ul>
+                           <!-- Second Column -->
+                           <ul class="home-song-list column snap-inline">
+                           </ul>
+                           <!-- Third Column -->
+                           <ul class="home-song-list column snap-inline">
+                           </ul>
                         </div>
-                    </div>
-                </div>
-                </div>
-                <div id="songListContainer"></div>
-                <div id="favArtists">
-                   
-                    <h1 class="h2">FAVORITE ARTISTS</h1>
-                <div id="favoriteArtistsContainer">
-                    <div id="favoriteArtists"><h4>your favorite artist to add them here</h4>
-                    </div>
-                </div>
-                </div>
-                <div id="favoriteArtistSongs" style="display: none;"></div>
-               
-                <br><br>
+                     </div>
+                  </div>
+                  <div class="backup-restore">
+                     <button onclick="backupLocalStorage()"><span class="material-symbols-outlined">
+                     edit_document
+                     </span></button>
+                     <h4>BACKUP -- RESTORE</h4>
+                     <button onclick="document.getElementById('fileInput').click()"><span class="material-symbols-outlined">
+                     restore_page
+                     </span></button>
+                     <input type="file" id="fileInput" style="display: none" onchange="restoreLocalStorage(event)">
+                  </div>
+                  <br></br><br></br><br></br><br></br>
+               </div>
+               <div id="library-section" style="display: none;">
+                  <div class="yourplaylist">
+                     <h1 class="h2 ">YOUR PLAYLIST</h1>
+                     <div class="added-playlists-container snap-inline">
+                        <div id="addedPlaylists" class="added-playlists snap-inline">
+                        </div>
+                        <div class="playlist">
+                           <div id="plistbylink">
+                              <input type="text" id="playlistLinkInput" placeholder="Enter YouTube Playlist Link">
+                              <button style="width: 208px;  margin: 0;" id="myplist" onclick="addPlaylist()"><span
+                                 class="material-symbols-outlined">
+                              add
+                              </span></button>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div id="songListContainer"></div>
+                  <div id="favArtists">
+                     <h1 class="h2">FAVORITE ARTISTS</h1>
+                     <div id="favoriteArtistsContainer">
+                        <div id="favoriteArtists">
+                           <h4>your favorite artist to add them here</h4>
+                        </div>
+                     </div>
+                  </div>
+                  <div id="favoriteArtistSongs" style="display: none;"></div>
+                  <br> <br><br> <br><br> <br>
+               </div>
+               <div class="fullscreen-div" id="green-div"></div>
             </div>
-                <div class="fullscreen-div" id="green-div"></div>
-                
-            </div>
-        </div> 
-        <div class="righthf">
+         </div>
+         <div class="righthf">
             <div id="controls">
-                <div class="con">
-                    <img class="video-thumbnail" src="image/songicon.jpg">
-                    <div class="video-title">MADE BY SHUBHAM</div>
-        
-                    <button id="play-pause"><span class="material-symbols-outlined">
-                            play_arrow
-                        </span></button>
-                    <!-- <button  onclick="playNextTrack()"><span class="material-symbols-outlined">
-                             navigate_next
-                            </span></button> -->
-                </div>
-                <div class="seekbar2">
-                    <div class="progress-bar2"></div>
-                </div>
-                <div id="mini-player" class="mini-player">
-                    <div class="youtube">
-                        <div id="lyrics-container" style="display: none;"></div>
-                        <div id="player"></div>
-                    </div>
-                    <div class="bottom">
-                        <div class="player-controls">
-                            <div class="video-title2"></div>
-                            <div id="seek-bar">
-                                <div id="progress-bar"></div>
-                            </div>
-                            
+               <div class="con">
+                  <img class="video-thumbnail" src="image/songicon.jpg">
+                  <div class="video-title">MADE BY SHUBHAM</div>
+                  <button id="play-pause"><span class="material-symbols-outlined">
+                  play_arrow
+                  </span></button>
+                  <!-- <button  onclick="playNextTrack()"><span class="material-symbols-outlined">
+                     navigate_next
+                     </span></button> -->
+               </div>
+               <div class="seekbar2">
+                  <div class="progress-bar2"></div>
+               </div>
+               <div id="mini-player" class="mini-player">
+                  <div class="youtube">
+                     <div id="lyrics-container" style="display: none;"></div>
+                     <div id="player"></div>
+                  </div>
+                  <div class="bottom">
+                     <div class="player-controls">
+                        <div class="video-title2"></div>
+                        <div id="seek-bar">
+                           <div id="progress-bar"></div>
                         </div>
-                        <div class="mini-player-buttons">
-                            <div class="bbutton">
-                                <button id="addToPlaylistButton" onclick="addToPlaylistFromVideo()"><span
-                                        class="material-symbols-outlined">
-                                        bookmark
-                                    </span></button>
-                                <button id="share-video" onclick="shareCurrentVideo()"><span class="material-symbols-outlined">
-                                        share
-                                    </span></button>
-                                    <button id="repeat-button" onclick="toggleRepeatOneMode()"><span class="material-icons">
-                                        repeat
-                                    </span></button>
-                                <button id="toggle-lyrics-btn" onclick="toggleLyrics(); togglePlayer()"><span
-                                        class="material-symbols-outlined">
-                                        lyrics
-                                    </span></button>
-                            </div>
-                            <div class="tndrow">
-                                <button class=" " id="toggle-timer-btn" onclick="toggleTimer()"><span class="material-symbols-outlined">
-                                    timer
-                                </span></button> 
-                                <button onclick=" downloadCurrentSong() "><span class="material-symbols-outlined">
-                                    download
-                                </span></button>
-                                <button class=" " id="fullscreen-button"><span class="material-symbols-outlined">
-                                    phone_iphone
-                                </span></button>
-                                  
-                            </div>
-                            <div class="ppnbutton">
-                                <button class="mini-player-previous-button" onclick="playPreviousTrack()"><span
-                                        class="material-symbols-outlined">
-                                        skip_previous
-                                    </span></button>
-                                <button class="mini-player-play-button" id="play-pause2" onclick="togglePlayPause()"><span
-                                        class="material-symbols-outlined">
-                                        play_arrow
-                                    </span></button>
-                                <button class="mini-player-next-button" onclick="endCurrentSong()"><span
-                                        class="material-symbols-outlined">
-                                        skip_next
-                                    </span></button>
-                            </div>
+                     </div>
+                     <div class="mini-player-buttons">
+                        <div class="bbutton">
+                           <button id="addToPlaylistButton" onclick="addToPlaylistFromVideo()"><span
+                              class="material-symbols-outlined">
+                           bookmark
+                           </span></button>
+                           <button id="share-video" onclick="shareCurrentVideo()"><span class="material-symbols-outlined">
+                           share
+                           </span></button>
+                           <button id="repeat-button" onclick="toggleRepeatOneMode()"><span class="material-icons">
+                           repeat
+                           </span></button>
+                           <button id="toggle-lyrics-btn" onclick="toggleLyrics(); togglePlayer()"><span
+                              class="material-symbols-outlined">
+                           lyrics
+                           </span></button>
                         </div>
-                    </div>
-                </div>
+                        <div class="tndrow">
+                           <button class=" " id="toggle-timer-btn" onclick="toggleTimer()"><span class="material-symbols-outlined">
+                           timer
+                           </span></button> 
+                           <button onclick=" downloadCurrentSong() "><span class="material-symbols-outlined">
+                           download
+                           </span></button>
+                           <button class=" " id="fullscreen-button"><span class="material-symbols-outlined">
+                           phone_iphone
+                           </span></button>
+                        </div>
+                        <div class="ppnbutton">
+                           <button class="mini-player-previous-button" onclick="playPreviousTrack()"><span
+                              class="material-symbols-outlined">
+                           skip_previous
+                           </span></button>
+                           <button class="mini-player-play-button" id="play-pause2" onclick="togglePlayPause()"><span
+                              class="material-symbols-outlined">
+                           play_arrow
+                           </span></button>
+                           <button class="mini-player-next-button" onclick="endCurrentSong()"><span
+                              class="material-symbols-outlined">
+                           skip_next
+                           </span></button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
             </div>
-        </div>
+         </div>
       </div>
       <!-- <div id="radixAlert" class="modal">
-        <div class="modal-content">
-          <p id="alertMessage"></p>
-          <button id="okButton">OK</button>
-        </div>
-      </div>
-      <div class="radixAlert flex items-center p-4 mb-4 text-sm text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800" role="alert">
-        <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-        </svg>
-        <span class="sr-only">Info</span>
-        <div>
-          <span id="alertMessage" class="font-medium">Success alert!</span> 
-        </div>
-      </div> -->
-      
+         <div class="modal-content">
+           <p id="alertMessage"></p>
+           <button id="okButton">OK</button>
+         </div>
+         </div>
+         <div class="radixAlert flex items-center p-4 mb-4 text-sm text-green-800 border border-green-300 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400 dark:border-green-800" role="alert">
+         <svg class="flex-shrink-0 inline w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+           <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+         </svg>
+         <span class="sr-only">Info</span>
+         <div>
+           <span id="alertMessage" class="font-medium">Success alert!</span> 
+         </div>
+         </div> -->
       <div id="bottom-navbar">
-        <button onclick="toggleSection('playlist')" id="playlist-button"><span class="material-symbols-outlined">
-            home
-            </span></button>
-        <button onclick="toggleSection('search')" id="search-button"><span class="material-symbols-outlined">
-            search
-            </span></button>
-        <button id="library-button" onclick="toggleSection('library')"><span class="material-symbols-outlined">
-            library_music
-            </span></button>
-        </div>  
-
-
-    <script src="src/apikeys.js"></script>
-    <script src="src/main.js"></script>
-    <script src="src/trending.js"></script>
-    <script src="src/your-playlist.js"></script>
-    <script src="src/timer.js"></script>
-    <script src="src/artist.js"></script>
-    <script src="src/script.js"></script>
-    <script src="src/lyrics.js"></script>
-    <script src="src/nav.js"></script>
-    <script src="src/searchplist.js"></script>
-   
-</body>
-
+         <button onclick="toggleSection('playlist')" id="playlist-button"><span class="material-symbols-outlined">
+         home
+         </span></button>
+         <button onclick="toggleSection('search')" id="search-button"><span class="material-symbols-outlined">
+         search
+         </span></button>
+         <button id="library-button" onclick="toggleSection('library')"><span class="material-symbols-outlined">
+         library_music
+         </span></button>
+      </div>
+      <script src="src/apikeys.js"></script>
+      <script src="src/main.js"></script>
+      <script src="src/trending.js"></script>
+      <script src="src/your-playlist.js"></script>
+      <script src="src/timer.js"></script>
+      <script src="src/artist.js"></script>
+      <script src="src/script.js"></script>
+      <script src="src/lyrics.js"></script>
+      <script src="src/nav.js"></script>
+      <script src="src/searchplist.js"></script>
+   </body>
 </html>
-
-
-
-
-
-
-
