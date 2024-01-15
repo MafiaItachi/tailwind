@@ -576,7 +576,6 @@ var controlsHammer = new Hammer(controlsElement);
 controlsHammer.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
 controlsHammer.on('swipeup swipedown', function (event) {
     event.preventDefault();
-    event.stopPropagation(); 
 });
 
 controlsHammer.on('swipeup', function () {
