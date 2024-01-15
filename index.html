@@ -69,7 +69,7 @@
                      <!-- Quick pick items will be displayed here -->
                   </div>
                   <div id="new-releases-section" >
-                     <h2>New Releases</h2>
+                     <h2>NEW RELEASES</h2>
                      <div id="new-releases"></div>
                   </div>
                   <button class=" " onclick="clearPlaylist()"><span class="material-symbols-outlined">
@@ -108,6 +108,8 @@
                         </div>
                      </div>
                   </div>
+                  <h2  class=" h2">MIXED FOR YOU</h2>
+                  <div id="recommendations"></div>
                   <div class="backup-restore">
                      <button onclick="backupLocalStorage()"><span class="material-symbols-outlined">
                      edit_document
@@ -123,8 +125,8 @@
                <div id="library-section" style="display: none;">
                   <div class="yourplaylist">
                      <h1 class="h2 ">YOUR PLAYLIST</h1>
-                     <div class="added-playlists-container ">
-                        <div id="addedPlaylists" class="added-playlists ">
+                     <div class="added-playlists-container snap-inline">
+                        <div id="addedPlaylists" class="added-playlists snap-inline">
                         </div>
                         <div class="playlist">
                            <div id="plistbylink">
@@ -263,5 +265,7 @@
       <script src="src/lyrics.js"></script>
       <script src="src/nav.js"></script>
       <script src="src/searchplist.js"></script>
+      <script src="src/reco.js"></script>
+
    </body>
 </html>
