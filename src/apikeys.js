@@ -8,19 +8,17 @@ function getRandomAPIKey() {
 }
 
 var playlist = ['PLx0sYbCqOb8TBPRdmBHs5Iftvv9TPboYG&si=rz9d0FC8BHsmvwra','PLx0sYbCqOb8Sfi8H4gvgW-vS1g2fkxwLT','RDTMAK5uy_lr0LWzGrq6FU9GIxWvFHTRPQD2LHMqlFA','RDCLAK5uy_ksEjgm3H_7zOJ_RHzRjN1wY-_FFcs7aAU','PLx0sYbCqOb8TBPRdmBHs5Iftvv9TPboYG']; // Array of playlist
+var myplaylist =['PLhsvUSWlL3WmveyxXTE_UaFdiNXIAmcbx','PLhsvUSWlL3WmTKFfJjJLIK97mFyR-JFiu','PLhsvUSWlL3Wkisdq5KXYnMUaapmBL567g','PLhsvUSWlL3WlgBp4x0YO4rnHGPGpdiqlW','RDCLAK5uy_n9Fbdw7e6ap-98_A-8JYBmPv64v-Uaq1g','RDCLAK5uy_l4zXRAZ8rMBbXcICdxzbyQKSaRWRF_-cY','RDCLAK5uy_ne9LK1yhdHJsvZNIsmDirK1WT-sl7q8sQ' ]
 
 function  getRendomPlaylist1() {
     var randomIndex = Math.floor(Math.random() * playlist.length);
-    return playlist[randomIndex];
+    return myplaylist[randomIndex];
 }
 function  getRendomPlaylist2() {
     var randomIndex = Math.floor(Math.random() * playlist.length);
     return playlist[randomIndex];
 }
-function  getRendomPlaylist3() {
-    var randomIndex = Math.floor(Math.random() * playlist.length);
-    return playlist[randomIndex];
-}
+
 
 function loadhomeSongs() {
     var homeSongLists = document.querySelectorAll('.home-song-list.column');
