@@ -64,22 +64,42 @@ function getPlaylistIdFromLink(link) {
 
 
 // Global variable to track the visibility state
+//var isPlaylistContainerVisible = true;
+//var isFavoriteArtistsContainerVisible = true;
+
+//document.addEventListener('DOMContentLoaded', function () {
+    // Add event listener to the added-playlists element
+   // var addedPlaylistsElement = document.getElementByClassName('yourplaylist-thumbnail');
+   // addedPlaylistsElement.addEventListener('click', function () {
+        // Toggle the visibility of the yourplaylist
+   //     isPlaylistContainerVisible = !isPlaylistContainerVisible;
+   //     togglePlaylistContainerVisibility();
+         // Toggle the visibility of the favoriteArtistsContainer
+   //      isFavoriteArtistsContainerVisible = true; // Ensure it's visible when clicking on a playlist
+   //      toggleFavoriteArtistsContainerVisibility();
+ //   });
+//});
 var isPlaylistContainerVisible = true;
 var isFavoriteArtistsContainerVisible = true;
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Add event listener to the added-playlists element
-    var addedPlaylistsElement = document.getElementByClassName('yourplaylist-thumbnail');
-    addedPlaylistsElement.addEventListener('click', function () {
-        // Toggle the visibility of the yourplaylist
-        isPlaylistContainerVisible = !isPlaylistContainerVisible;
-        togglePlaylistContainerVisibility();
-         // Toggle the visibility of the favoriteArtistsContainer
-         isFavoriteArtistsContainerVisible = true; // Ensure it's visible when clicking on a playlist
-         toggleFavoriteArtistsContainerVisibility();
-    });
-});
+    // Corrected method name to getElementsByClassName
+    var addedPlaylistsElements = document.getElementsByClassName('yourplaylist-thumbnail');
 
+    // Check if there are elements with the specified class
+    if (addedPlaylistsElements.length > 0) {
+        // Assuming you want to add the event listener to the first element in the collection
+        addedPlaylistsElements[0].addEventListener('click', function () {
+            // Toggle the visibility of the yourplaylist
+            isPlaylistContainerVisible = !isPlaylistContainerVisible;
+            togglePlaylistContainerVisibility();
+
+            // Toggle the visibility of the favoriteArtistsContainer
+            isFavoriteArtistsContainerVisible = true; // Ensure it's visible when clicking on a playlist
+            toggleFavoriteArtistsContainerVisibility();
+        });
+    }
+});
 
 
 async function revealSongs(playlistId) {
