@@ -570,7 +570,10 @@ function playPreviousTrack() {
 
 // Initialize Hammer.js on the controls section
 var controlsElement = document.getElementById('controls');
-var controlsHammer = new Hammer(controlsElement);
+var controlsHammer = new Hammer(controlsElement, {
+    preventDefault: true,
+});
+//var controlsHammer = new Hammer(controlsElement);
 
 // Detect swipe up and swipe down gestures
 controlsHammer.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
