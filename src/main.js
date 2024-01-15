@@ -570,20 +570,34 @@ function playPreviousTrack() {
 
 // Initialize Hammer.js on the controls section
 var controlsElement = document.getElementById('controls');
-var controlsHammer = new Hammer(controlsElement);
+var startX, startY;
 
-// Detect swipe up and swipe down gestures
-controlsHammer.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
-controlsHammer.on('swipeup swipedown', function (event) {
-    event.preventDefault();
+controlsElement.addEventListener('touchstart', function (e) {
+  startX = e.touches[0].clientX;
+  startY = e.touches[0].clientY;
 });
 
-controlsHammer.on('swipeup', function () {
-    showMiniPlayer();
+controlsElement.addEventListener('touchmove', function (e) {
+  e.preventDefault(); // Prevent the default scroll behavior
 });
 
-controlsHammer.on('swipedown', function () {
-    hideMiniPlayer();
+controlsElement.addEventListener('touchend', function (e) {
+  var endX = e.changedTouches[0].clientX;
+  var endY = e.changedTouches[0].clientY;
+
+  var deltaX = endX - startX;
+  var deltaY = endY - startY;
+
+  // Set a threshold for swipe detection
+  var threshold = 50;
+
+  if (Math.abs(deltaY) > threshold) {
+    if (deltaY < 0) {
+      showMiniPlayer();
+    } else {
+      hideMiniPlayer();
+    }
+  }
 });
 
 // Function to show the mini player
