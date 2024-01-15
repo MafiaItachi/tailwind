@@ -63,7 +63,7 @@ function onPlayerReady(event) {
     $('#play-pause2').click(togglePlayPause);
     $('#seek-bar').click(seek);
     
-    $('#repeat-mode').change(changeRepeatMode);
+   // $('#repeat-mode').change(changeRepeatMode);
 }
 
 
