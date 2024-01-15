@@ -5,7 +5,7 @@
        // Function to load trending songs from the playlist
        function loadTrendingSongs() {
            var trendingSongLists = document.querySelectorAll('.trending-song-list.column');
-           var trendingPlaylistId = getRendomPlaylist3();
+           var trendingPlaylistId = getRendomPlaylist2();
    var apiKey = getRandomAPIKey();
    // Fetch the playlist items using the YouTube Data API
    var playlistItemsUrl =
