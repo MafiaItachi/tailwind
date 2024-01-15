@@ -571,7 +571,7 @@ function playPreviousTrack() {
 // Initialize Hammer.js on the controls section
 var controlsElement = document.getElementById('controls');
 var controlsHammer = new Hammer(controlsElement, {
-    preventDefault: true,
+    preventDefault: false,
 });
 //var controlsHammer = new Hammer(controlsElement);
 
