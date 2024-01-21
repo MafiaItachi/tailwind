@@ -578,8 +578,15 @@ controlsElement.addEventListener('touchstart', function (e) {
 });
 
 controlsElement.addEventListener('touchmove', function (e) {
-  e.preventDefault(); // Prevent the default scroll behavior
+  // Check if the touchmove event is within a specific scrollable element
+  var isScrollable = e.target.closest('#lyrics-container');
+
+  // Prevent the default scroll behavior only if not within the scrollable element
+  if (!isScrollable) {
+    e.preventDefault();
+  }
 });
+
 
 controlsElement.addEventListener('touchend', function (e) {
   var endX = e.changedTouches[0].clientX;
