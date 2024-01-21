@@ -22,7 +22,15 @@ npx tailwindcss init -p
 ```bash
 npm i vite
 ```
-
+```bash
+npm run start
+```
+```bash
+npx tailwindcss -i ./src/main.css -o ./src/tw_style.css --watch
+```
+```bash
+npm run dev
+```
 tailwind.config.js
 ```bash
 /** @type {import('tailwindcss').Config} */
@@ -50,6 +58,7 @@ package.json
 
 ```bash
   "scripts": {
-    "start": "vite"
+    "start": "vite",
+    "dev":tailwindcss build -i ./src/main.css -o ./src/tw_style.css ",
   },
   ```
