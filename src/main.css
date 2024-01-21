@@ -85,6 +85,7 @@ input[type="text"],
   
   clip-path: inset(-15px 0px -15px -15px);
 }
+
 .trending-song-list li img {
   padding: 0px;
 }
@@ -106,7 +107,7 @@ body {
   
 }
 .h1 {
-  @apply text-body text-center text-3xl font-extrabold py-2 bg-primary  -mx-1.5;
+  @apply text-body text-center text-3xl font-extrabold py-2 bg-primary my-1 rounded-lg;
 }
 .sxq {
   @apply items-center h-12 flex rounded-md shadow-sm  w-full pt-2;
@@ -190,7 +191,7 @@ body {
 }
 
 .playlist-item {
-  @apply bg-secondary my-1  flex  items-center rounded-lg;
+  @apply bg-secondary mb-1  flex  items-center rounded-lg;
 }
 .playlist-item img {
   @apply h-14 m-1 w-20 object-cover rounded-md;
@@ -208,7 +209,7 @@ body {
 /* YOUTUBE PLAYLIST BY LINK  */
 
 .bookmarklink {
-  @apply items-center h-12 flex rounded-lg shadow-sm  w-full pt-2;
+  @apply items-center h-12 flex rounded-lg shadow-sm  w-full pb-2;
 }
 .bookmarklink button {
   @apply bg-primary  h-full focus:outline-none text-body font-medium rounded-md px-3 pt-1.5 ml-1;
@@ -491,7 +492,7 @@ body {
   @apply bg-secondary my-1  flex  items-center rounded-lg;
 }
 .video-container img {
-  @apply h-14 w-20 object-cover m-1 rounded-md;
+  @apply h-14 w-20 object-cover m-1 rounded;
 }
  .video-container div {
   @apply text-white w-full font-medium text-ellipsis overflow-hidden whitespace-nowrap;

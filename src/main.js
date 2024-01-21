@@ -413,7 +413,7 @@ function displayPlaylist() {
             var videoTitleDiv = document.createElement("div");
             videoTitleDiv.className = "bvideo-title";
             videoTitleDiv.textContent = truncatedTitle;
-            console.log(videoTitleDiv);
+            console.log(truncatedTitle);
             moreButton.innerHTML = '<span class="material-symbols-outlined">more_vert</span>';
             moreButton.className = "more-button";
             moreButton.addEventListener("click", function (index) {
@@ -537,7 +537,7 @@ document.getElementById('fileInput').addEventListener('change', function (event)
                 localStorage.setItem(key, localStorageData[key]);
             }
         }
-        alert('Local Storage has been restored!');
+        showAlert('Local Storage has been restored!');
     };
     reader.readAsText(file);
 });
@@ -639,7 +639,7 @@ function shuffleAndPlay() {
     console.log(repeatMode);
     var storedPlaylist = localStorage.getItem("playlist");
     if (!storedPlaylist) {
-        alert("Playlist is empty. Add videos to the playlist first.");
+        showAlert("Playlist is empty. Add videos to the playlist first.");
         return;
     }
 
@@ -661,7 +661,7 @@ function addPlaylistByLink() {
     if (playlistId) {
         fetchPlaylistItems(playlistId);
     } else {
-        alert("Invalid YouTube playlist link. Please enter a valid link.");
+        showAlert("Invalid YouTube playlist link. Please enter a valid link.");
     }
 }
 
@@ -1014,13 +1014,13 @@ function updateRepeatModeButton() {
 
 function showAlert(message) {
     var modal = document.getElementById("radixAlert");
-    var alertMessage = document.getElementById("alertMessage");
-    var okButton = document.getElementById("okButton");
+    var alertMessage = document.querySelector("#radixAlert .text-sm");
+    var closeButton = document.querySelector("#radixAlert button");
   
-    alertMessage.textContent = message;
+    alertMessage.innerHTML = message;
     modal.style.display = "block";
   
-    okButton.onclick = function() {
+    closeButton.onclick = function() {
       modal.style.display = "none";
     };
   
@@ -1030,5 +1030,9 @@ function showAlert(message) {
       }
     };
   }
-
-  // Add this code to your existing script
+  
+  function hideModal() {
+    var modal = document.getElementById("radixAlert");
+    modal.style.display = "none";
+  }
+  

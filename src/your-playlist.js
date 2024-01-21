@@ -2,14 +2,14 @@ function addPlaylist() {
     var playlistLink = document.getElementById('playlistLinkInput').value;
     document.getElementById("playlistLinkInput").value = "";
     if (playlistLink.trim() === '') {
-        alert('Please enter a valid YouTube playlist link.');
+        showAlert('Please enter a valid YouTube playlist link.');
         return;
     }
 
     // Extract playlist ID from the link
     var playlistId = getPlaylistIdFromLink(playlistLink);
     if (!playlistId) {
-        alert('Invalid YouTube playlist link.');
+        showAlert('Invalid YouTube playlist link.');
         return;
     }
     var apiKey = getRandomAPIKey();
@@ -378,7 +378,7 @@ async function shuffleAndPlaySongs(playlistId) {
 
         const items = data.items;
         if (items.length === 0) {
-            alert('No songs found in this playlist.');
+            showAlert('No songs found in this playlist.');
             return;
         }
 

@@ -15,9 +15,7 @@ function searchArtistChannel() {
                 displayArtistChannel(channelName, channelId, channelImage);
                 console.log(channelName, channelId, channelImage);
                 loadArtistVideos(channelId);
-            } else {
-                alert("No channel found for the artist.");
-            }
+            } 
         })
         .catch(error => {
             console.error('Error fetching channel:', error);
@@ -35,9 +33,7 @@ function loadArtistVideos(channelId) {
         .then(data => {
             if (data.items && data.items.length > 0) {
                 displayArtistVideos(data.items);
-            } else {
-                alert("No videos found for the artist.");
-            }
+            } 
         })
         .catch(error => {
             console.error('Error fetching videos:', error);
@@ -206,9 +202,7 @@ function loadFavoriteArtistSongs(channelId, artist) {
         .then(data => {
             if (data.items && data.items.length > 0) {
                 displayFavoriteArtistSongs(data.items, artist);
-            } else {
-                alert("No videos found for the artist.");
-            }
+            } 
         })
         .catch(error => {
             console.error('Error fetching videos:', error);
@@ -324,9 +318,7 @@ function playArtistVideosShuffled(channelId) {
                 var videos = data.items;
                 shuffleArray(videos);
                 playShuffledVideos(videos);
-            } else {
-                alert("No videos found for the artist.");
-            }
+            } 
         })
         .catch(error => {
             console.error('Error fetching videos:', error);
@@ -415,9 +407,7 @@ function playArtistVideosShuffled(channelId) {
                 var videos = data.items;
                 shuffleArray(videos);
                 playShuffledVideos(videos);
-            } else {
-                alert("No videos found for the artist.");
-            }
+            } 
         })
         .catch(error => {
             console.error('Error fetching videos:', error);
@@ -468,9 +458,7 @@ function playFavoriteArtistVideos(artistId) {
                     var videos = data.items;
                     shuffleArray(videos);
                     playShuffledVideos(videos);
-                } else {
-                    alert("No videos found for the artist.");
-                }
+                } 
             })
             .catch(error => {
                 console.error('Error fetching videos:', error);
