@@ -835,7 +835,10 @@ body {
 
 .result-item img {
   height: 4rem;
+  width: 5rem;
   border-radius: 0.375rem;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .result-details {
@@ -886,7 +889,10 @@ body {
 
 #artistVideos img {
   height: 4rem;
+  width: 5rem;
   border-radius: 0.375rem;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 #artistVideos p {
@@ -963,7 +969,10 @@ body {
 .playlist-item img {
   margin: 0.25rem;
   height: 3.5rem;
+  width: 5rem;
   border-radius: 0.375rem;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .bvideo-title {
@@ -1138,7 +1147,10 @@ body {
 .song-list-item img {
   margin: 0.25rem;
   height: 3.5rem;
+  width: 5rem;
   border-radius: 0.375rem;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .cut {
@@ -1277,7 +1289,10 @@ body {
 .trending-song-list li img {
   margin-right: 0.5rem;
   height: 3.5rem;
+  width: 5rem;
   border-radius: 0.375rem;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .song-title {
@@ -1340,7 +1355,10 @@ body {
 .home-song-list li img {
   margin-right: 0.5rem;
   height: 3.5rem;
+  width: 5rem;
   border-radius: 0.375rem;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 /* FAVORITE ARTIST */
@@ -1454,7 +1472,10 @@ body {
 .favorite-artist-song img {
   margin: 0.25rem;
   height: 3.5rem;
+  width: 5rem;
   border-radius: 0.375rem;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .favorite-artist-song p {
@@ -1645,9 +1666,13 @@ body {
 }
 
 .video-title2 {
-  margin-top: 1.25rem;
-  margin-bottom: 1.25rem;
+  margin-top: 0.75rem;
+  margin-bottom: 0.75rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  display: flex;
   height: 3rem;
+  align-items: center;
   text-align: center;
 }
 
@@ -1815,7 +1840,10 @@ body {
 .video-container img {
   margin: 0.25rem;
   height: 3.5rem;
+  width: 5rem;
   border-radius: 0.375rem;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .video-container div {
