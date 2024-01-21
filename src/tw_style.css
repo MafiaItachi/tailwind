@@ -623,8 +623,14 @@ button:active {
   transform: translateY(1px);
 }
 
+.pc {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+
 body {
-  font-family: "Poppins", sans-serif;
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
   --tw-bg-opacity: 1;
   background-color: rgb(24 28 40 / var(--tw-bg-opacity));
   font-size: 0.875rem;
@@ -642,21 +648,22 @@ body {
   /* IE and Edge */
   scrollbar-width: none;
   /* Firefox */
+  font-family: "Poppins", sans-serif;
 }
 
 .h1 {
-  border-bottom-right-radius: 0.375rem;
-  border-bottom-left-radius: 0.375rem;
+  margin-left: -0.75rem;
+  margin-right: -0.75rem;
   --tw-bg-opacity: 1;
-  background-color: rgb(69 81 116 / var(--tw-bg-opacity));
-  padding-top: 1rem;
-  padding-bottom: 1rem;
+  background-color: rgb(35 169 145 / var(--tw-bg-opacity));
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   text-align: center;
   font-size: 1.875rem;
   line-height: 2.25rem;
   font-weight: 800;
   --tw-text-opacity: 1;
-  color: rgb(255 255 255 / var(--tw-text-opacity));
+  color: rgb(24 28 40 / var(--tw-text-opacity));
 }
 
 .sxq {
@@ -1134,6 +1141,7 @@ body {
 }
 
 .cut {
+  margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
@@ -1522,8 +1530,7 @@ body {
 }
 
 .video-title {
-  width: -moz-fit-content;
-  width: fit-content;
+  width: auto;
   overflow: hidden;
   white-space: nowrap;
 }
@@ -1817,3 +1824,4 @@ body {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
+
