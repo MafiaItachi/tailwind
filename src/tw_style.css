@@ -1823,6 +1823,11 @@ body {
   background-color: rgb(69 81 116 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
   color: rgb(35 169 145 / var(--tw-text-opacity));
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24;
 }
 
 /* RECOMMENDATION SECTION */
@@ -1864,3 +1869,5 @@ body {
   -o-object-fit: cover;
      object-fit: cover;
 }
+
+

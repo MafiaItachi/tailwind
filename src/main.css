@@ -482,6 +482,11 @@ body {
 #bottom-navbar button:hover,
 #bottom-navbar button.active {
   @apply bg-secondary text-primary;
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
 }
 
 
@@ -505,3 +510,5 @@ body {
   border-radius: 0.375rem;
   object-fit: cover;
 }
+
+
