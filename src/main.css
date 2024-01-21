@@ -27,6 +27,9 @@
   .translate-y-1px {
     transform: translateY(1px);
   }
+  .min-w90{
+    min-width: 90%;
+  }
 }
 .tra {
   transform: translateY(100%);
@@ -483,10 +486,7 @@ body {
 #bottom-navbar button.active {
   @apply bg-secondary text-primary;
   font-variation-settings:
-  'FILL' 1,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24
+  'FILL' 1
 }
 
 
@@ -503,12 +503,86 @@ body {
   @apply text-white w-full font-medium text-ellipsis overflow-hidden whitespace-nowrap;
 }
 
-.playlist-item img {
-  margin: 0.25rem;
-  height: 3.5rem;
-  width: 80px;
-  border-radius: 0.375rem;
-  object-fit: cover;
+
+
+
+
+/* PC LAYOUT */
+
+
+/* CSS rules for laptops and PCs */
+@media screen and (min-width: 1000px) {
+  ::-webkit-scrollbar {
+  display: none;
+}
+body {
+  @apply overflow-hidden text-base
+}
+#pc{
+  @apply flex h-screen
+}
+.faded{
+@apply flex overflow-scroll w-1/2
+}
+.lefthf {
+ @apply ml-14 w-full
+}
+.righthf{
+@apply w-1/2
+}
+.mini-player{
+@apply absolute
+}
+#controls {
+  @apply relative bg-body h-28
 }
 
 
+
+
+.mini-player{
+  @apply h-screen shadow-none
+}
+.con{
+  @apply bg-body hidden h-full
+}
+.bottom{
+ @apply bg-secondary justify-normal h-1/2 m-0
+
+}
+.bottom button {
+  @apply w-2/12
+}
+
+.youtube{
+  @apply w-full
+}
+
+#player{
+ @apply h-full
+}
+.tndrow,.bbutton{
+  @apply w-full flex justify-center
+}
+
+.player-controls{
+  @apply w-full
+}
+#seek-bar {
+@apply min-w90 bg-white
+}
+.seekbar2{
+  @apply hidden
+}
+#bottom-navbar{
+  @apply flex-col w-fit h-full fixed top-0 left-0
+}
+
+#bottom-navbar button {
+  @apply bg-transparent border-0 text-white transition-colors duration-300 w-10 h-20 rounded-3xl pt-1.5 shadow-none;
+}
+
+
+
+
+}
