@@ -602,10 +602,21 @@ controlsElement.addEventListener('touchend', function (e) {
   if (Math.abs(deltaY) > threshold) {
     if (deltaY < 0) {
       showMiniPlayer();
-    } else {
-      hideMiniPlayer();
-    }
+    } //else {
+      //hideMiniPlayer();
+   // }
   }
+});
+
+
+// Detect swipe up and swipe down gestures
+controlsHammer.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
+controlsHammer.on('swipedown', function (event) {
+    event.preventDefault();
+});
+
+controlsHammer.on('swipedown', function () {
+    hideMiniPlayer();
 });
 
 // Function to show the mini player
