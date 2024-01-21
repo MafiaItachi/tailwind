@@ -99,14 +99,14 @@ button:active {
   @apply mx-1
 }
 body {
-  @apply bg-body text-white no-scrollbar text-sm mx-1 ; 
+  @apply bg-body text-white no-scrollbar text-sm mx-1 no-scrollbar; 
 }
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins", sans-serif ;
   
 }
 .h1 {
-  @apply text-body text-center text-3xl font-extrabold py-2 bg-primary  -mx-3;
+  @apply text-body text-center text-3xl font-extrabold py-2 bg-primary  -mx-1.5;
 }
 .sxq {
   @apply items-center h-12 flex rounded-md shadow-sm  w-full pt-2;
@@ -180,13 +180,13 @@ body {
 
 /* BOOKMARK */
 .h2 {
-  @apply text-2xl font-medium py-2;
+  @apply text-2xl font-medium py-2 px-2;
 }
 .shuffle {
-  @apply flex justify-between items-center h-14 rounded-lg  px-2 w-full;
+  @apply flex justify-between items-center h-14 rounded-lg   w-full;
 }
 .shuffle button {
-  @apply bg-primary  mx-1 focus:outline-none    text-body rounded-lg    px-4 pt-2.5 pb-1;
+  @apply bg-primary  focus:outline-none  w-1/4   text-body rounded-lg    px-4 pt-2.5 pb-1;
 }
 
 .playlist-item {
@@ -390,7 +390,7 @@ body {
 /* MINIPLAYER */
 
 #controls {
-  @apply fixed bottom-15 right-2 left-2 rounded-lg bg-mini z-10 pb-1;
+  @apply fixed bottom-15 right-1.5 left-1.5 rounded-lg bg-mini z-10 pb-1;
 }
 .con {
   @apply w-full h-full flex justify-between items-center;
