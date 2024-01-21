@@ -1468,14 +1468,14 @@ body {
 .backup-restore {
   margin-top: 2.5rem;
   display: flex;
-  height: 3.5rem;
+  height: 3rem;
   width: 100%;
   align-items: center;
   justify-content: space-between;
   border-radius: 0.375rem;
   --tw-bg-opacity: 1;
   background-color: rgb(69 81 116 / var(--tw-bg-opacity));
-  padding: 0.5rem;
+  padding: 0.25rem;
   --tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
   --tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
@@ -1483,13 +1483,14 @@ body {
 
 .backup-restore button {
   height: 100%;
+  width: -moz-fit-content;
+  width: fit-content;
   border-radius: 0.375rem;
   --tw-bg-opacity: 1;
   background-color: rgb(35 169 145 / var(--tw-bg-opacity));
   padding-left: 1rem;
   padding-right: 1rem;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-top: 0.375rem;
   font-weight: 500;
   --tw-text-opacity: 1;
   color: rgb(24 28 40 / var(--tw-text-opacity));
@@ -1511,7 +1512,7 @@ body {
   --tw-bg-opacity: 1;
   background-color: rgb(38 45 65 / var(--tw-bg-opacity));
   padding-bottom: 0.25rem;
-  bottom:  60px ;
+  bottom:  59px ;
 }
 
 .con {
@@ -1525,6 +1526,7 @@ body {
 .video-thumbnail {
   margin: 0.375rem;
   height: 3.5rem;
+  width: 5rem;
   border-radius: 0.375rem;
   -o-object-fit: cover;
      object-fit: cover;
@@ -1576,8 +1578,8 @@ body {
 .mini-player {
   position: fixed;
   bottom: -1px;
-  left: 0.25rem;
-  right: 0.25rem;
+  left: 0px;
+  right: 0px;
   box-sizing: border-box;
   display: flex;
   height: 100%;
@@ -1826,3 +1828,11 @@ body {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+.playlist-item img {
+  margin: 0.25rem;
+  height: 3.5rem;
+  width: 80px;
+  border-radius: 0.375rem;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
