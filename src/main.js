@@ -581,10 +581,15 @@ controlsElement.addEventListener('touchmove', function (e) {
   // Check if the touchmove event is within a specific scrollable element
   var isScrollable = e.target.closest('#lyrics-container');
 
-  // Prevent the default scroll behavior only if not within the scrollable element
-  if (!isScrollable) {
-    e.preventDefault();
-  }
+ // Check if the scrollable element is at the top or bottom
+ var isAtTop = isScrollable && isScrollable.scrollTop === 0;
+ var isAtBottom = isScrollable && isScrollable.scrollHeight - isScrollable.scrollTop === isScrollable.clientHeight;
+
+ // Prevent the default scroll behavior only if not within the scrollable element
+ // or if the scrollable element is not at the top or bottom
+ if (!isScrollable || (!isAtTop && !isAtBottom)) {
+   e.preventDefault();
+ }
 });
 
 
