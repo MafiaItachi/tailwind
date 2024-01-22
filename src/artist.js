@@ -465,14 +465,14 @@ function clearArtistSearchResults() {
 }
 
 function simulateBackGesture() {
-        document.getElementById("favoriteArtistSongs").innerHTML = "";
+  document.getElementById("favoriteArtistSongs").innerHTML = "";
   // Push a state with a custom property to indicate the back gesture
   window.history.pushState(
     { backGesture: true },
     document.title,
     location.href
   );
-        clearfavsong();
+       
 }
 
 // Update the popstate event listener to check for the backGesture property
@@ -480,22 +480,22 @@ window.addEventListener("popstate", function (event) {
   // Check if the event is due to a navigation back and if the backGesture property is set
   if (event.state && event.state.backGesture) {
     // Perform the desired function (clearfavsong() in this case)
-
-      simulateBackGesture();
+ clearfavsong();
+    
   }
 });
 
 // You can call simulateBackGesture() when the back gesture is detected, e.g., on swipe or button press
 // For example, you can call it in your clearfavsong() function
 function clearfavsong() {
-  document.getElementById("favoriteArtistSongs").innerHTML = "";
+ // document.getElementById("favoriteArtistSongs").innerHTML = "";
   isPlaylistContainerVisible = true;
   togglePlaylistContainerVisibility();
   // Restore the visibility of the favoriteArtistsContainer
   isFavoriteArtistsContainerVisible = true;
   toggleFavoriteArtistsContainerVisibility();
   // Simulate the back gesture
-  
+    simulateBackGesture();
 }
 
 
