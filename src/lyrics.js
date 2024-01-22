@@ -44,8 +44,11 @@ function updateVideoTitle2() {
  videoTitle = videoTitle.replace(/\([^()]*\)|\[[^\[\]]*\]/g, '').trim();
  //videoTitle = videoTitle.replace(/\sft\.\s.*$/, '').trim();
  //videoTitle = videoTitle.replace(/\sFeat\.\s.*$/, '').trim();
-videoTitle = videoTitle.replace(/\sft\.\s.*(?=\s-\s)/, '').trim();
- videoTitle = videoTitle.replace(/\sFeat\.\s.*(?=\s-\s)/, '').trim();
+//videoTitle = videoTitle.replace(/\sft\.\s.*(?=\s-\s)/, '').trim();
+ //videoTitle = videoTitle.replace(/\sFeat\.\s.*(?=\s-\s)/, '').trim();
+  videoTitle = videoTitle.replace(/\sft\.\s.*(?=\s-\s)|\sft\.\s.*$/, '').trim();
+videoTitle = videoTitle.replace(/\sFeat\.\s.*(?=\s-\s)|\sFeat\.\s.*$/, '').trim();
+
    videoTitle = videoTitle.replace(/,\s*.*(?=\s-\s)|\sft\.\s.*(?=\s-\s)/, '').trim();
 
 
