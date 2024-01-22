@@ -196,8 +196,9 @@ async function revealSongs(playlistId) {
             
                     var title = document.createElement('div');
                     title.classList.add('song-title');
-                    title.textContent = videoTitle;
-            
+                   var truncatedTitle = truncateTitle(videoTitle);
+                    title.textContent = truncatedTitle;
+                    
                     listItem.appendChild(thumbnail);
                     listItem.appendChild(title);
             
