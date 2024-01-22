@@ -38,8 +38,10 @@ function updateVideoTitle2() {
    videoChannel = channelWords.slice(0, -2).join(' ');
  }
  videoTitle = videoTitle.replace(/\([^()]*\)|\[[^\[\]]*\]/g, '').trim();
- videoTitle = videoTitle.replace(/\sft\.\s.*$/, '').trim();
- videoTitle = videoTitle.replace(/\sFeat\.\s.*$/, '').trim();
+ //videoTitle = videoTitle.replace(/\sft\.\s.*$/, '').trim();
+ //videoTitle = videoTitle.replace(/\sFeat\.\s.*$/, '').trim();
+videoTitle = videoTitle.replace(/\sft\.\s.*(?=\s-\s)/, '').trim();
+ videoTitle = videoTitle.replace(/\sFeat\.\s.*(?=\s-\s)/, '').trim();
 
   var splitTitle = videoTitle.split(' - ');
   if (splitTitle.length === 2) {
@@ -54,7 +56,7 @@ function updateVideoTitle2() {
 
   
 
-  var updatedTitle = `${videoTitle} (${videoChannel})`;
+  var updatedTitle = `${videoTitle} - By ${videoChannel}`;
   console.log(updatedTitle);
   var videoTitleElement = document.querySelector('.video-title2');
   
