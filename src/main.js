@@ -379,6 +379,22 @@ function playVideos(videoId) {
     }
 }
 
+function truncateTitle(title) {
+    // Trim content within parentheses, curly braces, square brackets, and Japanese brackets
+    title = title.replace(/\([^)]*\)|\{[^}]*\}|\[[^\]]*\]|【[^】]*】|「[^」]*」/g, '').trim();
+    title = title.replace(/\sft\.\s.*(?=\s-\s)/, '').trim();
+    title = title.replace(/\sFeat\.\s.*(?=\s-\s)/, '').trim();
+    // Split the title into words
+    var words = title.split(' ');
+
+    // If the title has more than 10 words, truncate it
+    if (words.length > 10) {
+        title = words.slice(0, 10).join(' ') + '...';
+    }
+
+    return title;
+}
+
 
 
 
@@ -404,9 +420,9 @@ function displayPlaylist() {
             var playlistControls = document.createElement("div");
             var playOption = document.createElement("a");
             var removeOption = document.createElement("a");
-
             var videoTitle = playlistItems[i].videoTitle;
-            var truncatedTitle = videoTitle.split(' ').splice(0, 10).join(' ');
+           
+            var truncatedTitle = truncateTitle(videoTitle);
 
             // listItem.innerHTML = "<strong>" + (i + 1) + " </strong>" + truncatedTitle;
 
