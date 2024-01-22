@@ -486,7 +486,7 @@ window.addEventListener("popstate", function (event) {
 // You can call simulateBackGesture() when the back gesture is detected, e.g., on swipe or button press
 // For example, you can call it in your clearfavsong() function
 function clearfavsong() {
- // document.getElementById("favoriteArtistSongs").innerHTML = "";
+  document.getElementById("favoriteArtistSongs").innerHTML = "";
   isPlaylistContainerVisible = true;
   togglePlaylistContainerVisibility();
   // Restore the visibility of the favoriteArtistsContainer
