@@ -457,6 +457,11 @@ function clearArtistSearchResults() {
 }
 
 function simulateBackGesture() {
+    isPlaylistContainerVisible = true;
+    togglePlaylistContainerVisibility();
+    // Restore the visibility of the favoriteArtistsContainer
+    isFavoriteArtistsContainerVisible = true;
+    toggleFavoriteArtistsContainerVisibility();
   // Push a state with a custom property to indicate the back gesture
   window.history.pushState(
     { backGesture: true },
