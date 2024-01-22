@@ -472,6 +472,7 @@ function simulateBackGesture() {
     document.title,
     location.href
   );
+        clearfavsong();
 }
 
 // Update the popstate event listener to check for the backGesture property
@@ -479,7 +480,8 @@ window.addEventListener("popstate", function (event) {
   // Check if the event is due to a navigation back and if the backGesture property is set
   if (event.state && event.state.backGesture) {
     // Perform the desired function (clearfavsong() in this case)
-    clearfavsong();
+
+      simulateBackGesture();
   }
 });
 
@@ -493,7 +495,7 @@ function clearfavsong() {
   isFavoriteArtistsContainerVisible = true;
   toggleFavoriteArtistsContainerVisibility();
   // Simulate the back gesture
-  simulateBackGesture();
+  
 }
 
 
