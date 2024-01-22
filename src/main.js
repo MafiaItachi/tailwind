@@ -53,9 +53,23 @@ function onYouTubeIframeAPIReady() {
         events: {
             'onReady': onPlayerReady,
             'onStateChange': onPlayerStateChange
+        },
+        playerVars: {
+            'origin': 'https://yourwebsite.com'
         }
     });
 }
+document.addEventListener('visibilitychange', function () {
+    if (document.hidden) {
+        // Document is hidden, pause the video
+        if (player.getPlayerState() === YT.PlayerState.PLAYING) {
+            player.playVideo();
+        }
+    } else {
+        // Document is visible again, resume playback
+        player.playVideo();
+    }
+});
 
 function onPlayerReady(event) {
     // Player is ready to receive commands
