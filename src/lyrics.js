@@ -37,6 +37,10 @@ function updateVideoTitle2() {
   if (channelWords.length > 2) {
    videoChannel = channelWords.slice(0, -2).join(' ');
  }
+    // Trim "VEVO" from the end of videoChannel
+  if (videoChannel.endsWith('VEVO')) {
+    videoChannel = videoChannel.slice(0, -4).trim();
+  }
  videoTitle = videoTitle.replace(/\([^()]*\)|\[[^\[\]]*\]/g, '').trim();
  //videoTitle = videoTitle.replace(/\sft\.\s.*$/, '').trim();
  //videoTitle = videoTitle.replace(/\sFeat\.\s.*$/, '').trim();
