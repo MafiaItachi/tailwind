@@ -32,7 +32,6 @@ function toggleSection(section) {
         searchButton.classList.remove('active');
     }
     clearSearchResults();
-    displayNewReleases();
     clearplistsong();
     clearfavsong();
 }

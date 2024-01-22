@@ -306,50 +306,6 @@ function removeFavoriteArtist(index) {
 
 
 
-function playArtistVideosShuffled(channelId) {
-    repeatMode = 'no-repeat';
-    var apiKey = getRandomAPIKey();
-    var apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&type=video&maxResults=50&key=${apiKey}`;
-
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(data => {
-            if (data.items && data.items.length > 0) {
-                var videos = data.items;
-                shuffleArray(videos);
-                playShuffledVideos(videos);
-            } 
-        })
-        .catch(error => {
-            console.error('Error fetching videos:', error);
-        });
-}
-
-
-function playShuffledVideos(videos) {
-    var videoIds = videos.map(video => video.id.videoId);
-    var currentIndex = 0;
-
-    function playNextVideo() {
-        if (currentIndex < videoIds.length) {
-            playVideoFromId(videoIds[currentIndex]);
-            currentIndex++;
-        } else {
-            currentIndex = 0; // Reset index for looping
-        }
-    }
-
-    // Initial play and continue to next video on video ended
-    player.addEventListener('onStateChange', function (event) {
-        if (event.data === YT.PlayerState.ENDED) {
-            playNextVideo();
-        }
-    });
-
-    // Start playing the shuffled videos
-    playNextVideo();
-}
-
 
 
 function shuffleArray(array) {
