@@ -126,7 +126,7 @@ document.getElementById('playlist-button').classList.add('active');
                 quickPickSection.appendChild(div);
             }
         }
-        
+        displayNewReleases();
     
         // Call fetchAndDisplayPlaylist when the page loads
         window.onload = fetchAndDisplayPlaylist;
