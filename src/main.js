@@ -542,23 +542,6 @@ document.getElementById('fileInput').addEventListener('change', function (event)
     reader.readAsText(file);
 });
 
-
-
-
-// Initialize Hammer.js on the controls section
-var controlsElement = document.getElementById('controls');
-var controlsHammer = new Hammer(controlsElement);
-
-// Detect swipe gestures
-controlsHammer.on('swipeleft', function () {
-    endCurrentSong();
-});
-
-controlsHammer.on('swiperight', function () {
-    playPreviousTrack();
-});
-
-
 // Function to play the previous track
 function playPreviousTrack() {
     currentVideoIndex--;
@@ -568,45 +551,49 @@ function playPreviousTrack() {
     playVideo(playlistItems[currentVideoIndex].videoId);
 }
 
-// Initialize Hammer.js on the controls section
 var controlsElement = document.getElementById('controls');
 var startX, startY;
 
 controlsElement.addEventListener('touchstart', function (e) {
-  startX = e.touches[0].clientX;
-  startY = e.touches[0].clientY;
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
 });
 
 controlsElement.addEventListener('touchmove', function (e) {
-  // Check if the touchmove event is within a specific scrollable element
-  var isScrollable = e.target.closest('#lyrics-container');
+    // Check if the touchmove event is within a specific scrollable element
+    var isScrollable = e.target.closest('#lyrics-container');
 
-  // Prevent the default scroll behavior only if not within the scrollable element
-  if (!isScrollable) {
-    e.preventDefault();
-  }
+    // Prevent the default scroll behavior only if not within the scrollable element
+    if (!isScrollable) {
+        e.preventDefault();
+    }
 });
-
-
 
 controlsElement.addEventListener('touchend', function (e) {
-  var endX = e.changedTouches[0].clientX;
-  var endY = e.changedTouches[0].clientY;
+    var endX = e.changedTouches[0].clientX;
+    var endY = e.changedTouches[0].clientY;
 
-  var deltaX = endX - startX;
-  var deltaY = endY - startY;
+    var deltaX = endX - startX;
+    var deltaY = endY - startY;
 
-  // Set a threshold for swipe detection
-  var threshold = 50;
+    // Set a threshold for swipe detection
+    var threshold = 100;
 
-  if (Math.abs(deltaY) > threshold) {
-    if (deltaY < 0) {
-      showMiniPlayer();
-    } //else {
-      //hideMiniPlayer();
-   // }
-  }
+    if (Math.abs(deltaX) > threshold) {
+        if (deltaX < 0) {
+            endCurrentSong();
+        } else {
+            playPreviousTrack();
+        }
+    } else if (Math.abs(deltaY) > threshold) {
+        if (deltaY < 0) {
+            showMiniPlayer();
+        } 
+    }
 });
+
+var controlsHammer = new Hammer(controlsElement);
+
 
 
 // Detect swipe up and swipe down gestures
