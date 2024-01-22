@@ -153,6 +153,14 @@ function loadFavoriteArtistsOnLoad() {
             channelImg.alt = "Channel Image";
 
             var channelParagraph = document.createElement("p");
+             var channelWords = artist.name.split(' ');
+            if (channelWords.length > 2) {
+             artist.name = channelWords.slice(0, -2).join(' ');
+           }
+             // Trim "VEVO" from the end of artist.name
+             if (artist.name.endsWith('VEVO')) {
+             artist.name = artist.name.slice(0, -4).trim();
+            }
             channelParagraph.textContent = artist.name;
 
             var playButton = document.createElement("button");
