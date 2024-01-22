@@ -38,6 +38,8 @@ items.forEach(function (item, index) {
     var video = item.snippet;
     var videoId = video.resourceId.videoId;
     var videoTitle = video.title;
+    var truncatedTitle = truncateTitle(videoTitle);
+
     var videoThumbnailUrl = video.thumbnails.medium.url;
 
     // Determine the column for each song
@@ -47,7 +49,7 @@ items.forEach(function (item, index) {
     var listItem = document.createElement('li');
     listItem.innerHTML = `
         <img src="${videoThumbnailUrl}" alt="${videoTitle} Thumbnail">
-        <div class="song-title">${videoTitle}</div>
+        <div class="song-title">${truncatedTitle}</div>
     `;
 
     // Add a click event listener to play the video
