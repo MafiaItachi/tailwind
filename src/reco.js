@@ -1,12 +1,13 @@
 
 // Function to fetch playlist video IDs and their tags
-function fetchPlaylistInfo() {
-  // Your YouTube API key
   var apiKey = getRandomAPIKey();
      
   // Playlist ID
   var playlistId = getRendomPlaylist1();
   
+function fetchPlaylistInfo() {
+  // Your YouTube API key
+
 var apiUrl = 'https://www.googleapis.com/youtube/v3/playlistItems';
 var params = {
  part: 'snippet',
