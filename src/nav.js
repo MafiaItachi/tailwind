@@ -58,29 +58,34 @@ document.getElementById('playlist-button').classList.add('active');
         }
     }
 
-    function displayNewReleases() {
-        var newReleasesDiv = document.getElementById("new-releases");
-        newReleasesDiv.innerHTML = "";
-
-        fetchNewReleases().then(newReleasesData => {
-            for (var i = 0; i < newReleasesData.length; i++) {
-                var releaseItem = document.createElement("div");
-                releaseItem.className = "playlist-item";
-
-                var thumbnail = document.createElement("img");
-                thumbnail.src = newReleasesData[i].snippet.thumbnails.medium.url;
-                thumbnail.setAttribute("onclick", "playVideo('" + newReleasesData[i].id + "')");
-
-                var listItem = document.createElement("p");
-                listItem.innerHTML = "<strong>" + (i + 1) + ". </strong>" + newReleasesData[i].snippet.title;
-
-                releaseItem.appendChild(thumbnail);
-                releaseItem.appendChild(listItem);
-                newReleasesDiv.appendChild(releaseItem);
+        function displayQuickPick(playlistItems) {
+            var quickPickSection = document.getElementById('quick-pick-section');
+            quickPickSection.innerHTML = " <h2>New Releases</h2>";
+    
+            for (var i = 0; i < playlistItems.length; i++) {
+                var video = playlistItems[i].snippet;
+                var videoId = video.resourceId.videoId;
+                var videoTitle = video.title;
+                var truncatedTitle = truncateTitle(videoTitle);
+                var thumbnailUrl = video.thumbnails.medium.url;
+    
+                var div = document.createElement("div");
+                div.className = "song-list-item";
+    
+                var thumbnailImg = document.createElement("img");
+                thumbnailImg.src = thumbnailUrl;
+                div.setAttribute("onclick", "playVideo('" + videoId + "', '" + videoTitle + "', '" + thumbnailUrl + "')");
+    
+                var title = document.createElement("p");
+                title.className = "song-title";
+                title.textContent = truncatedTitle;
+    
+                div.appendChild(thumbnailImg);
+                div.appendChild(title);
+    
+                quickPickSection.appendChild(div);
             }
-        });
-    }
-
+        }
    
         function fetchAndDisplayPlaylist() {
             var playlistId = getRendomPlaylist2();
