@@ -2,7 +2,7 @@
 
 
 
-https://shubham01015.github.io/tailwind/
+https://mafiaitach.github.io/tailwind/
 
 
 AIzaSyAqKMAYLdXHpw93B-aA0sxbYnI0fW7VH7k
@@ -59,6 +59,6 @@ package.json
 ```bash
   "scripts": {
     "start": "vite",
-    "dev":tailwindcss build -i ./src/main.css -o ./src/tw_style.css ",
+    "dev": tailwindcss build -i ./src/main.css -o ./src/tw_style.css ",
   },
   ```
