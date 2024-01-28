@@ -58,7 +58,6 @@ package.json
 
 ```bash
   "scripts": {
-    "start": "vite",
-    "dev": tailwindcss build -i ./src/main.css -o ./src/tw_style.css ",
+    "start": "vite"
   },
   ```
