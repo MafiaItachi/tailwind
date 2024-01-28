@@ -1571,6 +1571,7 @@ body {
   font-weight: 500;
   --tw-text-opacity: 1;
   color: rgb(24 28 40 / var(--tw-text-opacity));
+  flex-shrink: 0;
 }
 
 #play-pause:focus {

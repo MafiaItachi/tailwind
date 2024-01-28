@@ -15,6 +15,9 @@
   .bottom-15 {
     bottom:  59px ;
 }
+.flex-shrink0{
+  flex-shrink: 0;
+}
   .vw-90 {
     min-width: 90vw;
   }
@@ -406,7 +409,7 @@ body {
   @apply  overflow-hidden whitespace-nowrap w-auto;
 }
 #play-pause {
-  @apply bg-primary  focus:outline-none text-body font-medium rounded-md pt-3 pb-2 w-14 h-full m-2;
+  @apply bg-primary focus:outline-none text-body font-medium rounded-md pt-3 pb-2 w-14 h-full m-2 flex-shrink0 ;
 }
 .seekbar2 {
   @apply h-1 absolute bottom-px right-1 left-1 rounded-xl bg-secondary;
