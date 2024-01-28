@@ -2,10 +2,7 @@
 
 
 
-https://mafiaitach.github.io/tailwind/
-
-
-AIzaSyAqKMAYLdXHpw93B-aA0sxbYnI0fW7VH7k
+https://mafiaitachi.github.io/tailwind/
 
 ```bash
 npm init -y
