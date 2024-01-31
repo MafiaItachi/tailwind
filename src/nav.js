@@ -34,8 +34,7 @@ function toggleSection(section) {
   clearSearchResults();
   clearplistsong();
   clearfavsong();
-  fetchAndDisplayPlaylist();
-  loadTrendingSongs();
+  
 }
 
 document.getElementById("playlist-button").classList.add("active");
@@ -156,5 +155,4 @@ function displayQuickPick(playlistItems) {
   }
 }
 
-// Call fetchAndDisplayPlaylist when the page loads
-window.onload = fetchAndDisplayPlaylist;
+fetchAndDisplayPlaylist();
