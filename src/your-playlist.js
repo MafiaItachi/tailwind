@@ -133,6 +133,13 @@ async function revealSongs(playlistId) {
         clickedPlaylistTitle.classList.add('clicked-playlist-title');
         clickedPlaylistTitle.textContent = clickedPlaylist.title;
 
+        var deleteButton = document.createElement('button');
+        deleteButton.innerHTML = '<span class="material-symbols-outlined">cancel</span>';
+        deleteButton.classList.add('delete-button');
+        deleteButton.addEventListener('click', function () {
+            removePlaylist(playlistId);
+        });
+
         var shuffleButton = document.createElement('button');
         shuffleButton.innerHTML = '<span class="material-symbols-outlined">play_arrow</span>';
         shuffleButton.classList.add('shuffle-button');
@@ -141,6 +148,7 @@ async function revealSongs(playlistId) {
         });
 
         playlistDetails.appendChild(clickedPlaylistTitle);
+        playlistDetails.appendChild(deleteButton);
         playlistDetails.appendChild(shuffleButton);
 
         clickedPlaylistInfo.appendChild(clickedPlaylistThumbnail);
@@ -319,12 +327,7 @@ function displaySavedPlaylists() {
         var buttonsDiv = document.createElement('div');
         buttonsDiv.classList.add('playlist-buttons');
 
-        var deleteButton = document.createElement('button');
-        deleteButton.innerHTML = '<span class="material-symbols-outlined">cancel</span>';
-        deleteButton.classList.add('delete-button');
-        deleteButton.addEventListener('click', function () {
-            removePlaylist(playlist.id);
-        });
+       
 
         var shuffleButton = document.createElement('button');
         shuffleButton.innerHTML = '<span class="material-symbols-outlined">play_arrow</span>';
@@ -333,7 +336,7 @@ function displaySavedPlaylists() {
             shuffleAndPlaySongs(playlist.id);
         });
 
-        buttonsDiv.appendChild(deleteButton);
+       
         buttonsDiv.appendChild(shuffleButton);
 
         playlistInfo.appendChild(playlistTitleElement);
@@ -347,6 +350,7 @@ function displaySavedPlaylists() {
 
 
 function removePlaylist(playlistId) {
+    clearplistsong();
     var savedPlaylists = JSON.parse(localStorage.getItem('savedPlaylists')) || [];
     var updatedPlaylists = savedPlaylists.filter(function (playlist) {
         return playlist.id !== playlistId;

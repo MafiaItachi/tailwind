@@ -282,10 +282,13 @@ body {
 }
 
 .playlist-details {
-  @apply flex justify-between mt-2 items-center pl-1;
+  @apply flex justify-end mt-2 items-center pl-1;
+}
+.clicked-playlist-title{
+  @apply w-full
 }
 .playlist-details button {
-  @apply bg-primary rounded-md pt-2 pb-1 w-20 text-body;
+  @apply bg-primary rounded-md pt-2 pb-1 w-12 ml-2 text-body flex-shrink-0;
 }
 
 /* TRENDING SONG */
