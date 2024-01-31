@@ -354,11 +354,14 @@ body {
 .favorite-artist img {
   @apply h-40 object-cover rounded-md w-40;
 }
+.favorite-artist div{
+  @apply flex flex-row items-center justify-end
+}
 .favorite-artist p {
-  @apply text-white items-center p-1 overflow-hidden text-ellipsis  whitespace-nowrap;
+  @apply text-white items-center p-1 w-full ;
 }
 .favorite-artist button {
-  @apply bg-primary  h-full focus:outline-none text-body font-medium rounded-md px-4 pt-3 pb-1  w-48p;
+  @apply bg-primary  h-full focus:outline-none text-body font-medium rounded-full px-3 pt-3 pb-1.5  align-middle ml-2 mt-2;
 }
 .remove-btn {
   @apply mr-1;
@@ -370,11 +373,14 @@ body {
   @apply w-48 flex flex-col bg-secondary p-2 mx-auto my-2 rounded-lg;
 }
 .favorite-artist2 div {
-  @apply flex justify-between mt-2 items-center;
+  @apply flex justify-end mt-2 items-center;
+}
+.favorite-artist2 p {
+  @apply w-full;
 }
 
 .favorite-artist2 button {
-  @apply bg-primary rounded-md pt-2 pb-1 w-12 text-body;
+  @apply bg-primary rounded-md pt-2 pb-1 w-12 text-body flex-shrink-0;
 }
 
 .favorite-artist-song {

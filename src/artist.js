@@ -152,14 +152,16 @@ function loadFavoriteArtistsOnLoad() {
             channelImg.src = artist.image;
             channelImg.alt = "Channel Image";
 
+            var infoContainer = document.createElement("div"); // New container div
+
             var channelParagraph = document.createElement("p");
-             var channelWords = artist.name.split(' ');
+            var channelWords = artist.name.split(' ');
             if (channelWords.length > 2) {
-             artist.name = channelWords.slice(0, -2).join(' ');
-           }
-             // Trim "VEVO" from the end of artist.name
-             if (artist.name.endsWith('VEVO')) {
-             artist.name = artist.name.slice(0, -4).trim();
+                artist.name = channelWords.slice(0, -2).join(' ');
+            }
+            // Trim "VEVO" from the end of artist.name
+            if (artist.name.endsWith('VEVO')) {
+                artist.name = artist.name.slice(0, -4).trim();
             }
             channelParagraph.textContent = artist.name;
 
@@ -173,9 +175,8 @@ function loadFavoriteArtistsOnLoad() {
                 };
             }(artist.id));
 
-            var removeButton = document.createElement("button");
-            removeButton.innerHTML = '<span class="material-symbols-outlined">cancel</span>';
-            removeButton.className = "remove-btn";
+            infoContainer.appendChild(channelParagraph); // Append channelParagraph to the new container div
+            infoContainer.appendChild(playButton); // Append playButton to the new container div
 
             // Add click event to load the channel's videos when clicked
             channelImg.addEventListener("click", function (artistId, artistItem) {
@@ -184,22 +185,14 @@ function loadFavoriteArtistsOnLoad() {
                 };
             }(artist.id, artist));
 
-            // Add click event to remove the artist when clicked
-            removeButton.addEventListener("click", function (index) {
-                return function () {
-                    removeFavoriteArtist(index);
-                };
-            }(i));
-
             artistDiv.appendChild(channelImg);
-            artistDiv.appendChild(channelParagraph);
-            artistDiv.appendChild(removeButton);
-            artistDiv.appendChild(playButton);
+            artistDiv.appendChild(infoContainer); // Append the new container div to artistDiv
 
             favoriteArtistsDiv.appendChild(artistDiv);
         }
     }
 }
+
 
 function loadFavoriteArtistSongs(channelId, artist) {
     var apiKey = getRandomAPIKey(); // Replace with your YouTube API key
@@ -217,53 +210,63 @@ function loadFavoriteArtistSongs(channelId, artist) {
         });
 }
 
-function displayFavoriteArtistSongs(items, artist) {
-          // Toggle the visibility of the yourplaylist
-          isPlaylistContainerVisible = false;
-          togglePlaylistContainerVisibility();
-      
-          // Toggle the visibility of the favoriteArtistsContainer
-          isFavoriteArtistsContainerVisible = false;
-          toggleFavoriteArtistsContainerVisibility();
-      
-    var favoriteArtistSongsDiv = document.getElementById("favoriteArtistSongs");
-    favoriteArtistSongsDiv.innerHTML = '<div class="cut"><button onclick="clearfavsong()"><span class="material-symbols-outlined">keyboard_backspace</span></button><span>Back</span>';
-    // Create a container to hold the clicked favorite-artist item
-var clickedArtistContainer = document.createElement("div");
-clickedArtistContainer.className = "favorite-artist2";
-
-var channelImg = document.createElement("img");
-channelImg.src = artist.image;
-channelImg.alt = "Channel Image";
-
-// Create a new div to hold the paragraph and play button
-var infoContainer = document.createElement("div");
-
-var channelParagraph = document.createElement("p");
-channelParagraph.textContent = artist.name;
-
-
-var playButton = document.createElement("button");
-playButton.innerHTML = '<span class="material-symbols-outlined">play_arrow</span>';
-playButton.className = "play-artist-videos";
-playButton.title = "Play All Videos";
-playButton.addEventListener("click", function (id) {
-    return function () {
-        playFavoriteArtistVideos(id);
-    };
-}(artist.id));
-
-// Append the paragraph and play button to the new div
-infoContainer.appendChild(channelParagraph);
-infoContainer.appendChild(playButton);
-
-// Append the image and the new div to the main container
-clickedArtistContainer.appendChild(channelImg);
-clickedArtistContainer.appendChild(infoContainer);
-
-// Append the clicked favorite-artist item to the favoriteArtistSongsDiv
-favoriteArtistSongsDiv.appendChild(clickedArtistContainer);
-
+    function displayFavoriteArtistSongs(items, artist) {
+        // Toggle the visibility of the yourplaylist
+        isPlaylistContainerVisible = false;
+        togglePlaylistContainerVisibility();
+    
+        // Toggle the visibility of the favoriteArtistsContainer
+        isFavoriteArtistsContainerVisible = false;
+        toggleFavoriteArtistsContainerVisibility();
+    
+        var favoriteArtistSongsDiv = document.getElementById("favoriteArtistSongs");
+        favoriteArtistSongsDiv.innerHTML = '<div class="cut"><button onclick="clearfavsong()"><span class="material-symbols-outlined">keyboard_backspace</span></button><span>Back</span>';
+    
+        // Create a container to hold the clicked favorite-artist item
+        var clickedArtistContainer = document.createElement("div");
+        clickedArtistContainer.className = "favorite-artist2";
+    
+        var channelImg = document.createElement("img");
+        channelImg.src = artist.image;
+        channelImg.alt = "Channel Image";
+    
+        // Create a new div to hold the paragraph and play button
+        var infoContainer = document.createElement("div");
+    
+        var channelParagraph = document.createElement("p");
+        channelParagraph.textContent = artist.name;
+    
+        // Remove Button
+        var removeButton = document.createElement("button");
+        removeButton.innerHTML = '<span class="material-symbols-outlined">cancel</span>';
+        removeButton.className = "remove-btn";
+    
+        // Add click event to remove the artist when clicked
+        removeButton.addEventListener("click", function () {
+            removeFavoriteArtist(artist.id);
+        });
+    
+        var playButton = document.createElement("button");
+        playButton.innerHTML = '<span class="material-symbols-outlined">play_arrow</span>';
+        playButton.className = "play-artist-videos";
+        playButton.title = "Play All Videos";
+        playButton.addEventListener("click", function () {
+            playFavoriteArtistVideos(artist.id);
+        });
+        // Append the paragraph and play button to the new div
+        infoContainer.appendChild(channelParagraph);
+        infoContainer.appendChild(removeButton);
+        infoContainer.appendChild(playButton);
+    
+    
+        // Append the image and the new div to the main container
+        clickedArtistContainer.appendChild(channelImg);
+        clickedArtistContainer.appendChild(infoContainer);
+        
+    
+        // Append the clicked favorite-artist item to the favoriteArtistSongsDiv
+        favoriteArtistSongsDiv.appendChild(clickedArtistContainer);
+    
     // Continue with displaying videos as before
     for (var i = 0; i < items.length; i++) {
         var video = items[i];
@@ -301,12 +304,7 @@ favoriteArtistSongsDiv.appendChild(clickedArtistContainer);
 loadFavoriteArtistsOnLoad();
 
 
-function removeFavoriteArtist(index) {
-    var favoriteArtists = JSON.parse(localStorage.getItem("favoriteArtists")) || [];
-    favoriteArtists.splice(index, 1);
-    localStorage.setItem("favoriteArtists", JSON.stringify(favoriteArtists));
-    loadFavoriteArtistsOnLoad();
-}
+
 
 
 
@@ -450,12 +448,27 @@ function playVideosSequentially(videoIds) {
     });
 }
 
-function removeFavoriteArtist(index) {
+function removeFavoriteArtist(artistId) {
+    // Retrieve the list of favorite artists from local storage
     var favoriteArtists = JSON.parse(localStorage.getItem("favoriteArtists")) || [];
-    favoriteArtists.splice(index, 1);
-    localStorage.setItem("favoriteArtists", JSON.stringify(favoriteArtists));
-    loadFavoriteArtistsOnLoad();
+
+    // Find the index of the artist to remove
+    var indexToRemove = favoriteArtists.findIndex(function(artist) {
+        return artist.id === artistId;
+    });
+
+    // If the artist is found, remove it from the list
+    if (indexToRemove !== -1) {
+        favoriteArtists.splice(indexToRemove, 1);
+
+        // Update the local storage with the modified list
+        localStorage.setItem("favoriteArtists", JSON.stringify(favoriteArtists));
+
+        // Optionally, you can also update the UI to reflect the removal
+        loadFavoriteArtistsOnLoad(); // Reload the favorite artists after removal
+    }clearfavsong();
 }
+
 
 
 function clearArtistSearchResults() {
@@ -463,6 +476,18 @@ function clearArtistSearchResults() {
     document.getElementById("artistVideos").innerHTML = "";
      document.getElementById("artistSearchInput").value = "";
 }
+function clearfavsong() {
+    document.getElementById("favoriteArtistSongs").innerHTML = "";
+    isPlaylistContainerVisible = true;
+    togglePlaylistContainerVisibility();
+    // Restore the visibility of the favoriteArtistsContainer
+    isFavoriteArtistsContainerVisible = true;
+    toggleFavoriteArtistsContainerVisibility();
+    // Simulate the back gesture
+      simulateBackGesture();
+  }
+  
+  
 
 function simulateBackGesture() {
     console.log("simulateBackGesture() called");
@@ -485,17 +510,6 @@ window.addEventListener("popstate", function (event) {
 
 // You can call simulateBackGesture() when the back gesture is detected, e.g., on swipe or button press
 // For example, you can call it in your clearfavsong() function
-function clearfavsong() {
-  document.getElementById("favoriteArtistSongs").innerHTML = "";
-  isPlaylistContainerVisible = true;
-  togglePlaylistContainerVisibility();
-  // Restore the visibility of the favoriteArtistsContainer
-  isFavoriteArtistsContainerVisible = true;
-  toggleFavoriteArtistsContainerVisibility();
-  // Simulate the back gesture
-    simulateBackGesture();
-}
-
 
 
 
