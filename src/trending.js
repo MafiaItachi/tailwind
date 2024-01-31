@@ -1,8 +1,7 @@
 // Define the trending playlist IDPL4fGSI1pDJn77aK7sAW2AT0oOzo5inWY8
 
 // Function to load trending songs from the playlist
-// Function to load trending songs from the playlist
-// Function to load trending songs from the playlist
+
 function loadTrendingSongs() {
   var trendingSongLists = document.querySelectorAll(
     ".trending-song-list.column"
