@@ -120,7 +120,7 @@ function fetchAndDisplayPlaylist() {
 
 function displayQuickPick(playlistItems) {
   var quickPickSection = document.getElementById("quick-pick-section");
-  quickPickSection.innerHTML = " <h2>New Releases</h2>";
+  quickPickSection.innerHTML = " <h1 class='h2'>NEW RELEASES</h1>";
 
   for (var i = 0; i < playlistItems.length; i++) {
     var video = playlistItems[i].snippet;
