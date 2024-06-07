@@ -29,12 +29,29 @@
                <div id="search-section" style="display: none;">
                   <div class="sxq "><input id="searchInput" class="searchInput" placeholder="search" >
                      <button class="" id="clearSearchResults " onclick="clearSearchResults()"><span class="material-symbols-outlined">
-                     cancel
-                     </span></button>
-                     <button class="search" id="myBtn" onclick="search();searchArtistChannel();searchplist()"><span class="material-symbols-outlined">
-                     search
-                     </span></button>
-                  </div>
+                        cancel
+                        </span></button>
+                        <button class="search" id="myBtn" onclick="search();searchArtistChannel();searchplist()"><span class="material-symbols-outlined">
+                           search
+                           </span></button>
+                           </div>
+                              <div id="moods-genres">
+                                 <h2 class="h2">MOODS AND GENRES</h2>
+                                 <div id="genres-list">
+                                     <button class="genre" onclick="fetchSongsByGenre('indie')">indie</button>
+                                     <button class="genre" onclick="fetchSongsByGenre('sad moment')">Sad</button>
+                                     <button class="genre" onclick="fetchSongsByGenre('rock ')">Rock</button>
+                                     <button class="genre" onclick="fetchSongsByGenre('pop')">Pop</button>
+                                     <button class="genre" onclick="fetchSongsByGenre('english')">English</button>
+                                     <button class="genre" onclick="fetchSongsByGenre('hindi')">Hindi</button>
+                                     <button class="genre" onclick="fetchSongsByGenre('Party')">Party</button>
+                                     <button class="genre" onclick="fetchSongsByGenre('Romantic')">Romantic</button>
+                                     <button class="genre" onclick="fetchSongsByGenre('chill')">Chill</button>
+                                     <button class="genre" onclick="fetchSongsByGenre('sleep')">Sleep</button>
+
+                                     <!-- Add more genres as needed -->
+                                 </div>
+                             </div>
                   <div id="searchinfo" style="display: none;">
                      <div id="searchinfo2">
                         <h3>YOUR SEARCH RESULT</h3>
@@ -43,6 +60,9 @@
                         </span></button>
                      </div>
                   </div>
+                  <div id="genre-songs">
+                     <!-- Songs for the selected genre will be displayed here -->
+                 </div>
                   <div id="artistChannel"></div>
                   <div id="artistVideos" style="display: none;"></div>
                   <div id="results"></div>
@@ -291,6 +311,7 @@
       <script src="src/nav.js"></script>
       <script src="src/searchplist.js"></script>
       <script src="src/reco.js"></script>
+      <script src="src/mood.js"></script>
 
    </body>
 </html>

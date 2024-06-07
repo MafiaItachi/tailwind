@@ -516,7 +516,29 @@ body {
 }
 
 
+/* mood and genres */
 
+#genres-list{
+  @apply flex mb-2 overflow-x-auto whitespace-nowrap max-w-full ;
+}
+#genres-list button{
+  @apply flex mb-2 bg-primary p-2 flex flex-wrap;
+}
+.genre {
+  @apply  m-1 rounded-md ;
+}
+#genre-songs{
+  @apply w-full
+}
+.song{
+  @apply w-full bg-secondary mb-1 rounded-md flex p-1 items-center
+}
+.song img{
+  @apply  h-16 w-20 object-cover rounded-md flex flex-wrap
+}
+.song p {
+  @apply pl-1 text-ellipsis overflow-hidden whitespace-nowrap text-center
+}
 
 
 /* PC LAYOUT */
@@ -593,8 +615,6 @@ body {
 #bottom-navbar button {
   @apply bg-transparent border-0 text-white transition-colors duration-300 w-10 h-20 rounded-3xl pt-1.5 shadow-none;
 }
-
-
 
 
 }
