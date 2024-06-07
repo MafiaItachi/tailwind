@@ -255,6 +255,7 @@ function search() {
             console.log(xhr);
         }
     });
+    document.getElementById("genre-songs").innerHTML ="";
 }
 
 function clearSearchResults() {
@@ -269,6 +270,7 @@ function clearSearchResults() {
     hideToggleButton(); // Hide the toggle button after clearing search results
     document.getElementById("artistChannel").innerHTML = "";
     document.getElementById("artistVideos").innerHTML = "";
+    document.getElementById("genre-songs").innerHTML ="";
 }
 
 function hideToggleButton() {
