@@ -16,7 +16,78 @@
          <!-- <link rel="stylesheet" href="src/main.css"> -->
          <link rel="stylesheet" href="src/tw_style.css">
       <style>
+     
+.favorite-artist2 div {
+    position: sticky;
+    top: 2px;
+    
+ }
+ #urplist{
+   height: 100%;
+   width: 100%;
+ }
 
+/* Modal Styles */
+.modal {
+display: none;
+position: fixed;
+z-index: 10;
+left: 0;
+top: 0;
+width: 100%;
+height: 100%;
+overflow: auto;
+background-color: rgb(0,0,0);
+background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+background-color: #000000;
+margin: 15% auto;
+padding: 20px;
+border: 1px solid #888;
+width: 80%;
+}
+
+.close {
+color: #aaa;
+float: right;
+font-size: 28px;
+font-weight: bold;
+}
+
+
+#playlistsContainer {
+margin-top: 20px;
+}
+
+
+#urplist{
+width: 100%;
+overflow: auto;
+white-space: nowrap;
+
+}
+.playlist-thumbnail {
+display: inline-block;
+white-space: nowrap;
+overflow-x: hidden;
+padding: 2px;
+margin: 2px;
+background-color: cyan;
+border-radius: 4px;
+}
+.playlist-thumbnail img{
+height: 10rem;
+width: 13rem;
+border-radius: 8px;
+}
+
+.uplistb{
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+}
 
 
       </style>
@@ -25,7 +96,7 @@
       <div id="pc">
          <div class="faded">
             <div class="lefthf">
-               <h1 class="h1" >PHOTON PLAYER</h1>
+               <h1 class="h1" >PHOTON PLAYER</h1>      
                <div id="search-section" style="display: none;">
                   <div class="sxq "><input id="searchInput" class="searchInput" placeholder="search" >
                      <button class="" id="clearSearchResults " onclick="clearSearchResults()"><span class="material-symbols-outlined">
@@ -98,6 +169,7 @@
                   </span></button>
                </div>
                <div id="playlist-section">
+                  <div id="urplist"></div>
                   <div class=" shuffle ">
                      <h1 class=" h2">BOOKMARK</h1>
                      <button class=" " onclick="shuffleAndPlay()"><span class="material-symbols-outlined">
@@ -226,6 +298,9 @@
                            <button class=" " id="fullscreen-button"><span class="material-symbols-outlined">
                            phone_iphone
                            </span></button>
+                           <button onclick="showPlaylistsModal()"> <span class="material-symbols-outlined">
+                           playlist_add
+                           </span></button>            
                         </div>
                         <div class="ppnbutton">
                            <button class="mini-player-previous-button" onclick="playPreviousTrack()"><span
@@ -276,8 +351,16 @@
          </div>
        </div>
        
-       
-       
+       <div id="playlistsModal" class="modal">
+         <div class="modal-content">
+           <span class="close" onclick="closePlaylistsModal()">&times;</span>
+           <h2>Select Playlist</h2>
+           <div id="playlistsContainer"></div>
+           <input type="text" id="newPlaylistName" placeholder="New Playlist Name">
+           <button onclick="createPlaylist()">Create Playlist</button>
+         </div>
+       </div>
+
       <div id="bottom-navbar">
          <button onclick="toggleSection('playlist')" id="playlist-button"><span class="material-symbols-outlined">
          home
@@ -312,6 +395,6 @@
       <script src="src/searchplist.js"></script>
       <script src="src/reco.js"></script>
       <script src="src/mood.js"></script>
-
+       <script src="src/urplist.js"></script>
    </body>
 </html>
