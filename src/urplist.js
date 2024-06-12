@@ -77,7 +77,7 @@ function displayAddedSongs() {
       const playlistThumbnail = document.createElement('div');
       playlistThumbnail.className = 'playlist-thumbnail';
       playlistThumbnail.innerHTML = `
-        <img src="https://img.youtube.com/vi/${playlists[playlistName][0].id}/default.jpg" alt="${playlistName}">
+        <img src="https://img.youtube.com/vi/${playlists[playlistName][0].id}/mqdefault.jpg" alt="${playlistName}">
         <div class="uplistb">
           <h3>${playlistName}</h3>
           <button onclick="shufflePlaylist('${playlistName}')">
@@ -115,7 +115,7 @@ function revealSongsList(playlistName) {
     const songElement = document.createElement('div');
     songElement.className = 'song';
     songElement.innerHTML = `
-      <img src="https://img.youtube.com/vi/${song.id}/default.jpg" alt="${song.title}">
+      <img src="https://img.youtube.com/vi/${song.id}/mqdefault.jpg" alt="${song.title}">
       <p>${song.title}</p>
     `;
     songElement.onclick = function() {

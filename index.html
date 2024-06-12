@@ -72,9 +72,9 @@ white-space: nowrap;
 display: inline-block;
 white-space: nowrap;
 overflow-x: hidden;
-padding: 2px;
-margin: 2px;
-background-color: cyan;
+padding: 4px;
+margin: 4px;
+background-color: #455174;
 border-radius: 4px;
 }
 .playlist-thumbnail img{
@@ -87,6 +87,16 @@ border-radius: 8px;
    display: flex;
    justify-content: space-between;
    align-items: center;
+}
+.uplistb button{
+   border-radius: 50%;
+   width: 45px;
+   height: 45px;
+   background-color: #23a991;
+   color:#181c28 ;
+   padding-top: 2px;
+   padding-left: 2px;
+   margin: 4px;
 }
 
 
@@ -169,7 +179,6 @@ border-radius: 8px;
                   </span></button>
                </div>
                <div id="playlist-section">
-                  <div id="urplist"></div>
                   <div class=" shuffle ">
                      <h1 class=" h2">BOOKMARK</h1>
                      <button class=" " onclick="shuffleAndPlay()"><span class="material-symbols-outlined">
@@ -181,6 +190,10 @@ border-radius: 8px;
                      <button id="mybm" onclick="addPlaylistByLink()"><span class="material-symbols-outlined">
                      add
                      </span></button>
+                  </div>
+                  <div>
+                     <h1 class="h2">PLAYLIST</h1>
+                     <div id="urplist"></div>
                   </div>
                   <div class="home-songs">
                      <h1 class="h2" >QUICK PICK SONG</h1>
