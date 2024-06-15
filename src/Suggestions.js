@@ -1,0 +1,53 @@
+
+       // Function to fetch search suggestions
+function fetchSuggestions(query) {
+    if (!query) {
+        document.getElementById('suggestionsBox').innerHTML = '';
+        return;
+    }
+    
+    var apiKey = getRandomAPIKey();
+    var url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=5&q=${encodeURIComponent(query)}&key=${apiKey}`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => displaySuggestions(data.items))
+        .catch(error => console.error('Error fetching suggestions:', error));
+}
+
+// Function to display suggestions
+function displaySuggestions(suggestions) {
+    var suggestionsBox = document.getElementById('suggestionsBox');
+    suggestionsBox.innerHTML = '';
+
+    suggestions.forEach(suggestion => {
+        var suggestionDiv = document.createElement('div');
+        suggestionDiv.className = 'suggestion';
+        
+        // Trim the title to 5 words
+        var title = suggestion.snippet.title;
+        var trimmedTitle = title.split(' ').slice(0, 5).join(' ');
+        if (title.split(' ').length > 5) {
+            trimmedTitle += '...';
+        }
+        
+        suggestionDiv.innerText = trimmedTitle;
+        suggestionDiv.onclick = function() {
+            document.getElementById('searchInput').value = trimmedTitle;
+            suggestionsBox.innerHTML = '';
+        };
+        suggestionsBox.appendChild(suggestionDiv);
+    });
+}
+
+
+// Function to fetch songs based on query
+function fetchSongs(query) {
+    var apiKey =getRandomAPIKey();
+    var url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=10&q=${encodeURIComponent(query)}&key=${apiKey}`;
+
+    fetch(url)
+        .then(response => response.json())
+        .then(data => displayResults(data.items))
+        .catch(error => console.error('Error fetching songs:', error));
+}

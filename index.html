@@ -98,6 +98,27 @@ border-radius: 8px;
    padding-left: 2px;
    margin: 4px;
 }
+#suggestionsBox {
+    max-height: 250px;
+    overflow-y: auto;
+    position: absolute;
+    background-color: #262d41;
+    width: calc(100% - 12px); /* Adjust based on padding and border of input calc(100% - 22px)*/
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+    z-index: 1000;
+    border-radius: 8px;
+    margin-top: 4px;
+}
+
+.suggestion {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.suggestion:hover {
+    background-color: #455174;
+    border-radius: 8px;
+}
 
 
       </style>
@@ -108,14 +129,15 @@ border-radius: 8px;
             <div class="lefthf">
                <h1 class="h1" >PHOTON PLAYER</h1>      
                <div id="search-section" style="display: none;">
-                  <div class="sxq "><input id="searchInput" class="searchInput" placeholder="search" >
+                  <div class="sxq "><input id="searchInput" class="searchInput" placeholder="search"oninput="fetchSuggestions(this.value)" >
                      <button class="" id="clearSearchResults " onclick="clearSearchResults()"><span class="material-symbols-outlined">
                         cancel
-                        </span></button>
-                        <button class="search" id="myBtn" onclick="search();searchArtistChannel();searchplist()"><span class="material-symbols-outlined">
-                           search
-                           </span></button>
-                           </div>
+                     </span></button>
+                     <button class="search" id="myBtn" onclick="search();searchArtistChannel();searchplist()"><span class="material-symbols-outlined">
+                        search
+                     </span></button>
+                  </div>
+                  <div id="suggestionsBox"></div>
                               <div id="moods-genres">
                                  <h2 class="h2">MOODS AND GENRES</h2>
                                  <div id="genres-list">
@@ -394,6 +416,7 @@ border-radius: 8px;
          <script src="https://www.youtube.com/iframe_api?enablejsapi=1"></script>
          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
          <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js"></script>
+         <script src="https://apis.google.com/js/api.js"></script>
 
 
       <script src="src/apikeys.js"></script>
@@ -409,5 +432,6 @@ border-radius: 8px;
       <script src="src/reco.js"></script>
       <script src="src/mood.js"></script>
        <script src="src/urplist.js"></script>
+       <script src="src/Suggestions.js"></script>
    </body>
 </html>
