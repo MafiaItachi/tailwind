@@ -1,5 +1,4 @@
-
-       // Function to fetch search suggestions
+// Function to fetch search suggestions
 function fetchSuggestions(query) {
     if (!query) {
         document.getElementById('suggestionsBox').innerHTML = '';
@@ -24,21 +23,37 @@ function displaySuggestions(suggestions) {
         var suggestionDiv = document.createElement('div');
         suggestionDiv.className = 'suggestion';
         
+        // Create an img element for the thumbnail
+        var thumbnail = document.createElement('img');
+        thumbnail.src = suggestion.snippet.thumbnails.default.url;
+        thumbnail.alt = suggestion.snippet.title;
+        thumbnail.className = 'suggestion-thumbnail';
+        
         // Trim the title to 5 words
         var title = suggestion.snippet.title;
         var trimmedTitle = title.split(' ').slice(0, 5).join(' ');
         if (title.split(' ').length > 5) {
-            trimmedTitle += '...';
+            trimmedTitle += '.';
         }
         
-        suggestionDiv.innerText = trimmedTitle;
+        // Create a span element for the title
+        var titleSpan = document.createElement('span');
+        titleSpan.innerText = trimmedTitle;
+        
+        // Append thumbnail and title to the suggestion div
+        suggestionDiv.appendChild(thumbnail);
+        suggestionDiv.appendChild(titleSpan);
+        
+        // Set the search input value to the trimmed title on click
         suggestionDiv.onclick = function() {
             document.getElementById('searchInput').value = trimmedTitle;
             suggestionsBox.innerHTML = '';
         };
+        
         suggestionsBox.appendChild(suggestionDiv);
     });
 }
+
 
 
 // Function to fetch songs based on query
