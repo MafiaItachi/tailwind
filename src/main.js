@@ -545,14 +545,24 @@ function backupLocalStorage() {
     const localStorageData = JSON.stringify(localStorage);
     const blob = new Blob([localStorageData], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
+
+    // Get current date and month
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, '0'); // Ensure 2 digits
+    const month = String(now.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+
+    // Create file name with current day and month
+    const fileName = `photon_backup_${day}_${month}.json`;
+
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'localStorageBackup.json';
+    a.download = fileName;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
 }
+
 
 function restoreLocalStorage() {
     document.getElementById('fileInput').click();
