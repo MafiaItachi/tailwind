@@ -33,6 +33,9 @@
   .min-w90{
     min-width: 90%;
   }
+  .widthcal {
+    width: calc(100% - 12px);
+  }
 }
 .tra {
   transform: translateY(100%);
@@ -183,6 +186,22 @@ body {
 }
 .result-item div button {
   @apply bg-primary px-3 rounded-md my-1
+}
+
+
+/* SEARCH SUGGETION */
+
+#suggestionsBox {
+  @apply max-h-72 overflow-y-auto absolute bg-mini shadow-sm z-50 rounded-md mt-1 no-scrollbar widthcal
+}
+.suggestion {
+  @apply p-2 flex items-center 
+}
+.suggestion-thumbnail {
+  @apply w-12 h-auto mr-2 rounded-lg
+}
+.suggestion:hover{
+  @apply rounded-md bg-secondary
 }
 
 /* BOOKMARK */
@@ -522,7 +541,7 @@ body {
   @apply flex mb-2 overflow-x-auto whitespace-nowrap max-w-full ;
 }
 #genres-list button{
-  @apply flex mb-2 bg-primary p-2 flex flex-wrap;
+  @apply flex mb-2 bg-primary p-2 flex flex-wrap bg-secondary;
 }
 .genre {
   @apply  m-1 rounded-md ;
@@ -540,6 +559,35 @@ body {
   @apply pl-1 text-ellipsis overflow-hidden whitespace-nowrap text-center
 }
 
+/* urplist */
+
+.modal{
+  @apply hidden fixed z-10 left-0 top-0 w-full h-full overflow-auto bg-body
+}
+.modal-content{
+  @apply bg-mini mt-8 mr-auto p-5 w-4/5
+}
+.close{
+  @apply to-white float-right size-6 font-bold 
+}
+#playlistscontainer{
+  @apply mt-5
+}
+#urplist{
+  @apply w-full h-full overflow-auto whitespace-nowrap  
+}
+.playlist-thumbnail{
+  @apply inline-block whitespace-nowrap overflow-x-hidden p-2 m-1 bg-secondary rounded-lg
+}
+.playlist-thumbnail img{
+  @apply h-40 w-auto rounded-lg  
+}
+.uplistb{
+  @apply flex justify-between items-center 
+}
+.uplistb button{
+  @apply  bg-primary  h-full focus:outline-none text-body font-medium rounded-full px-3 pt-3 pb-1.5  align-middle ml-2 mt-2;
+}
 
 /* PC LAYOUT */
 
