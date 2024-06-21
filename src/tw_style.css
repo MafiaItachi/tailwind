@@ -660,7 +660,7 @@ body {
   /* IE and Edge */
   scrollbar-width: none;
   /* Firefox */
-  font-family: "Poppins", sans-serif ;
+  font-family: "Poppins", sans-serif;
 }
 
 .h1 {
@@ -1608,7 +1608,7 @@ body {
   --tw-bg-opacity: 1;
   background-color: rgb(38 45 65 / var(--tw-bg-opacity));
   padding-bottom: 0.25rem;
-  bottom:  59px ;
+  bottom: 59px;
 }
 
 .con {
@@ -1899,8 +1899,7 @@ body {
   background-color: rgb(69 81 116 / var(--tw-bg-opacity));
   --tw-text-opacity: 1;
   color: rgb(35 169 145 / var(--tw-text-opacity));
-  font-variation-settings:
-  'FILL' 1;
+  font-variation-settings: "FILL" 1;
 }
 
 /* RECOMMENDATION SECTION */
@@ -2160,7 +2159,8 @@ body {
     height: 100%;
   }
 
-  .tndrow,.bbutton {
+  .tndrow,
+  .bbutton {
     display: flex;
     width: 100%;
     justify-content: center;

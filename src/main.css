@@ -13,11 +13,11 @@
     scrollbar-width: none; /* Firefox */
   }
   .bottom-15 {
-    bottom:  59px ;
-}
-.flex-shrink0{
-  flex-shrink: 0;
-}
+    bottom: 59px;
+  }
+  .flex-shrink0 {
+    flex-shrink: 0;
+  }
   .vw-90 {
     min-width: 90vw;
   }
@@ -30,7 +30,7 @@
   .translate-y-1px {
     transform: translateY(1px);
   }
-  .min-w90{
+  .min-w90 {
     min-width: 90%;
   }
   .widthcal {
@@ -91,7 +91,7 @@ input[type="text"],
   /* Example usage: */
   /* Adding the advanced box-shadow to multiple elements */
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  
+
   clip-path: inset(-15px 0px -15px -15px);
 }
 
@@ -105,15 +105,14 @@ button:active {
   @apply translate-y-1px;
 }
 
-.pc{
-  @apply mx-1
+.pc {
+  @apply mx-1;
 }
 body {
-  @apply bg-body text-white no-scrollbar text-sm mx-1 no-scrollbar; 
+  @apply bg-body text-white no-scrollbar text-sm mx-1 no-scrollbar;
 }
 body {
-  font-family: "Poppins", sans-serif ;
-  
+  font-family: "Poppins", sans-serif;
 }
 .h1 {
   @apply text-body text-center text-3xl font-extrabold py-2 bg-primary my-1 rounded-lg;
@@ -182,26 +181,25 @@ body {
   @apply flex whitespace-nowrap   text-white ml-2;
 }
 .result-item div {
-  @apply ml-1
+  @apply ml-1;
 }
 .result-item div button {
-  @apply bg-primary px-3 rounded-md my-1
+  @apply bg-primary px-3 rounded-md my-1;
 }
-
 
 /* SEARCH SUGGETION */
 
 #suggestionsBox {
-  @apply max-h-72 overflow-y-auto absolute bg-mini shadow-sm z-50 rounded-md mt-1 no-scrollbar widthcal
+  @apply max-h-72 overflow-y-auto absolute bg-mini shadow-sm z-50 rounded-md mt-1 no-scrollbar widthcal;
 }
 .suggestion {
-  @apply p-2 flex items-center 
+  @apply p-2 flex items-center;
 }
 .suggestion-thumbnail {
-  @apply w-12 h-auto mr-2 rounded-lg
+  @apply w-12 h-auto mr-2 rounded-lg;
 }
-.suggestion:hover{
-  @apply rounded-md bg-secondary
+.suggestion:hover {
+  @apply rounded-md bg-secondary;
 }
 
 /* BOOKMARK */
@@ -303,8 +301,8 @@ body {
 .playlist-details {
   @apply flex justify-end mt-2 items-center pl-1;
 }
-.clicked-playlist-title{
-  @apply w-full
+.clicked-playlist-title {
+  @apply w-full;
 }
 .playlist-details button {
   @apply bg-primary rounded-md pt-2 pb-1 w-12 ml-2 text-body flex-shrink-0;
@@ -373,11 +371,11 @@ body {
 .favorite-artist img {
   @apply h-40 object-cover rounded-md w-40;
 }
-.favorite-artist div{
-  @apply flex flex-row items-center justify-end
+.favorite-artist div {
+  @apply flex flex-row items-center justify-end;
 }
 .favorite-artist p {
-  @apply text-white items-center p-1 w-full ;
+  @apply text-white items-center p-1 w-full;
 }
 .favorite-artist button {
   @apply bg-primary  h-full focus:outline-none text-body font-medium rounded-full px-3 pt-3 pb-1.5  align-middle ml-2 mt-2;
@@ -386,7 +384,7 @@ body {
   @apply mr-1;
 }
 .favorite-artist2 img {
-  @apply w-44  rounded-md ;
+  @apply w-44  rounded-md;
 }
 .favorite-artist2 {
   @apply w-48 flex flex-col bg-secondary p-2 mx-auto my-2 rounded-lg;
@@ -434,10 +432,10 @@ body {
   @apply m-1.5  rounded-md h-14 w-20 object-cover;
 }
 .video-title {
-  @apply  overflow-hidden whitespace-nowrap w-auto;
+  @apply overflow-hidden whitespace-nowrap w-auto;
 }
 #play-pause {
-  @apply bg-primary focus:outline-none text-body font-medium rounded-md pt-3 pb-2 w-14 h-full m-2 flex-shrink0 ;
+  @apply bg-primary focus:outline-none text-body font-medium rounded-md pt-3 pb-2 w-14 h-full m-2 flex-shrink0;
 }
 .seekbar2 {
   @apply h-1 absolute bottom-px right-1 left-1 rounded-xl bg-secondary;
@@ -516,11 +514,8 @@ body {
 #bottom-navbar button:hover,
 #bottom-navbar button.active {
   @apply bg-secondary text-primary;
-  font-variation-settings:
-  'FILL' 1
+  font-variation-settings: "FILL" 1;
 }
-
-
 
 /* RECOMMENDATION SECTION */
 
@@ -530,139 +525,132 @@ body {
 .video-container img {
   @apply h-14 w-20 object-cover m-1 rounded;
 }
- .video-container div {
+.video-container div {
   @apply text-white w-full font-medium text-ellipsis overflow-hidden whitespace-nowrap;
 }
 
-
 /* mood and genres */
 
-#genres-list{
-  @apply flex mb-2 overflow-x-auto whitespace-nowrap max-w-full ;
+#genres-list {
+  @apply flex mb-2 overflow-x-auto whitespace-nowrap max-w-full;
 }
-#genres-list button{
+#genres-list button {
   @apply flex mb-2 bg-primary p-2 flex flex-wrap bg-secondary;
 }
 .genre {
-  @apply  m-1 rounded-md ;
+  @apply m-1 rounded-md;
 }
-#genre-songs{
-  @apply w-full
+#genre-songs {
+  @apply w-full;
 }
-.song{
-  @apply w-full bg-secondary mb-1 rounded-md flex p-1 items-center
+.song {
+  @apply w-full bg-secondary mb-1 rounded-md flex p-1 items-center;
 }
-.song img{
-  @apply  h-16 w-20 object-cover rounded-md flex flex-wrap
+.song img {
+  @apply h-16 w-20 object-cover rounded-md flex flex-wrap;
 }
 .song p {
-  @apply pl-1 text-ellipsis overflow-hidden whitespace-nowrap text-center
+  @apply pl-1 text-ellipsis overflow-hidden whitespace-nowrap text-center;
 }
 
 /* urplist */
 
-.modal{
-  @apply hidden fixed z-10 left-0 top-0 w-full h-full overflow-auto bg-body
+.modal {
+  @apply hidden fixed z-10 left-0 top-0 w-full h-full overflow-auto bg-body;
 }
-.modal-content{
-  @apply bg-mini mt-8 mr-auto p-5 w-4/5
+.modal-content {
+  @apply bg-mini mt-8 mr-auto p-5 w-4/5;
 }
-.close{
-  @apply to-white float-right size-6 font-bold 
+.close {
+  @apply to-white float-right size-6 font-bold;
 }
-#playlistscontainer{
-  @apply mt-5
+#playlistscontainer {
+  @apply mt-5;
 }
-#urplist{
-  @apply w-full h-full overflow-auto whitespace-nowrap  
+#urplist {
+  @apply w-full h-full overflow-auto whitespace-nowrap;
 }
-.playlist-thumbnail{
-  @apply inline-block whitespace-nowrap overflow-x-hidden p-2 m-1 bg-secondary rounded-lg
+.playlist-thumbnail {
+  @apply inline-block whitespace-nowrap overflow-x-hidden p-2 m-1 bg-secondary rounded-lg;
 }
-.playlist-thumbnail img{
-  @apply h-40 w-auto rounded-lg  
+.playlist-thumbnail img {
+  @apply h-40 w-auto rounded-lg;
 }
-.uplistb{
-  @apply flex justify-between items-center 
+.uplistb {
+  @apply flex justify-between items-center;
 }
-.uplistb button{
-  @apply  bg-primary  h-full focus:outline-none text-body font-medium rounded-full px-3 pt-3 pb-1.5  align-middle ml-2 mt-2;
+.uplistb button {
+  @apply bg-primary  h-full focus:outline-none text-body font-medium rounded-full px-3 pt-3 pb-1.5  align-middle ml-2 mt-2;
 }
 
 /* PC LAYOUT */
 
-
 /* CSS rules for laptops and PCs */
 @media screen and (min-width: 1000px) {
   ::-webkit-scrollbar {
-  display: none;
-}
-body {
-  @apply overflow-hidden text-base
-}
-#pc{
-  @apply flex h-screen
-}
-.faded{
-@apply flex overflow-scroll w-1/2
-}
-.lefthf {
- @apply ml-14 w-full
-}
-.righthf{
-@apply w-1/2
-}
-.mini-player{
-@apply absolute
-}
-#controls {
-  @apply relative bg-body h-28
-}
+    display: none;
+  }
+  body {
+    @apply overflow-hidden text-base;
+  }
+  #pc {
+    @apply flex h-screen;
+  }
+  .faded {
+    @apply flex overflow-scroll w-1/2;
+  }
+  .lefthf {
+    @apply ml-14 w-full;
+  }
+  .righthf {
+    @apply w-1/2;
+  }
+  .mini-player {
+    @apply absolute;
+  }
+  #controls {
+    @apply relative bg-body h-28;
+  }
 
+  .mini-player {
+    @apply h-screen shadow-none;
+  }
+  .con {
+    @apply bg-body hidden h-full;
+  }
+  .bottom {
+    @apply bg-secondary justify-normal h-1/2 m-0;
+  }
+  .bottom button {
+    @apply w-2/12;
+  }
 
+  .youtube {
+    @apply w-full;
+  }
 
+  #player {
+    @apply h-full;
+  }
+  .tndrow,
+  .bbutton {
+    @apply w-full flex justify-center;
+  }
 
-.mini-player{
-  @apply h-screen shadow-none
-}
-.con{
-  @apply bg-body hidden h-full
-}
-.bottom{
- @apply bg-secondary justify-normal h-1/2 m-0
+  .player-controls {
+    @apply w-full;
+  }
+  #seek-bar {
+    @apply min-w90 bg-white;
+  }
+  .seekbar2 {
+    @apply hidden;
+  }
+  #bottom-navbar {
+    @apply flex-col w-fit h-full fixed top-0 left-0;
+  }
 
-}
-.bottom button {
-  @apply w-2/12
-}
-
-.youtube{
-  @apply w-full
-}
-
-#player{
- @apply h-full
-}
-.tndrow,.bbutton{
-  @apply w-full flex justify-center
-}
-
-.player-controls{
-  @apply w-full
-}
-#seek-bar {
-@apply min-w90 bg-white
-}
-.seekbar2{
-  @apply hidden
-}
-#bottom-navbar{
-  @apply flex-col w-fit h-full fixed top-0 left-0
-}
-
-#bottom-navbar button {
-  @apply bg-transparent border-0 text-white transition-colors duration-300 w-10 h-20 rounded-3xl pt-1.5 shadow-none;
-}
-
-
+  #bottom-navbar button {
+    @apply bg-transparent border-0 text-white transition-colors duration-300 w-10 h-20 rounded-3xl pt-1.5 shadow-none;
+  }
 }
