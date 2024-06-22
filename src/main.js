@@ -236,6 +236,7 @@ function toggleTopic() {
 
 
 function search() {
+    document.getElementById("suggestionsBox").innerHTML = "";
     var query = document.getElementById("searchInput").value;
     if (addTopic) {
         query += " - Topic"; // Append " - Topic" if addTopic is true
@@ -260,6 +261,7 @@ function search() {
 
 function clearSearchResults() {
     var artistVideosDiv = document.getElementById("artistVideos");
+    document.getElementById("suggestionsBox").innerHTML = "";
     artistVideosDiv.innerHTML = "";
     artistVideosDiv.style.display = "none"; 
     var results = document.getElementById("results");

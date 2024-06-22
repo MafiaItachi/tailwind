@@ -668,7 +668,7 @@ body {
   margin-bottom: 0.25rem;
   border-radius: 0.5rem;
   --tw-bg-opacity: 1;
-  background-color: rgb(35 169 145 / var(--tw-bg-opacity));
+  background-color: rgb(69 81 116 / var(--tw-bg-opacity));
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   text-align: center;
@@ -676,7 +676,7 @@ body {
   line-height: 2.25rem;
   font-weight: 800;
   --tw-text-opacity: 1;
-  color: rgb(24 28 40 / var(--tw-text-opacity));
+  color: rgb(35 169 145 / var(--tw-text-opacity));
 }
 
 .sxq {
@@ -934,7 +934,7 @@ body {
   position: absolute;
   z-index: 50;
   margin-top: 0.25rem;
-  max-height: 18rem;
+  max-height: 100vh;
   overflow-y: auto;
   border-radius: 0.375rem;
   --tw-bg-opacity: 1;

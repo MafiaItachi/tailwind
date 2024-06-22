@@ -6,7 +6,7 @@ function fetchSuggestions(query) {
     }
     
     var apiKey = getRandomAPIKey();
-    var url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=5&q=${encodeURIComponent(query)}&key=${apiKey}`;
+    var url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=50&q=${encodeURIComponent(query)}&key=${apiKey}`;
 
     fetch(url)
         .then(response => response.json())
@@ -48,6 +48,7 @@ function displaySuggestions(suggestions) {
         suggestionDiv.onclick = function() {
             document.getElementById('searchInput').value = trimmedTitle;
             suggestionsBox.innerHTML = '';
+            search();
         };
         
         suggestionsBox.appendChild(suggestionDiv);
@@ -57,12 +58,12 @@ function displaySuggestions(suggestions) {
 
 
 // Function to fetch songs based on query
-function fetchSongs(query) {
-    var apiKey =getRandomAPIKey();
-    var url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=10&q=${encodeURIComponent(query)}&key=${apiKey}`;
+// function fetchSongs(query) {
+//     var apiKey =getRandomAPIKey();
+//     var url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=10&q=${encodeURIComponent(query)}&key=${apiKey}`;
 
-    fetch(url)
-        .then(response => response.json())
-        .then(data => displayResults(data.items))
-        .catch(error => console.error('Error fetching songs:', error));
-}
+//     fetch(url)
+//         .then(response => response.json())
+//         .then(data => displayResults(data.items))
+//         .catch(error => console.error('Error fetching songs:', error));
+// }

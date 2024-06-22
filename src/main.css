@@ -115,7 +115,7 @@ body {
   font-family: "Poppins", sans-serif;
 }
 .h1 {
-  @apply text-body text-center text-3xl font-extrabold py-2 bg-primary my-1 rounded-lg;
+  @apply text-primary text-center text-3xl font-extrabold py-2 bg-secondary my-1 rounded-lg;
 }
 .sxq {
   @apply items-center h-12 flex rounded-md shadow-sm  w-full pt-2;
@@ -190,7 +190,7 @@ body {
 /* SEARCH SUGGETION */
 
 #suggestionsBox {
-  @apply max-h-72 overflow-y-auto absolute bg-mini shadow-sm z-50 rounded-md mt-1 no-scrollbar widthcal;
+  @apply max-h-screen overflow-y-auto absolute bg-mini shadow-sm z-50 rounded-md mt-1 no-scrollbar widthcal;
 }
 .suggestion {
   @apply p-2 flex items-center;
