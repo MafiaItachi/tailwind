@@ -278,6 +278,7 @@ window.addEventListener('popstate', function(event) {
 
 // Function to clear the song list container
 function clearSongListOnBackGesture() {
+    clearSearchResults()
     var songListContainer = document.getElementById('songListContainer');
     if (songListContainer) {
         songListContainer.innerHTML = '';
