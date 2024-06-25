@@ -504,6 +504,7 @@ window.addEventListener("popstate", function (event) {
     console.log("popstate event triggered", event.state);
     if (event.state && event.state.backGesture) {
         clearfavsong();
+        clearSearchResults()
     }
 });
 

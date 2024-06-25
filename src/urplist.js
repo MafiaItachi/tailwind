@@ -50,14 +50,14 @@ function displayPlaylists() {
     playlistElement.className = 'urplist';
     playlistElement.innerText = playlistName;
     playlistElement.onclick = function() {
-      addToPlaylist(playlistName);
+      addToYourPlaylist(playlistName);
     };
     playlistsContainer.appendChild(playlistElement);
   }
 }
 
 // Function to add the current song to the selected playlist
-function addToPlaylist(playlistName) {
+function addToYourPlaylist(playlistName) {
   const currentVideoId = player.getVideoData().video_id;
   const currentVideoTitle = player.getVideoData().title;
   if (!playlists[playlistName].find(video => video.id === currentVideoId)) {
