@@ -56,7 +56,7 @@
 </h1>
 
 <p  height="150" align="center">
-  <a href="https://mafiaitachi.github.io/photon_player/">
+  <a href="https://mafiaitachi.github.io/tailwind/">
     <img src="image/songicon.jpg">
   </a>
 </p>
@@ -70,21 +70,21 @@ TAP THIS LOGO TO GO TO PHOTON PLAYER
 </h1>
 Photon Player is a minimal music player that uses the YouTube API to play music. It has basic features such as play, pause, and skip. The music player also has additional features such as save to playlist, shuffle play, add playlist by link, gesture support, and play music videos. This is my first project and I’m excited to share it with everyone 
 
-You can go ahead and check out my website at https://mafiaitachi.github.io/photon_player/
+You can go ahead and check out my website at https://mafiaitachi.github.io/tailwind/
 
 ### :camera: Screenshots
 <p align="center">
-  <a href="https://mafiaitachi.github.io/photon_player/">
+  <a href="https://mafiaitachi.github.io/tailwind/">
     <img src="image/01.png">
   </a>
   <br>
 <h2 align="left">YOU CAN SEARCH SONG AND ARTIST AND ADD THEM TO BOOKMARK</h2>
-<a href="https://mafiaitachi.github.io/photon_player/">
+<a href="https://mafiaitachi.github.io/tailwind/">
     <img src="/image/06.jpg">
     </a>
     <br>
 <h2 align="left">USE OUR TRENDING SECTION TO FIND NEW SONGS AND DISCOVER YOUR FAV ARTIST</h2>
-   <a href="https://mafiaitachi.github.io/photon_player/">
+   <a href="https://mafiaitachi.github.io/tailwind/">
     <img src="image/07.jpg">
   </a>
    
