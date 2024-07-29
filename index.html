@@ -22,6 +22,62 @@
     top: 2px;
     
  }
+
+ .modal {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  z-index: 10;
+  display: none;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
+  --tw-bg-opacity: 1;
+  background-color: rgba(24, 28, 40, 0.607);
+}
+
+.modal-content {
+  margin: 2rem;  
+  --tw-bg-opacity: 1;
+  background-color: rgb(24 28 40 / var(--tw-bg-opacity));
+  padding: 1.25rem;
+  border-radius: 4PX;
+}
+
+#newPlaylistName{
+  border-radius: 4PX;
+  height: 36PX;
+  width:80%;
+}
+.close {
+  float: right;
+  width: 2rem;
+  height: 2rem;
+  --tw-gradient-to: #ffffff var(--tw-gradient-to-position);
+  font-weight: 200;
+}
+
+#playlistscontainer {
+  margin-top: 1.25rem;
+}
+.modal-content button{
+  height: 100%;
+  border-radius: 0.375rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(35 169 145 / var(--tw-bg-opacity));
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.375rem;
+  font-weight: 500;
+  --tw-text-opacity: 1;
+  color: rgb(24 28 40 / var(--tw-text-opacity));
+}
+.mc2{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
  
       </style>
    </head>
@@ -292,9 +348,16 @@
          <div class="modal-content">
            <span class="close" onclick="closePlaylistsModal()">&times;</span>
            <h2>Select Playlist</h2>
+           <div class="mc2">
+            <input type="text" id="newPlaylistName" placeholder="New Playlist Name">
+           <button onclick="createPlaylist()"><span class="material-symbols-outlined">
+add
+</span>
+</button>
+           </div>
+           
+<br>
            <div id="playlistsContainer"></div>
-           <input type="text" id="newPlaylistName" placeholder="New Playlist Name">
-           <button onclick="createPlaylist()">Create Playlist</button>
          </div>
        </div>
 
