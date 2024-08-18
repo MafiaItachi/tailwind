@@ -78,19 +78,17 @@ function onYouTubeIframeAPIReady() {
         }
     });
 }
-let checkPlaybackInterval;
-
 document.addEventListener('visibilitychange', function () {
     if (document.hidden) {
-        // Start an interval to keep checking if the video is playing
-        checkPlaybackInterval = setInterval(function () {
-            if (player.getPlayerState() !== YT.PlayerState.PLAYING) {
-                player.playVideo(); // Resume playback if it was stopped
-            }
-        }, 1000); // Check every second
+        // Document is hidden, ensure playback continues
+        if (player.getPlayerState() === YT.PlayerState.PLAYING) {
+            // Keep the video playing, no action needed
+        }
     } else {
-        // Clear the interval when the document is visible again
-        clearInterval(checkPlaybackInterval);
+        // Document is visible again, ensure playback resumes
+        if (player.getPlayerState() === YT.PlayerState.PAUSED) {
+            player.playVideo(); // Resume playback if it was paused
+        }
     }
 });
 
