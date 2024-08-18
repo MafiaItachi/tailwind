@@ -61,26 +61,14 @@ function onYouTubeIframeAPIReady() {
 }
 document.addEventListener('visibilitychange', function () {
     if (document.hidden) {
-        // Document is hidden, pause the video
+        // Document is hidden, ensure playback continues
         if (player.getPlayerState() === YT.PlayerState.PLAYING) {
-            player.playVideo();
+            // Keep the video playing, no action needed
         }
     } else {
-        // Document is visible again, resume playback
-        player.playVideo();
-    }
-});
-document.addEventListener('visibilitychange', function() {
-    if (document.visibilityState === 'hidden') {
-        // Handle when the page is hidden (tab switched or app backgrounded)
-        if (isPlaying) {
-            // Keep playing the video/music
-            player.playVideo();
-        }
-    } else {
-        // Handle when the page is visible again
-        if (isPlaying) {
-            player.playVideo(); // Ensure the music continues playing
+        // Document is visible again, ensure playback resumes
+        if (player.getPlayerState() === YT.PlayerState.PAUSED) {
+            player.playVideo(); // Resume playback if it was paused
         }
     }
 });
