@@ -1,3 +1,22 @@
+if ('mediaSession' in navigator) {
+    navigator.mediaSession.setActionHandler('play', function() {
+        player.playVideo();
+    });
+    navigator.mediaSession.setActionHandler('pause', function() {
+        player.pauseVideo();
+    });
+    navigator.mediaSession.setActionHandler('seekbackward', function() {
+        player.seekBy(-10); // Seek backward by 10 seconds
+    });
+    navigator.mediaSession.setActionHandler('seekforward', function() {
+        player.seekBy(10); // Seek forward by 10 seconds
+    });
+    navigator.mediaSession.setActionHandler('stop', function() {
+        player.stopVideo();
+    });
+}
+
+
 const fullscreenButton = document.getElementById('fullscreen-button');
 const greenDiv = document.getElementById('green-div');
 
