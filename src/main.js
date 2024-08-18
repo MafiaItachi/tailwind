@@ -70,6 +70,20 @@ document.addEventListener('visibilitychange', function () {
         player.playVideo();
     }
 });
+document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState === 'hidden') {
+        // Handle when the page is hidden (tab switched or app backgrounded)
+        if (isPlaying) {
+            // Keep playing the video/music
+            player.playVideo();
+        }
+    } else {
+        // Handle when the page is visible again
+        if (isPlaying) {
+            player.playVideo(); // Ensure the music continues playing
+        }
+    }
+});
 
 function onPlayerReady(event) {
     // Player is ready to receive commands
