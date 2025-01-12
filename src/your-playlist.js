@@ -98,6 +98,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 async function revealSongs(playlistId) {
   
+    history.pushState({ playlistId }, null, window.location.href);
     // Clear the existing song list
     var songListContainer = document.getElementById('songListContainer');
     songListContainer.innerHTML = '<div class="cut"><button onclick="clearplistsong()"><span class="material-symbols-outlined">keyboard_backspace</span></button><span>Back</span>';
@@ -272,24 +273,27 @@ function clearplistsong() {
 }
 
 window.addEventListener('popstate', function(event) {
-    clearSongListOnBackGesture();
-  
+    if (event.state && event.state.playlistId) {
+        // Handle specific playlist state
+        revealSongs(event.state.playlistId);
+    } else {
+        clearSongListOnBackGesture();
+    }
 });
+
 
 // Function to clear the song list container
 function clearSongListOnBackGesture() {
-    clearSearchResults()
     var songListContainer = document.getElementById('songListContainer');
     if (songListContainer) {
         songListContainer.innerHTML = '';
         isPlaylistContainerVisible = true;
         togglePlaylistContainerVisibility();
-         // Restore the visibility of the favoriteArtistsContainer
-         isFavoriteArtistsContainerVisible = true;
-         toggleFavoriteArtistsContainerVisibility();
- 
+        isFavoriteArtistsContainerVisible = true;
+        toggleFavoriteArtistsContainerVisibility();
     }
 }
+
 
 // Function to navigate back in history and trigger the popstate event
 function goBack() {
