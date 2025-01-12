@@ -127,7 +127,7 @@ function revealSongsList(playlistName) {
   const playlistDiv = document.getElementById('urplist');
   playlistDiv.innerHTML = '';
   const backButton = document.createElement('button');
-  backButton.innerText = 'Back to Playlists';
+  backButton.innerHTML = `<div class="cut"><button ><span class="material-symbols-outlined">keyboard_backspace</span></button><span>Back</span>`;
   backButton.onclick = displayAddedSongs;
   playlistDiv.appendChild(backButton);
   playlistDiv.appendChild(songsListDiv);
