@@ -196,14 +196,28 @@ function loadFavoriteArtistsOnLoad() {
 
 function loadFavoriteArtistSongs(channelId, artist) {
     var apiKey = getRandomAPIKey(); // Replace with your YouTube API key
-    var apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&type=video&maxResults=100&key=${apiKey}`;
+    var apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${channelId}&type=video&maxResults=50&key=${apiKey}`;
+    var allVideos = []; // Array to hold all videos
+    fetchAllVideos(apiUrl, allVideos, artist);
+}
 
+function fetchAllVideos(apiUrl, allVideos, artist) {
     fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
             if (data.items && data.items.length > 0) {
-                displayFavoriteArtistSongs(data.items, artist);
-            } 
+                allVideos = allVideos.concat(data.items); // Append the videos to the array
+            }
+
+            // Check if there's another page of videos (pagination)
+            if (data.nextPageToken) {
+                // If there's a nextPageToken, fetch the next set of videos
+                var nextApiUrl = `${apiUrl}&pageToken=${data.nextPageToken}`;
+                fetchAllVideos(nextApiUrl, allVideos, artist);
+            } else {
+                // No more pages, display all videos
+                displayFavoriteArtistSongs(allVideos, artist);
+            }
         })
         .catch(error => {
             console.error('Error fetching videos:', error);
@@ -376,8 +390,7 @@ function playArtistVideosShuffled(channelId) {
         });
 }
 
-function playShuffledVideos(videos) {
-    var videoIds = videos.map(video => video.id.videoId);
+function playShuffledVideos(videoIds) {
     var currentIndex = 0;
 
     function playNextVideo() {
@@ -385,20 +398,21 @@ function playShuffledVideos(videos) {
             playVideoFromId(videoIds[currentIndex]);
             currentIndex++;
         } else {
-            currentIndex = 0; // Reset index for looping
+            currentIndex = 0; // Reset index for looping if needed
         }
     }
 
-    // Initial play and continue to next video on video ended
+    // Continue to next video when the current one ends
     player.addEventListener('onStateChange', function (event) {
         if (event.data === YT.PlayerState.ENDED) {
             playNextVideo();
         }
     });
 
-    // Start playing the shuffled videos
+    // Start playing the first video
     playNextVideo();
 }
+
 
 
 
@@ -411,20 +425,39 @@ function playFavoriteArtistVideos(artistId) {
 
     if (artist) {
         var apiKey = getRandomAPIKey();
-        var apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${artistId}&type=video&maxResults=50&key=${apiKey}`;
+        var videoIds = [];
+        var pageToken = ''; // Initialize pageToken to an empty string
 
-        fetch(apiUrl)
-            .then(response => response.json())
-            .then(data => {
-                if (data.items && data.items.length > 0) {
-                    var videos = data.items;
-                    shuffleArray(videos);
-                    playShuffledVideos(videos);
-                } 
-            })
-            .catch(error => {
-                console.error('Error fetching videos:', error);
-            });
+        // Function to fetch all videos iteratively
+        function fetchAllVideos() {
+            var apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${artistId}&type=video&maxResults=50&key=${apiKey}&pageToken=${pageToken}`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.items && data.items.length > 0) {
+                        // Collect video IDs from the current page
+                        var currentVideoIds = data.items.map(video => video.id.videoId);
+                        videoIds = videoIds.concat(currentVideoIds);
+
+                        // Check if there is a nextPageToken for more results
+                        if (data.nextPageToken) {
+                            pageToken = data.nextPageToken;
+                            fetchAllVideos(); // Fetch the next set of videos
+                        } else {
+                            // All pages fetched, shuffle and play videos
+                            shuffleArray(videoIds);
+                            playShuffledVideos(videoIds);
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching videos:', error);
+                });
+        }
+
+        // Start fetching videos
+        fetchAllVideos();
     }
 }
 
