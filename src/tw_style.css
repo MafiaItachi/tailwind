@@ -1857,7 +1857,7 @@ body {
   position: fixed;
   bottom: 0px;
   left: 0px;
-  z-index: 0;
+  z-index: 10;
   display: flex;
   width: 100%;
   justify-content: space-around;
@@ -1987,7 +1987,6 @@ body {
   position: fixed;
   left: 0px;
   top: 0px;
-  z-index: 10;
   display: none;
   height: 100%;
   width: 100%;
@@ -1995,6 +1994,7 @@ body {
   --tw-backdrop-blur: blur(4px);
   -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
           backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
+  z-index: 11;
 }
 
 .modal-content {

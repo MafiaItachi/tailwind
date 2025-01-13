@@ -512,7 +512,7 @@ body {
 /* NAV BAR */
 
 #bottom-navbar {
-  @apply fixed bottom-0 left-0 w-full bg-mini flex justify-around p-2 z-0;
+  @apply fixed bottom-0 left-0 w-full bg-mini flex justify-around p-2 z-10;
 }
 #bottom-navbar button {
   @apply bg-transparent border-0 text-white transition-colors duration-300 h-10 w-20 rounded-3xl pt-1.5 shadow-none;
@@ -562,7 +562,7 @@ body {
 /* urplist */
 
 .modal {
-  @apply hidden fixed z-10 left-0 top-0 w-full h-full overflow-auto backdrop-blur-sm;
+  @apply hidden fixed z-11 left-0 top-0 w-full h-full overflow-auto backdrop-blur-sm;
 }
 .modal-content {
   @apply bg-body  mt-8 mr-auto p-2 m-2  ;
