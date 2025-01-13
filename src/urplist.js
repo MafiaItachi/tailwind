@@ -72,32 +72,41 @@ function addToYourPlaylist(playlistName) {
 function displayAddedSongs() {
   const playlistDiv = document.getElementById('urplist');
   playlistDiv.innerHTML = '';
+
   for (const playlistName in playlists) {
     if (playlists[playlistName].length > 0) {
       const playlistThumbnail = document.createElement('div');
       playlistThumbnail.className = 'playlist-thumbnail';
-      playlistThumbnail.innerHTML = `
-        <img src="https://img.youtube.com/vi/${playlists[playlistName][0].id}/mqdefault.jpg" alt="${playlistName}">
-        <div class="uplistb">
-          <h3>${playlistName}</h3>
-          <button onclick="shufflePlaylist('${playlistName}')">
-            <span class="material-symbols-outlined">shuffle</span>
-          </button>
-        </div>
-      `;
-
-      // Add event listener to the image element to reveal songs list
-      const imgElement = playlistThumbnail.querySelector('img');
-      imgElement.addEventListener('click', function(event) {
-        event.stopPropagation();  // Prevent triggering other click events on the parent element
+      
+      
+      // Create a grid container for the thumbnails
+      const thumbnailGrid = document.createElement('div');
+      thumbnailGrid.className = 'thumbnail-grid';
+      
+      // Add click listener to reveal songs list
+      thumbnailGrid.addEventListener('click', function () {
         revealSongsList(playlistName);
       });
-
-      // Add event listener to the entire playlistThumbnail to perform other actions if needed
-      playlistThumbnail.addEventListener('click', function() {
-        // Other actions can be handled here if needed
-        console.log('Thumbnail clicked: ' + playlistName);
+      // Add the first 4 song thumbnails
+      playlists[playlistName].slice(0, 4).forEach(song => {
+        const thumbnail = document.createElement('img');
+        thumbnail.src = `https://img.youtube.com/vi/${song.id}/mqdefault.jpg`;
+        thumbnail.alt = song.title;
+        thumbnailGrid.appendChild(thumbnail);
       });
+
+      playlistThumbnail.appendChild(thumbnailGrid);
+
+      // Add playlist name and shuffle button
+      const playlistInfo = document.createElement('div');
+      playlistInfo.className = 'uplistb';
+      playlistInfo.innerHTML = `
+        <h3>${playlistName}</h3>
+        <button onclick="shufflePlaylist('${playlistName}')">
+          <span class="material-symbols-outlined">shuffle</span>
+        </button>
+      `;
+      playlistThumbnail.appendChild(playlistInfo);
 
       playlistDiv.appendChild(playlistThumbnail);
     }

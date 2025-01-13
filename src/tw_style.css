@@ -2207,3 +2207,27 @@ body {
     transition-duration: 300ms;
   }
 }
+
+.playlist-thumbnail {
+  border-radius: 0.5rem; /* Outer border radius */
+  width: 284px; /* Adjust based on your layout */
+  overflow: hidden; /* Ensure child elements don't overflow the rounded corners */
+}
+
+.thumbnail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  background-color: #181c28; /* Background color for the grid container */
+  border-radius: 0.5rem; /* Rounded corners for the grid container */
+  position: relative; /* Position context for child elements */
+  overflow: hidden; /* Ensure child elements don't overflow the rounded corners */
+}
+
+.thumbnail-grid img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  z-index: 1; /* Place images behind the grid container */
+}
+
