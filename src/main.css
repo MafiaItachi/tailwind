@@ -441,7 +441,7 @@ body {
   @apply m-1.5  rounded-md h-14 w-20 object-cover;
 }
 .video-title {
-  @apply overflow-hidden whitespace-nowrap w-auto;
+  @apply overflow-hidden whitespace-nowrap w-auto  ;
 }
 #play-pause {
   @apply bg-primary focus:outline-none text-body font-medium rounded-md pt-3 pb-2 w-14 h-full m-2 flex-shrink0;
