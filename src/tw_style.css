@@ -1974,11 +1974,11 @@ body {
 }
 
 .song p {
+  width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   padding-left: 0.25rem;
-  text-align: center;
 }
 
 /* urplist */
@@ -1992,8 +1992,6 @@ body {
   height: 100%;
   width: 100%;
   overflow: auto;
-  --tw-bg-opacity: 1;
-  background-color: rgb(24 28 40 / var(--tw-bg-opacity));
   --tw-backdrop-blur: blur(4px);
   -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
           backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
@@ -2003,9 +2001,8 @@ body {
   margin: 0.5rem;
   margin-top: 2rem;
   margin-right: auto;
-  width: 100%;
   --tw-bg-opacity: 1;
-  background-color: rgb(38 45 65 / var(--tw-bg-opacity));
+  background-color: rgb(24 28 40 / var(--tw-bg-opacity));
   padding: 0.5rem;
 }
 
@@ -2280,6 +2277,8 @@ body {
 
 .urplist {
   display: flex;
+  width: -moz-fit-content;
+  width: fit-content;
   flex-direction: column;
   border-radius: 0.375rem;
   --tw-bg-opacity: 1;

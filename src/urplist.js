@@ -225,6 +225,10 @@ function revealSongsList(playlistName) {
       <p>${song.title}</p>
       <button onclick="removeSongFromPlaylist('${playlistName}', '${song.id}')"><span class="material-symbols-outlined">more_vert</span></button>
     `;
+        // Add a click event to play the song when clicked
+        songElement.addEventListener('click', function() {
+          playSong(song.id);  // Function to play the song
+        });
     songsListDiv.appendChild(songElement);
   });
 

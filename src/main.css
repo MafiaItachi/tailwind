@@ -553,16 +553,16 @@ body {
   @apply h-16 w-20 object-cover rounded-md flex flex-wrap;
 }
 .song p {
-  @apply pl-1 text-ellipsis overflow-hidden whitespace-nowrap text-center;
+  @apply pl-1 text-ellipsis overflow-hidden whitespace-nowrap w-full ;
 }
 
 /* urplist */
 
 .modal {
-  @apply hidden fixed z-10 left-0 top-0 w-full h-full overflow-auto bg-body backdrop-blur-sm;
+  @apply hidden fixed z-10 left-0 top-0 w-full h-full overflow-auto backdrop-blur-sm;
 }
 .modal-content {
-  @apply bg-mini  mt-8 mr-auto p-2 m-2 w-full  ;
+  @apply bg-body  mt-8 mr-auto p-2 m-2  ;
 }
 .close {
   @apply to-white float-right size-6 font-bold;
@@ -697,7 +697,7 @@ body {
   @apply w-[85%]; /* Width 85% */
 }
 .urplist{
-  @apply flex flex-col bg-secondary rounded-md p-1.5
+  @apply flex flex-col bg-secondary rounded-md p-1.5 w-fit
 }
 .selectp {
   @apply p-2; /* Padding 2 */
