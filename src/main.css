@@ -36,6 +36,9 @@
   .widthcal {
     width: calc(100% - 12px);
   }
+  .overflow-inherit {
+    overflow: inherit;
+  }
 }
 .tra {
   transform: translateY(100%);
@@ -556,10 +559,10 @@ body {
 /* urplist */
 
 .modal {
-  @apply hidden fixed z-10 left-0 top-0 w-full h-full overflow-auto bg-body;
+  @apply hidden fixed z-10 left-0 top-0 w-full h-full overflow-auto bg-body backdrop-blur-sm;
 }
 .modal-content {
-  @apply bg-mini mt-8 mr-auto p-5 w-4/5;
+  @apply bg-mini  mt-8 mr-auto p-2 m-2 w-full  ;
 }
 .close {
   @apply to-white float-right size-6 font-bold;
@@ -568,21 +571,29 @@ body {
   @apply mt-5;
 }
 #urplist {
-  @apply w-full h-full overflow-auto whitespace-nowrap;
+  @apply w-full h-full overflow-auto whitespace-nowrap ;
 }
 .playlist-thumbnail {
-  @apply inline-block whitespace-nowrap overflow-x-hidden p-2 m-1 bg-secondary rounded-lg;
+  @apply inline-block whitespace-nowrap rounded-lg w-[284px] overflow-hidden p-2 m-1 bg-secondary rounded-lg;
+}
+.thumbnail-grid {
+  @apply grid grid-cols-2 grid-rows-2 bg-[#181c28] rounded-lg relative overflow-hidden;
 }
 .playlist-thumbnail img {
-  @apply h-40 w-auto rounded-lg;
+  @apply w-full h-auto object-cover z-10 ;
+}
+.centered {
+  @apply relative left-1/2 transform -translate-x-1/2 max-w-[600px] p-5;
 }
 .uplistb {
-  @apply flex justify-between items-center;
+  @apply flex justify-end items-center ;
 }
 .uplistb button {
   @apply bg-primary  h-full focus:outline-none text-body font-medium rounded-full px-3 pt-3 pb-1.5  align-middle ml-2 mt-2;
 }
-
+.uplfull {
+  @apply w-full;
+}
 /* PC LAYOUT */
 
 /* CSS rules for laptops and PCs */
@@ -647,10 +658,47 @@ body {
     @apply hidden;
   }
   #bottom-navbar {
-    @apply flex-col w-fit h-full fixed top-0 left-0;
+    @apply flex-col w-fit h-full fixed top-0 left-0 ;
   }
 
   #bottom-navbar button {
     @apply bg-transparent border-0 text-white transition-colors duration-300 w-10 h-20 rounded-3xl pt-1.5 shadow-none;
   }
+}
+
+
+
+
+
+
+.model{
+  @apply bg-transparent;
+}
+.playlists-grid {
+  @apply grid grid-cols-2 gap-2; /* 2 columns with 10px spacing (equivalent to Tailwind's gap-2) */
+}
+/* Make the playlist-thumbnail smaller */
+.playlist-thumbnail.small {
+  @apply w-44 overflow-inherit m-0 p-0; /* Width of 169px (42.25rem in Tailwind) and no margin or padding */
+  height: auto; /* Tailwind does not support height: auto directly, so it needs to remain in plain CSS */
+}
+/* Grid for the song thumbnails inside each playlist */
+.thumbnail-grid.small {
+  @apply grid grid-cols-2; /* 2 thumbnails per row */
+}
+.thumbnail-grid.small img {
+  @apply w-full; /* Width 100% */
+  height: auto; /* Tailwind does not support height: auto directly */
+}
+.urplist span {
+  @apply pb-1 pl-1; /* Padding bottom and padding left */
+}
+#newPlaylistName {
+  @apply w-[85%]; /* Width 85% */
+}
+.urplist{
+  @apply flex flex-col bg-secondary rounded-md p-1.5
+}
+.selectp {
+  @apply p-2; /* Padding 2 */
 }

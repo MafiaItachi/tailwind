@@ -38,17 +38,13 @@
 }
 
 .modal-content {
-  margin: 2rem;  
-  --tw-bg-opacity: 1;
-  background-color: rgb(24 28 40 / var(--tw-bg-opacity));
-  padding: 1.25rem;
   border-radius: 4PX;
+  width: 98%;
 }
 
 #newPlaylistName{
   border-radius: 4PX;
   height: 36PX;
-  width:80%;
 }
 .close {
   float: right;
@@ -353,8 +349,8 @@
        
        <div id="playlistsModal" class="modal">
          <div class="modal-content">
-           <span class="close" onclick="closePlaylistsModal()">&times;</span>
-           <h2>Select Playlist</h2>
+           <span class="close" onclick="closePlaylistsModal()">X</span>
+           <h2 class="selectp">Select Playlist</h2>
            <div class="mc2">
             <input type="text" id="newPlaylistName" placeholder="New Playlist Name">
            <button onclick="createPlaylist()"><span class="material-symbols-outlined">

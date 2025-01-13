@@ -42,22 +42,58 @@ function createPlaylist() {
 }
 
 // Function to display playlists in the modal
+// Function to display playlists in the modal
 function displayPlaylists() {
   const playlistsContainer = document.getElementById('playlistsContainer');
   playlistsContainer.innerHTML = '';
+  
+  playlistsContainer.className = 'playlists-grid'; // Add a grid class for 2-column layout
+  
   for (const playlistName in playlists) {
     const playlistElement = document.createElement('div');
     playlistElement.className = 'urplist';
-    playlistElement.innerHTML = `
-      <span>${playlistName}</span>
-      <button onclick="editPlaylistName('${playlistName}')">Edit</button>
-    `;
+
+    // Create the smaller thumbnail container
+    const playlistThumbnail = document.createElement('div');
+    playlistThumbnail.className = 'playlist-thumbnail small';
+
+    // Create a grid for the thumbnails (display up to 4 song thumbnails)
+    const thumbnailGrid = document.createElement('div');
+    thumbnailGrid.className = 'thumbnail-grid small'; // Smaller grid for thumbnails
+    
+    playlists[playlistName].slice(0, 4).forEach(song => {
+      const thumbnail = document.createElement('img');
+      thumbnail.src = `https://img.youtube.com/vi/${song.id}/mqdefault.jpg`;
+      thumbnail.alt = song.title;
+      thumbnailGrid.appendChild(thumbnail);
+    });
+    
+    playlistThumbnail.appendChild(thumbnailGrid);
+
+    // Create the playlist name element
+    const playlistNameElement = document.createElement('span');
+    playlistNameElement.textContent = playlistName;
+
+    // Create the edit button
+    const editButton = document.createElement('button');
+    editButton.innerHTML = '<span class="material-symbols-outlined">edit</span>';
+    editButton.onclick = function() {
+      editPlaylistName(playlistName);
+    };
+
+    // Append elements in the desired order: thumbnail, name, edit button
+    playlistElement.appendChild(playlistThumbnail);
+    playlistElement.appendChild(playlistNameElement);
+    playlistElement.appendChild(editButton);
+    
     playlistElement.onclick = function() {
       addToYourPlaylist(playlistName);
     };
+
     playlistsContainer.appendChild(playlistElement);
   }
 }
+
 
 
 // Function to add the current song to the selected playlist

@@ -1064,3 +1064,90 @@ function hideMiniPlayer() {
     </script>
 </body>
 </html>
+
+
+.playlist-thumbnail {
+    border-radius: 0.5rem; /* Outer border radius */
+    width: 284px; /* Adjust based on your layout */
+    overflow: hidden; /* Ensure child elements don't overflow the rounded corners */
+  }
+  
+  .thumbnail-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    background-color: #181c28; /* Background color for the grid container */
+    border-radius: 0.5rem; /* Rounded corners for the grid container */
+    position: relative; /* Position context for child elements */
+    overflow: hidden; /* Ensure child elements don't overflow the rounded corners */
+  }
+  
+  .thumbnail-grid img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    z-index: 1; /* Place images behind the grid container */
+  }
+  .centered {
+    position: relative;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    max-width: 600px;
+    padding: 20px;
+  }
+  .uplistb {
+    justify-content:flex-end;
+  }
+  .uplfull{
+    width: 100%;
+  }
+
+
+  /* Grid for playlistsContainer (2 columns) */
+.playlists-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 columns */
+  gap: 10px; /* Spacing between columns */
+
+}
+
+/* Make the playlist-thumbnail smaller */
+.playlist-thumbnail.small {
+  width: 169px;  /* Smaller width */
+  height: auto;
+  overflow :inherit ;
+  margin: 0px;
+  padding: 0px;
+}
+
+/* Grid for the song thumbnails inside each playlist */
+.thumbnail-grid.small {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2 thumbnails per row */
+
+}
+
+.thumbnail-grid.small img {
+  width: 100%; /* Ensure thumbnails fit the grid */
+  height: auto;
+}
+
+/* urplist element for playlists */
+.urplist {
+  
+  display: flex;
+  flex-direction: column;
+  background-color: #455174;
+  border-radius: 0.5rem;
+  padding: 6px;
+}
+.modal {
+  background-color: #0000007b;
+}
+.urplist span{
+  padding: 0 0 4px 4px;
+}
+
+#newPlaylistName {
+  width: 85%;
+}
