@@ -106,11 +106,29 @@ function displayAddedSongs() {
 
 
 // Function to reveal songs list in a playlist with thumbnails
+// Function to reveal songs list in a playlist with thumbnails
 function revealSongsList(playlistName) {
   const playlistSongs = playlists[playlistName];
   const songsListDiv = document.createElement('div');
   songsListDiv.className = 'songs-list';
   
+  // Hide the specified elements
+  const elementsToHide = [
+    document.getElementById('mixedforyou'),   // Assuming 'mixedforyou' is the ID of the element
+    document.querySelector('.home-songs'),
+    document.querySelector('.backup-restore'),
+    document.querySelector('.h1'),
+    document.querySelector('.shuffle'),
+    document.querySelector('.bookmarklink'),
+    document.getElementById('playlist')
+  ];
+  
+  elementsToHide.forEach(element => {
+    if (element) {
+      element.classList.add('hidden');
+    }
+  });
+
   playlistSongs.forEach(song => {
     const songElement = document.createElement('div');
     songElement.className = 'song';
@@ -128,10 +146,32 @@ function revealSongsList(playlistName) {
   playlistDiv.innerHTML = '';
   const backButton = document.createElement('button');
   backButton.innerHTML = `<div class="cut"><button ><span class="material-symbols-outlined">keyboard_backspace</span></button><span>Back</span>`;
-  backButton.onclick = displayAddedSongs;
+  
+  // On Back Button Click or Back Gesture
+  backButton.onclick = function() {
+    // Show the hidden elements
+    elementsToHide.forEach(element => {
+      if (element) {
+        element.classList.remove('hidden');
+      }
+    });
+    displayAddedSongs();
+  };
+
+  // Handle Back Gesture (e.g., swipe back or physical back button)
+  window.addEventListener('popstate', function() {
+    elementsToHide.forEach(element => {
+      if (element) {
+        element.classList.remove('hidden');
+      }
+    });
+    displayAddedSongs();
+  });
+
   playlistDiv.appendChild(backButton);
   playlistDiv.appendChild(songsListDiv);
 }
+
 
 // Function to shuffle and play the playlist
 function shufflePlaylist(playlistName) {
