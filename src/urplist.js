@@ -114,7 +114,7 @@ function revealSongsList(playlistName) {
   
   // Hide the specified elements
   const elementsToHide = [
-    document.getElementById('mixedforyou'),   // Assuming 'mixedforyou' is the ID of the element
+    document.querySelector('.mixedforyou'),   // Assuming 'mixedforyou' is the ID of the element
     document.querySelector('.home-songs'),
     document.querySelector('.backup-restore'),
     document.querySelector('.h1'),
