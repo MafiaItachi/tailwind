@@ -48,13 +48,17 @@ function displayPlaylists() {
   for (const playlistName in playlists) {
     const playlistElement = document.createElement('div');
     playlistElement.className = 'urplist';
-    playlistElement.innerText = playlistName;
+    playlistElement.innerHTML = `
+      <span>${playlistName}</span>
+      <button onclick="editPlaylistName('${playlistName}')">Edit</button>
+    `;
     playlistElement.onclick = function() {
       addToYourPlaylist(playlistName);
     };
     playlistsContainer.appendChild(playlistElement);
   }
 }
+
 
 // Function to add the current song to the selected playlist
 function addToYourPlaylist(playlistName) {
@@ -101,7 +105,7 @@ function displayAddedSongs() {
       const playlistInfo = document.createElement('div');
       playlistInfo.className = 'uplistb';
       playlistInfo.innerHTML = `
-        <h3>${playlistName}</h3>
+        <h3 class="uplfull">${playlistName}</h3>
         <button onclick="shufflePlaylist('${playlistName}')">
           <span class="material-symbols-outlined">shuffle</span>
         </button>
@@ -116,6 +120,47 @@ function displayAddedSongs() {
 // Function to reveal songs list in a playlist with thumbnails
 function revealSongsList(playlistName) {
   const playlistSongs = playlists[playlistName];
+  const playlistDiv = document.getElementById('urplist');
+  playlistDiv.innerHTML = '';
+
+  // Create a container for the playlist thumbnail and songs list
+  const containerDiv = document.createElement('div');
+  containerDiv.className = 'playlist-container';
+
+  // Add the playlist thumbnail
+  const playlistThumbnail = document.createElement('div');
+  playlistThumbnail.className = 'playlist-thumbnail centered';
+
+  // Add the first 4 song thumbnails to the playlist thumbnail
+  const thumbnailGrid = document.createElement('div');
+  thumbnailGrid.className = 'thumbnail-grid';
+
+  playlists[playlistName].slice(0, 4).forEach(song => {
+    const thumbnail = document.createElement('img');
+    thumbnail.src = `https://img.youtube.com/vi/${song.id}/mqdefault.jpg`;
+    thumbnail.alt = song.title;
+    thumbnailGrid.appendChild(thumbnail);
+  });
+
+  playlistThumbnail.appendChild(thumbnailGrid);
+
+  // Add playlist name and shuffle button
+  const playlistInfo = document.createElement('div');
+  playlistInfo.className = 'uplistb';
+  playlistInfo.innerHTML = `
+    <h3 class="uplfull">${playlistName}</h3>
+    <button onclick="editPlaylistName('${playlistName}')">
+      <span class="material-symbols-outlined">edit</span>
+    </button>
+    <button onclick="shufflePlaylist('${playlistName}')">
+      <span class="material-symbols-outlined">shuffle</span>
+    </button>
+  `;
+  playlistThumbnail.appendChild(playlistInfo);
+
+  containerDiv.appendChild(playlistThumbnail);
+
+  // Add the songs list below the playlist thumbnail
   const songsListDiv = document.createElement('div');
   songsListDiv.className = 'songs-list';
 
@@ -142,28 +187,24 @@ function revealSongsList(playlistName) {
     songElement.innerHTML = `
       <img src="https://img.youtube.com/vi/${song.id}/mqdefault.jpg" alt="${song.title}">
       <p>${song.title}</p>
+      <button onclick="removeSongFromPlaylist('${playlistName}', '${song.id}')"><span class="material-symbols-outlined">more_vert</span></button>
     `;
-    songElement.onclick = function() {
-      playSong(song.id);
-    };
     songsListDiv.appendChild(songElement);
   });
 
-  const playlistDiv = document.getElementById('urplist');
-  playlistDiv.innerHTML = '';
+  containerDiv.appendChild(songsListDiv);
+
+  // Add a back button at the top of the playlistDiv
   const backButton = document.createElement('button');
   backButton.innerHTML = `<div class="cut"><button ><span class="material-symbols-outlined">keyboard_backspace</span></button><span>Back</span>`;
-
-  // On Back Button Click
   backButton.onclick = function() {
-    history.back(); // Go back in history
+    history.back();
   };
 
-  // Push a new state to the history
   history.pushState({ view: 'playlist' }, '', '#playlist');
 
   playlistDiv.appendChild(backButton);
-  playlistDiv.appendChild(songsListDiv);
+  playlistDiv.appendChild(containerDiv);
 }
 
 // Handle the Back Gesture using popstate
@@ -216,5 +257,29 @@ function playSongsSequentially(songs, index = 0) {
   }
 }
 
+function removeSongFromPlaylist(playlistName, songId) {
+  playlists[playlistName] = playlists[playlistName].filter(song => song.id !== songId);
+  savePlaylists();
+  revealSongsList(playlistName); // Refresh the song list view
+}
+
+
+function editPlaylistName(oldName) {
+  const newName = prompt("Enter the new name for the playlist:", oldName);
+  if (newName && newName !== oldName) {
+    if (!playlists[newName]) {
+      playlists[newName] = playlists[oldName]; // Copy the songs to the new playlist
+      delete playlists[oldName]; // Remove the old playlist
+      savePlaylists();
+      displayPlaylists();
+      alert(`Playlist renamed to "${newName}"`);
+    } else {
+      alert("A playlist with that name already exists!");
+    }
+  }
+}
+
 // Load playlists when the page loads
 window.onload = loadPlaylists;
+
+

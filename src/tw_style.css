@@ -2230,4 +2230,16 @@ body {
   object-fit: cover;
   z-index: 1; /* Place images behind the grid container */
 }
-
+.centered {
+  position: relative;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  max-width: 600px;
+  padding: 20px;
+}
+.uplistb {
+  justify-content:flex-end;
+}
+.uplfull{
+  width: 100%;
+}
