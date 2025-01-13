@@ -39,6 +39,9 @@
   .overflow-inherit {
     overflow: inherit;
   }
+  .z-11{
+    z-index: 11;
+  }
 }
 .tra {
   transform: translateY(100%);
@@ -426,7 +429,7 @@ body {
 /* MINIPLAYER */
 
 #controls {
-  @apply fixed bottom-15 right-1.5 left-1.5 rounded-lg bg-mini z-10 pb-1;
+  @apply fixed bottom-15 right-1.5 left-1.5 rounded-lg bg-mini z-11 pb-1;
 }
 .con {
   @apply w-full h-full flex justify-between items-center;
@@ -679,7 +682,7 @@ body {
 }
 /* Make the playlist-thumbnail smaller */
 .playlist-thumbnail.small {
-  @apply w-44 overflow-inherit m-0 p-0; /* Width of 169px (42.25rem in Tailwind) and no margin or padding */
+  @apply w-40 overflow-inherit m-0 p-0; /* Width of 169px (42.25rem in Tailwind) and no margin or padding */
   height: auto; /* Tailwind does not support height: auto directly, so it needs to remain in plain CSS */
 }
 /* Grid for the song thumbnails inside each playlist */
