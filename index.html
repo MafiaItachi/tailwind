@@ -8,6 +8,8 @@
       <link rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
       <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
       <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
@@ -17,6 +19,21 @@
          <!-- <link rel="stylesheet" href="src/main.css"> -->
          <link rel="stylesheet" href="src/tw_style.css">
       <style>
+         .dontn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background-color: #1a202c;
+  color: #fff;
+  border-radius: 0.375rem;
+  margin-bottom: 0.5rem;
+  width: 100%;
+}
+.h3 {
+  margin: 0;
+  margin-left: 35%;
+}
      
 .favorite-artist2 div {
     position: sticky;
@@ -77,7 +94,6 @@
 .hidden {
   display: none !important;
 }
-
       </style>
    </head>
    <body class="mx-1.5">
@@ -241,7 +257,7 @@
          </div>
          <div class="righthf">
             <div id="controls">
-               <div class="con">
+               <div class="con" onclick="showMiniPlayer()">
                   <img class="video-thumbnail" src="image/songicon.jpg">
                   <div class="video-title">MADE BY SHUBHAM</div>
                   <button id="play-pause"><span class="material-symbols-outlined">
@@ -255,6 +271,12 @@
                   <div class="progress-bar2"></div>
                </div>
                <div id="mini-player" class="mini-player">
+                  <div class="dontn">
+                     <h1 class="h3">PHOTON PLAYER </h1>
+                     <button onclick="hideMiniPlayer()"><span class="material-symbols-outlined">
+                        keyboard_arrow_down
+                        </span></button>
+                  </div>
                   <div class="youtube">
                      <div id="lyrics-container" style="display: none;"></div>
                      <div id="player"></div>

@@ -41,9 +41,9 @@
   }
   .z-11{
     z-index: 11;
-    .Z-12{
-      z-index: 12;
-    }
+  }
+  .z-13{
+    z-index: 13;
   }
 }
 .tra {
@@ -565,7 +565,7 @@ body {
 /* urplist */
 
 .modal {
-  @apply hidden fixed z-12 left-0 top-0 w-full h-full overflow-auto backdrop-blur-sm;
+  @apply hidden fixed z-13 left-0 top-0 w-full h-full overflow-auto backdrop-blur-md bg-opacity-10;
 }
 .modal-content {
   @apply bg-body  mt-8 mr-auto p-2 m-2  ;
