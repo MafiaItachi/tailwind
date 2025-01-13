@@ -69,9 +69,11 @@ function onYouTubeIframeAPIReady() {
             'controls': 1,
 
         },
-        events: {
-            'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
+    events: {
+        'onReady': function(event) {
+            event.target.playVideo(); // Only attempt play after interaction
+        },
+        'onStateChange': onPlayerStateChange
         },
         playerVars: {
             'origin': 'https://yourwebsite.com'
