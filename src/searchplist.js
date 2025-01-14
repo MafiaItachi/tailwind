@@ -71,7 +71,7 @@ function displayResultItem(playlistTitle, playlistId, thumbnailUrl) {
     title.innerHTML = "<strong>Playlist:</strong> " + playlistTitle;
 
     var addButton = document.createElement("button");
-    addButton.textContent = "Add to Playlist";
+    addButton.innerHTML = '<span class="material-symbols-outlined">playlist_add</span>';
     addButton.setAttribute("onclick", "addToSavedPlaylists('" + playlistId + "', '" + playlistTitle + "', '" + thumbnailUrl + "')");
 
     titleAndButtonDiv.appendChild(title);

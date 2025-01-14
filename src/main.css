@@ -175,7 +175,7 @@ body {
   @apply flex flex-col w-full overflow-hidden ml-2;
 }
 .result-title {
-  @apply flex whitespace-nowrap   text-white;
+  @apply   text-white;
 }
 .result-buttons button {
   @apply bg-primary  mt-1 mr-2 focus:outline-none  h-fit   text-body rounded-lg    w-47p pt-1;

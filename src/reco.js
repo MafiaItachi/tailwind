@@ -85,30 +85,49 @@ videosData.forEach(video => {
 });
 }
 
-// Function to display recommended videos with thumbnails
-function displayRecommendations(videos, sourceVideo) {
-var recommendationsDiv = $('#recommendations');
+// Function to calculate similarity between two strings
+function getSimilarity(string1, string2) {
+  string1 = string1.toLowerCase();
+  string2 = string2.toLowerCase();
+  let longer = string1.length > string2.length ? string1 : string2;
+  let shorter = string1.length > string2.length ? string2 : string1;
 
-videos.forEach(video => {
- var videoTitle = video.snippet.title;
- var videoId = video.id.videoId;
- var thumbnailUrl = video.snippet.thumbnails.medium.url;
-
- // Create a div to hold thumbnail and video title
- var videoContainer = $('<div>')
-   .addClass('video-container')
-   .click(function() {
-     playVideo(videoId);
-   })
-   .append(
-     $('<img>').attr('src', thumbnailUrl).attr('alt', videoTitle), // Thumbnail
-     $('<div>').text(videoTitle) // Video title
-   );
-
- // Append the div to the recommendations div
- recommendationsDiv.append(videoContainer);
-});
+  let intersection = [...shorter].filter(char => longer.includes(char));
+  return intersection.length / longer.length;
 }
+
+// Function to display recommended videos with thumbnails, avoiding duplicates
+function displayRecommendations(videos, sourceVideo) {
+  var recommendationsDiv = $('#recommendations');
+
+  videos.forEach(video => {
+    // Truncate and clean the video title
+    var videoTitle = truncateTitle(video.snippet.title);
+    var videoId = video.id.videoId;
+    var thumbnailUrl = video.snippet.thumbnails.medium.url;
+
+    // Check for similar titles already in the recommendations
+    var existingTitles = recommendationsDiv.find('.video-container div').map((_, el) => $(el).text()).get();
+    var isDuplicate = existingTitles.some(title => getSimilarity(title, videoTitle) > 0.8); // Adjust threshold if needed
+
+    if (!isDuplicate) {
+      // Create a div to hold thumbnail and video title
+      var videoContainer = $('<div>')
+        .addClass('video-container')
+        .click(function () {
+          playVideo(videoId);
+        })
+        .append(
+          $('<img>').attr('src', thumbnailUrl).attr('alt', videoTitle), // Thumbnail
+          $('<div>').text(videoTitle) // Video title
+        );
+
+      // Append the div to the recommendations div
+      recommendationsDiv.append(videoContainer);
+    }
+  });
+}
+
 
 
 // Call the main function to start the process

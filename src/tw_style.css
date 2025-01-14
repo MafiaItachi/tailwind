@@ -851,8 +851,6 @@ body {
 }
 
 .result-title {
-  display: flex;
-  white-space: nowrap;
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }

@@ -25,7 +25,7 @@ function displayGenreSongs(response) {
 
     response.items.forEach(function(item) {
         var videoId = item.id.videoId;
-        var videoTitle = item.snippet.title;
+        var videoTitle = truncateTitle(item.snippet.title); // Apply truncateTitle
         var thumbnailUrl = item.snippet.thumbnails.medium.url;
 
         var songElement = document.createElement('div');

@@ -329,6 +329,7 @@ function addToPlaylist(videoId, videoTitle) {
 
 
 
+
 function displayResults(response) {
     var results = document.getElementById("results");
     results.innerHTML = "";
@@ -336,61 +337,38 @@ function displayResults(response) {
     for (var i = 0; i < response.items.length; i++) {
         var video = response.items[i];
         var videoId = video.id.videoId;
-        var videoTitle = video.snippet.title;
+        var videoTitle = truncateTitle(video.snippet.title); // Apply truncateTitle
         var thumbnailUrl = video.snippet.thumbnails.medium.url;
 
+        // Create a result-item container
         var div = document.createElement("div");
         div.className = "result-item";
+        div.addEventListener("click", function (id) {
+            return function () {
+                playVideo(id); // Play video on clicking the entire container
+            };
+        }(videoId));
 
+        // Create and append the thumbnail
         var thumbnailImg = document.createElement("img");
         thumbnailImg.src = thumbnailUrl;
         thumbnailImg.className = "thumbnail";
-        thumbnailImg.setAttribute("data-video-id", videoId);
-        thumbnailImg.addEventListener("click", function (id) {
-            return function () {
-                playVideo(id);
-            };
-        }(videoId));
+
+        // Create and append the details section
         var detailsDiv = document.createElement("div");
         detailsDiv.className = "result-details";
 
         var title = document.createElement("p");
         title.className = "result-title";
-        title.textContent = videoTitle;
+        title.textContent = videoTitle; // Use the truncated title
 
-        var buttonsDiv = document.createElement("div");
-        buttonsDiv.className = "result-buttons";
-
-        var addToPlaylistButton = document.createElement("button");
-        addToPlaylistButton.innerHTML = '<span class="material-symbols-outlined">bookmark</span>';
-        addToPlaylistButton.addEventListener("click", function (id, title, thumbnail) {
-            return function () {
-                addToPlaylist(id, title, thumbnail);
-            };
-        }(videoId, videoTitle, thumbnailUrl));
-
-        var playVideoButton = document.createElement("button");
-        playVideoButton.innerHTML = '<span class="material-symbols-outlined">play_arrow</span>';
-        playVideoButton.addEventListener("click", function (id, title, thumbnail) {
-            return function () {
-                playVideo(id, title, thumbnail);
-            };
-        }(videoId, videoTitle, thumbnailUrl));
-
-        buttonsDiv.appendChild(addToPlaylistButton);
-        buttonsDiv.appendChild(playVideoButton);
-        div.appendChild(thumbnailImg);
         detailsDiv.appendChild(title);
-        detailsDiv.appendChild(buttonsDiv);
-
-
+        div.appendChild(thumbnailImg);
         div.appendChild(detailsDiv);
 
         results.appendChild(div);
     }
-    
 }
-
 
 
 function playVideos(videoId) {

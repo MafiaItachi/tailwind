@@ -126,7 +126,7 @@ function displayQuickPick(playlistItems) {
   for (var i = 0; i < playlistItems.length; i++) {
     var video = playlistItems[i].snippet;
     var videoId = video.resourceId.videoId;
-    var videoTitle = video.title;
+    var videoTitle = truncateTitle(video.title);//truncateTitle(video.title);
     var thumbnailUrl = video.thumbnails.medium.url;
 
     var div = document.createElement("div");
