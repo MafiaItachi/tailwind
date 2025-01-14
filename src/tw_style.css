@@ -1999,25 +1999,14 @@ body {
 .modal-content {
   position: fixed;
   left: 0px;
-  top: 12rem;
+  top: 0px;
+  height: auto;
   width: 100%;
-  border-radius: 1.5rem;
+  border-top-left-radius: 1.5rem;
+  border-top-right-radius: 1.5rem;
   --tw-bg-opacity: 1;
   background-color: rgb(24 28 40 / var(--tw-bg-opacity));
   padding: 1.25rem;
-
-  overflow-y: auto; /* Enable scrolling when content overflows */
-  scroll-behavior: smooth; /* Smooth scrolling */
-}
-
-/* Optional: You can customize the scrollbar */
-.modal-content::-webkit-scrollbar {
-  width: 8px;
-}
-
-.modal-content::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 10px;
 }
 
 .modal-content button {
