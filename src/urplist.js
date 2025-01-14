@@ -15,16 +15,37 @@ function loadPlaylists() {
   }
 }
 
-// Function to show the playlists modal
-function showPlaylistsModal() {
-  document.getElementById('playlistsModal').style.display = 'block';
-  displayPlaylists();
+// Function to initialize swipe-down gesture
+function initializeSwipeGesture() {
+  const modal = document.getElementById('playlistsModal');
+  const hammer = new Hammer(modal);
+
+  // Detect swipe gestures
+  hammer.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
+
+  hammer.on('swipedown', function () {
+    closePlaylistsModal(); // Close the modal on swipe down
+  });
 }
 
-// Function to close the playlists modal
-function closePlaylistsModal() {
-  document.getElementById('playlistsModal').style.display = 'none';
+// Function to show the playlists modal
+function showPlaylistsModal() {
+  const modal = document.getElementById('playlistsModal');
+  modal.style.display = 'block';
+  displayPlaylists();
+  initializeSwipeGesture(); // Initialize swipe gesture when modal is shown
 }
+
+function closePlaylistsModal() {
+  const modal = document.getElementById('playlistsModal');
+  modal.classList.add('hiddens');
+  setTimeout(() => {
+    modal.style.display = 'none';
+    modal.classList.remove('hiddens');
+  }, 300); // Match the CSS transition duration
+}
+
+
 
 // Function to create a new playlist
 function createPlaylist() {
@@ -322,57 +343,3 @@ function editPlaylistName(oldName) {
 // Load playlists when the page loads
 window.onload = loadPlaylists;
 
-
-// Add swipe functionality to modal-content
-document.addEventListener('DOMContentLoaded', () => {
-  const modal = document.getElementById('playlistsModal');
-  const modalContent = modal.querySelector('.modal-content');
-  let startY = 0;
-  let isSwiping = false;
-
-  // Handle touch start
-  modalContent.addEventListener('touchstart', (e) => {
-    startY = e.touches[0].clientY;
-    isSwiping = true;
-  });
-
-  // Handle touch move
-  modalContent.addEventListener('touchmove', (e) => {
-    if (!isSwiping) return;
-
-    const currentY = e.touches[0].clientY;
-    const translateY = currentY - startY;
-
-    if (translateY > 0) {
-      // Swipe down (close modal)
-      modalContent.style.transform = `translateY(${translateY}px)`;
-    } else {
-      // Swipe up (expand modal)
-      modalContent.style.transform = `translateY(${translateY}px)`;
-    }
-
-    modalContent.style.transition = 'transform 0.3s ease-in-out';
-  });
-
-  // Handle touch end
-  modalContent.addEventListener('touchend', (e) => {
-    const endY = e.changedTouches[0].clientY;
-    const swipeDistance = endY - startY;
-
-    // Swipe down to close modal
-    if (swipeDistance > 50) {
-      closePlaylistsModal();
-    } else {
-      // Reset position if swipe distance is insufficient
-      modalContent.style.transform = 'translateY(0)';
-    }
-
-    isSwiping = false;
-  });
-
-  // Prevent interference with buttons inside modal-content
-  modalContent.querySelectorAll('button').forEach((button) => {
-    button.addEventListener('touchstart', (e) => e.stopPropagation());
-    button.addEventListener('click', (e) => e.stopPropagation());
-  });
-});
