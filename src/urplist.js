@@ -349,7 +349,8 @@ function detectSwipeDownGesture(event) {
 
   // Detect swipe down and close the modal
   event.target.addEventListener('touchend', function() {
-    if (touchEnd - touchStart > 100) { // Swipe down threshold
+    const swipeDistance = touchEnd - touchStart; // Difference between touch start and end positions
+    if (swipeDistance > 100) { // Swipe down threshold (100px or more)
       closePlaylistsModal(); // Close the modal if swipe down is detected
     }
   });
@@ -358,6 +359,7 @@ function detectSwipeDownGesture(event) {
 // Apply the swipe-down gesture to the modal
 const modal = document.getElementById('playlistsModal');
 modal.addEventListener('touchstart', detectSwipeDownGesture);
+
 modal.addEventListener('touchmove', function(e) {
   e.preventDefault();  // Prevent scroll while swiping in the modal
 });
