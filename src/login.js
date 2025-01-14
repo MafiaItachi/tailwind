@@ -172,7 +172,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log("Found saved profile image in localStorage.");
         const loginButton = document.getElementById('loginButton');
         if (loginButton) {
-            loginButton.innerHTML = `<img src="${savedProfileImageUrl}" alt="Google User" style="border-radius: 50%; width: 40px; height: 40px;" />`;
+            loginButton.innerHTML = `<img src="${savedProfileImageUrl}" alt="Google User" style="border-radius: 50%; width: 50px; height: 50px;" />`;
         }
     }
 
