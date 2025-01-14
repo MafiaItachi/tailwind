@@ -21,6 +21,7 @@ function showPlaylistsModal() {
   modal.style.display = 'block'; // Ensure it's part of the DOM
   setTimeout(() => modal.classList.add('active'), 10); // Add 'active' after a tiny delay for the transition
   displayPlaylists();
+  modal.scrollTop = 0;
   initializeSwipeGesture(); // Initialize swipe gesture when modal is shown
 }
 
