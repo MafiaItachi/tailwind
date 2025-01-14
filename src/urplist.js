@@ -335,7 +335,13 @@ window.onload = loadPlaylists;
 // Function to detect swipe-down gesture
 function detectSwipeDownGesture(event) {
   const modal = document.getElementById('playlistsModal');
+  const modalContent = modal.querySelector('.modal-content'); // Adjust this selector as needed for your modal content
   
+  // If the touch starts inside a form input (text box or button), don't trigger the gesture
+  if (event.target.closest('input, button')) {
+    return; // Prevent the swipe-down gesture when touching the text box or button
+  }
+
   // Prevent the default action (browser refresh)
   event.preventDefault();
 
