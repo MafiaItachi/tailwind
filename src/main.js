@@ -503,7 +503,7 @@ function displayPlaylist() {
             playlistDiv.appendChild(playlistItem);
         }
     } else {
-        playlistDiv.innerHTML = "<li>LIKED SONGS WILL APPEAR HERE</li> <li>SWIPE UP THE MINI PLAYER TO SEE VIDEO</li> <li>BOOKMARK SONGS WILL APPEAR HERE</li>  <li>BOOKMARK SONGS WILL APPEAR HERE</li> <li>ENTER YOUTUBE LINK TO ADD SONG HERE</li>  ";
+        playlistDiv.innerHTML = "<li>LIKED SONGS WILL APPEAR HERE</li> <li>SWIPE UP THE MINI PLAYER TO SEE VIDEO</li> <li>LOGIN TO GOOGLE ACCOUT TO IMPORT YOUTUBE PLAYLIST</li>  <li>BOOKMARK SONGS WILL APPEAR HERE</li> <li>ENTER YOUTUBE LINK TO ADD SONG HERE</li>  ";
     }
 }
 
