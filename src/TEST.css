@@ -19,6 +19,7 @@
     opacity: 0;
     transform: translateY(100%); /* Slide in from below */
     transition: opacity 0.3s ease, transform 0.3s ease;
+    overflow: hidden;
   }
   
   #playlistsModal.active {
