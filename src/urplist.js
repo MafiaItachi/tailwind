@@ -15,16 +15,25 @@ function loadPlaylists() {
   }
 }
 
-// Function to show the playlists modal
+// Function to show the playlists modal with transition
 function showPlaylistsModal() {
-  document.getElementById('playlistsModal').style.display = 'block';
+  const modal = document.getElementById('playlistsModal');
+  modal.style.display = 'block';
+  setTimeout(() => {
+    modal.classList.add('open'); // Apply the 'open' class after the modal is displayed
+  }, 10); // Small delay to ensure the modal is displayed before transition starts
   displayPlaylists();
 }
 
-// Function to close the playlists modal
+// Function to close the playlists modal with transition
 function closePlaylistsModal() {
-  document.getElementById('playlistsModal').style.display = 'none';
+  const modal = document.getElementById('playlistsModal');
+  modal.classList.remove('open'); // Remove the 'open' class to trigger the slide-up effect
+  setTimeout(() => {
+    modal.style.display = 'none'; // Hide the modal completely after the transition
+  }, 300); // Timeout matches the duration of the transition (0.3s)
 }
+
 
 // Function to create a new playlist
 function createPlaylist() {
@@ -323,3 +332,26 @@ function editPlaylistName(oldName) {
 window.onload = loadPlaylists;
 
 
+// Function to detect swipe-down gesture
+function detectSwipeDownGesture(event) {
+  const modal = document.getElementById('playlistsModal');
+  const touchStart = event.touches[0].clientY;
+  
+  let touchEnd = touchStart;
+
+  // Track the swipe move
+  event.target.addEventListener('touchmove', function(e) {
+    touchEnd = e.touches[0].clientY;
+  });
+
+  // Detect swipe down and close the modal
+  event.target.addEventListener('touchend', function() {
+    if (touchEnd - touchStart > 100) { // Swipe down threshold
+      closePlaylistsModal(); // Close the modal if swipe down is detected
+    }
+  });
+}
+
+// Apply the swipe-down gesture to the modal
+const modal = document.getElementById('playlistsModal');
+modal.addEventListener('touchstart', detectSwipeDownGesture);

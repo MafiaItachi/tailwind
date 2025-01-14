@@ -7,6 +7,9 @@
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
+  .WEB-FULL{
+    HEIGHT: -webkit-fill-available;
+  }
   /* Hide scrollbar for IE, Edge and Firefox */
   .no-scrollbar {
     -ms-overflow-style: none; /* IE and Edge */
@@ -29,6 +32,9 @@
   }
   .translate-y-1px {
     transform: translateY(1px);
+  }
+  .translate-y {
+    transform: translateY(100%);
   }
   .min-w90 {
     min-width: 90%;
@@ -565,16 +571,19 @@ body {
 /* urplist */
 
 .modal {
-  @apply hidden fixed z-13 left-0 top-0 w-full h-full overflow-auto backdrop-blur-md bg-opacity-10;
+  @apply hidden fixed z-13 left-0 top-0 w-full h-full overflow-auto backdrop-blur-md bg-opacity-10 ;
 }
 .modal-content {
-  @apply bg-body  mt-8 mr-auto p-2 m-2  ;
+  @apply bg-body fixed left-0 top-96 w-full h-full rounded-3xl p-5  ;
+}
+.modal-content button {
+  @apply bg-green pt-2 px-3 rounded-md text-body 
 }
 .close {
   @apply to-white float-right size-6 font-bold;
 }
 #playlistscontainer {
-  @apply mt-5;
+  @apply mt-5 ;
 }
 #urplist {
   @apply w-full h-full overflow-auto whitespace-nowrap ;
@@ -697,10 +706,13 @@ body {
   height: auto; /* Tailwind does not support height: auto directly */
 }
 .urplist span {
-  @apply pb-1 pl-1; /* Padding bottom and padding left */
+  @apply pb-1 pl-1 WEB-FULL; /* Padding bottom and padding left */
 }
 #newPlaylistName {
-  @apply w-[85%]; /* Width 85% */
+  @apply w-[85%] rounded bg-secondary p-1; /* Width 85% */
+}
+.mc2{
+  @apply flex justify-between w-full
 }
 .urplist{
   @apply flex flex-col bg-secondary rounded-md p-1.5 w-fit

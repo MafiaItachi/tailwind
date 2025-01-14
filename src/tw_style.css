@@ -1997,12 +1997,26 @@ body {
 }
 
 .modal-content {
-  margin: 0.5rem;
-  margin-top: 2rem;
-  margin-right: auto;
+  position: fixed;
+  left: 0px;
+  top: 24rem;
+  height: 100%;
+  width: 100%;
+  border-radius: 1.5rem;
   --tw-bg-opacity: 1;
   background-color: rgb(24 28 40 / var(--tw-bg-opacity));
-  padding: 0.5rem;
+  padding: 1.25rem;
+}
+
+.modal-content button {
+  border-radius: 0.375rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(35 169 145 / var(--tw-bg-opacity));
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.5rem;
+  --tw-text-opacity: 1;
+  color: rgb(24 28 40 / var(--tw-text-opacity));
 }
 
 .close {
@@ -2266,12 +2280,23 @@ body {
 .urplist span {
   padding-bottom: 0.25rem;
   padding-left: 0.25rem;
+  HEIGHT: -webkit-fill-available;
   /* Padding bottom and padding left */
 }
 
 #newPlaylistName {
   width: 85%;
+  border-radius: 0.25rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(69 81 116 / var(--tw-bg-opacity));
+  padding: 0.25rem;
   /* Width 85% */
+}
+
+.mc2 {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
 }
 
 .urplist {

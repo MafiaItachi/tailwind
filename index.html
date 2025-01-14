@@ -19,6 +19,7 @@
          <!-- npx tailwindcss -i ./src/main.css -o ./src/tw_style.css --watch -->
          <!-- <link rel="stylesheet" href="src/main.css"> -->
          <link rel="stylesheet" href="src/tw_style.css">
+         <link rel="stylesheet" href="src/TEST.css">
       <style>
          .result-item div {
   margin-left: 0.25rem;
@@ -54,59 +55,6 @@
     
  }
 
- .modal {
-  position: fixed;
-  left: 0px;
-  top: 0px;
-  display: none;
-  height: 100%;
-  width: 100%;
-  overflow: auto;
-  --tw-bg-opacity: 1;
-  background-color: rgba(24, 28, 40, 0.607);
-}
-
-.modal-content {
-  border-radius: 4PX;
-  width: 97%;
-}
-
-#newPlaylistName{
-  border-radius: 4PX;
-  height: 36PX;
-}
-.close {
-  float: right;
-  width: 2rem;
-  height: 2rem;
-  --tw-gradient-to: #ffffff var(--tw-gradient-to-position);
-  font-weight: 200;
-}
-
-#playlistscontainer {
-  margin-top: 1.25rem;
-}
-.modal-content button{
-  height: 100%;
-  border-radius: 0.375rem;
-  --tw-bg-opacity: 1;
-  background-color: rgb(35 169 145 / var(--tw-bg-opacity));
-  padding-left: 0.75rem;
-  padding-right: 0.75rem;
-  padding-top: 0.375rem;
-  font-weight: 500;
-  --tw-text-opacity: 1;
-  color: rgb(24 28 40 / var(--tw-text-opacity));
-}
-.mc2{
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: space-between;
-}
-.hidden {
-  display: none !important;
-}
 .circle-button {
    margin: 0 0 0 6px;
     width: 40px;
@@ -439,7 +387,7 @@
        
        <div id="playlistsModal" class="modal">
          <div class="modal-content">
-           <span class="close" onclick="closePlaylistsModal()">X</span>
+<br>
            <h2 class="selectp">Select Playlist</h2>
            <div class="mc2">
             <input type="text" id="newPlaylistName" placeholder="New Playlist Name">

@@ -1,0 +1,22 @@
+
+
+
+  
+
+  .hidden {
+    display: none !important;
+  }
+  /* Initial state of the modal (positioned above the screen) */
+#playlistsModal {
+    position: fixed;
+    top: 100%; /* Initially off-screen */
+    left: 0;
+    right: 0;
+    transition: top 0.3s ease; /* Smooth slide effect */
+  }
+  
+  /* When the modal is visible (on-screen) */
+  #playlistsModal.open {
+    top: 0;
+  }
+  
