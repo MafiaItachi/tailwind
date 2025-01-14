@@ -8,11 +8,23 @@
   }
 
 
-  #playlistsModal {
-    transition: transform 0.3s ease, opacity 0.3s ease;
-  }
+
   .hiddens {
     transform: translateY(100%); /* Slide down */
     opacity: 0;
   }
+  
+  #playlistsModal {
+    display: none; /* Hidden by default */
+    opacity: 0;
+    transform: translateY(100%); /* Slide in from below */
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  #playlistsModal.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0); /* Reset position for visible state */
+  }
+  
   

@@ -15,6 +15,24 @@ function loadPlaylists() {
   }
 }
 
+// Function to show the playlists modal with smooth appearing effect
+function showPlaylistsModal() {
+  const modal = document.getElementById('playlistsModal');
+  modal.style.display = 'block'; // Ensure it's part of the DOM
+  setTimeout(() => modal.classList.add('active'), 10); // Add 'active' after a tiny delay for the transition
+  displayPlaylists();
+  initializeSwipeGesture(); // Initialize swipe gesture when modal is shown
+}
+
+// Function to close the playlists modal with smooth disappearing effect
+function closePlaylistsModal() {
+  const modal = document.getElementById('playlistsModal');
+  modal.classList.remove('active'); // Remove the active class to trigger the transition
+  setTimeout(() => {
+    modal.style.display = 'none'; // Hide after transition completes
+  }, 300); // Match the CSS transition duration
+}
+
 // Function to initialize swipe-down gesture
 function initializeSwipeGesture() {
   const modal = document.getElementById('playlistsModal');
@@ -28,22 +46,12 @@ function initializeSwipeGesture() {
   });
 }
 
-// Function to show the playlists modal
-function showPlaylistsModal() {
-  const modal = document.getElementById('playlistsModal');
-  modal.style.display = 'block';
-  displayPlaylists();
-  initializeSwipeGesture(); // Initialize swipe gesture when modal is shown
-}
+// Initialize when the page loads
+window.onload = function () {
+  loadPlaylists();
+  initializeSwipeGesture(); // Ensure swipe gestures are ready
+};
 
-function closePlaylistsModal() {
-  const modal = document.getElementById('playlistsModal');
-  modal.classList.add('hiddens');
-  setTimeout(() => {
-    modal.style.display = 'none';
-    modal.classList.remove('hiddens');
-  }, 300); // Match the CSS transition duration
-}
 
 
 
