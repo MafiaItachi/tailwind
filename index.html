@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html>
    <head>
-   
-      <script src="https://accounts.google.com/gsi/client" async defer></script>
-
+      <script src="https://accounts.google.com/gsi/client" async defer></script> <!--Google Sign-In -->
       <link rel="icon" href="image/favicon.png" type="image/icon">
       <link rel="manifest" href="/manifest.json">
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -109,6 +107,27 @@
 .hidden {
   display: none !important;
 }
+.circle-button {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    background-color: #4285F4; /* Google blue */
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* For showing profile picture later */
+}
+
+.circle-button img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure the image covers the button area */
+}
+
       </style>
    </head>
    <body class="mx-1.5">
@@ -240,7 +259,7 @@
                </div>
                <div id="library-section" style="display: none;">
                   <div class="yourplaylist">
-                     <button id="loginButton">Login to YouTube</button>
+                     <button id="loginButton" class="circle-button">Login to YouTube</button>
                      <h1 class="h2 ">YOUR PLAYLIST</h1>
                      <div class="added-playlists-container ">
                         <div id="addedPlaylists" class="added-playlists ">

@@ -3,10 +3,12 @@
 //const clientId = '637980846129-vi3estjf3mehsarbbf44ongjltci9sue.apps.googleusercontent.com';
 
 //https://maps.googleapis.com/maps/api/js?key=AIzaSyCnd1JW8BZS6WShR1j4twmeTES-l-FCxoU
+
+
 const CLIENT_IDe = '78183444968-nq7r22h10p4p2j83sbkvh9j60bb6isek.apps.googleusercontent.com';
 const API_KEYe = 'AIzaSyCnd1JW8BZS6WShR1j4twmeTES-l-FCxoU';
 const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"];
-const SCOPES = 'https://www.googleapis.com/auth/youtube.readonly';
+const SCOPES = 'https://www.googleapis.com/auth/youtube.readonly https://www.googleapis.com/auth/userinfo.profile';
 
 let tokenClient;
 let gapiInited = false;
@@ -36,13 +38,15 @@ function initGIS() {
     tokenClient = google.accounts.oauth2.initTokenClient({
         client_id: CLIENT_IDe,
         scope: SCOPES,
-        callback: (response) => {
+        callback: async (response) => {
             if (response.error) {
                 console.error('Error during token acquisition:', response);
                 alert('Failed to acquire token. Check console for details.');
                 return;
             }
-            getPlaylists(); // If successful, fetch playlists
+            // Fetch and display the user's profile image
+            await getUserProfile();
+            getPlaylists(); // Fetch playlists after login
         },
     });
     gisInited = true;
@@ -62,7 +66,25 @@ function handleAuthClick() {
     tokenClient.requestAccessToken({ prompt: 'consent' });
 }
 
-// Fetch and display playlists
+// Fetch the Google user's profile information
+async function getUserProfile() {
+    try {
+        const response = await gapi.client.request({
+            path: 'https://www.googleapis.com/oauth2/v1/userinfo',
+        });
+
+        const userInfo = response.result;
+        const profileImageUrl = userInfo.picture;
+
+        // Replace the button with the user's profile image
+        const loginButton = document.getElementById('loginButton');
+        loginButton.innerHTML = `<img src="${profileImageUrl}" alt="Google User" />`;
+    } catch (error) {
+        console.error('Error fetching user profile:', error);
+    }
+}
+
+// Fetch and display playlists (Updated to handle duplicates)
 async function getPlaylists() {
     try {
         const response = await gapi.client.youtube.playlists.list({
@@ -72,17 +94,29 @@ async function getPlaylists() {
         });
 
         const playlists = response.result.items;
+
         playlists.forEach((playlist) => {
             const playlistId = playlist.id;
             const playlistTitle = playlist.snippet.title;
             const playlistThumbnail = playlist.snippet.thumbnails.medium.url;
 
-            // Add playlists to the saved list
+            // Retrieve the stored playlists from localStorage
             const storedPlaylists = JSON.parse(localStorage.getItem('savedPlaylists')) || [];
+
+            // Check for duplicates by playlist ID
+            const existingPlaylistIndex = storedPlaylists.findIndex(p => p.id === playlistId);
+            if (existingPlaylistIndex !== -1) {
+                // If a playlist with the same ID exists, remove the old one
+                storedPlaylists.splice(existingPlaylistIndex, 1);
+            }
+
+            // Add the new playlist to the list
             storedPlaylists.push({ id: playlistId, title: playlistTitle, thumbnail: playlistThumbnail });
+
+            // Store the updated list in localStorage
             localStorage.setItem('savedPlaylists', JSON.stringify(storedPlaylists));
 
-            // Add playlists to the DOM
+            // Add the playlist to the DOM
             const playlistsSection = document.getElementById('addedPlaylists');
             const playlistContainer = document.createElement('div');
             playlistContainer.classList.add('playlist');
