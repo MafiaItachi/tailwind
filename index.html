@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
    <head>
+   
+      <script src="https://accounts.google.com/gsi/client" async defer></script>
+
       <link rel="icon" href="image/favicon.png" type="image/icon">
       <link rel="manifest" href="/manifest.json">
       <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
@@ -237,6 +240,7 @@
                </div>
                <div id="library-section" style="display: none;">
                   <div class="yourplaylist">
+                     <button id="loginButton">Login to YouTube</button>
                      <h1 class="h2 ">YOUR PLAYLIST</h1>
                      <div class="added-playlists-container ">
                         <div id="addedPlaylists" class="added-playlists ">
@@ -435,5 +439,6 @@ add
        <script src="src/urplist.js"></script>
        <script src="src/Suggestions.js"></script>
       <script src="src/icon.js"></script>
+      <script src="src/login.js"></script>
    </body>
 </html>
