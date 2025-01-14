@@ -108,8 +108,9 @@
   display: none !important;
 }
 .circle-button {
-    width: 50px;
-    height: 50px;
+   margin: 0 0 0 6px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     border: none;
     background-color: #4285F4; /* Google blue */
@@ -128,10 +129,36 @@
     object-fit: cover; /* Ensure the image covers the button area */
 }
 #loginButton img {
+
     border-radius: 50%; /* Makes the image circular */
-    width: 50px;       /* Set desired width */
-    height: 50px;      /* Set desired height */
+    width: 40px;       /* Set desired width */
+    height: 40px;      /* Set desired height */
     object-fit: cover; /* Ensures the image fits within the circle */
+}
+/* General styles for the h1 container */
+.h1 {
+  display: flex;
+  align-items: center; /* Vertically center the elements */
+  justify-content: center; /* Center the "PHOTON PLAYER" text horizontally */
+  position: relative; /* Allows absolute positioning for the image */
+  width: 100%; /* Takes full width of the screen */
+}
+
+/* Styles for the button container */
+.circle-button {
+  position: absolute;
+  left: 0; /* Position the button at the far left */
+  top: 50%; /* Vertically align it */
+  transform: translateY(-50%); /* Adjust for button height */
+
+}
+
+
+/* Styles for the "PHOTON PLAYER" text */
+.h1 span {
+  text-align: center;
+  font-size: 24px; /* Adjust as needed */
+  font-weight: bold;
 }
 
 
@@ -140,8 +167,14 @@
    <body class="mx-1.5">
       <div id="pc">
          <div class="faded">
-            <div class="lefthf">
-               <h1 class="h1" >PHOTON PLAYER</h1>      
+            <div class="lefthf">    
+               <h1 class="h1">
+                  <button id="loginButton" class="circle-button">
+                    <img src="image/songicon.jpg" alt="Icon">
+                  </button>
+                  <span>PHOTON PLAYER</span>
+                </h1>                
+                   
                <div id="search-section" style="display: none;">
                   <div class="sxq "><input id="searchInput" class="searchInput" placeholder="search" oninput="fetchSuggestions(this.value)" >
 
@@ -266,7 +299,6 @@
                </div>
                <div id="library-section" style="display: none;">
                   <div class="yourplaylist">
-                     <button id="loginButton" class="circle-button">Login to YouTube</button>
                      <h1 class="h2 ">YOUR PLAYLIST</h1>
                      <div class="added-playlists-container ">
                         <div id="addedPlaylists" class="added-playlists ">
