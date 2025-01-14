@@ -335,8 +335,11 @@ window.onload = loadPlaylists;
 // Function to detect swipe-down gesture
 function detectSwipeDownGesture(event) {
   const modal = document.getElementById('playlistsModal');
-  const touchStart = event.touches[0].clientY;
   
+  // Prevent the default action (browser refresh)
+  event.preventDefault();
+
+  const touchStart = event.touches[0].clientY;
   let touchEnd = touchStart;
 
   // Track the swipe move
