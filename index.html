@@ -29,7 +29,6 @@
 }
          .dontn {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   padding: 0.5rem;
   background-color: #262d41;
@@ -39,14 +38,17 @@
   width: 100%;
 }
 .dontn button {
-   background-color: transparent;
    border: none;
    box-shadow: none;
    color: #fff;
 }
 .h3 {
+   display: flex;
+  align-items: center; /* Vertically center the elements */
+  justify-content: center; /* Center the "PHOTON PLAYER" text horizontally */
+  position: relative; /* Allows absolute positioning for the image */
+  width: 100%; /* Takes full width of the screen */
   margin: 0;
-  margin-left: 35%;
 }
      
 .favorite-artist2 div {
@@ -289,10 +291,10 @@
                </div>
                <div id="mini-player" class="mini-player">
                   <div class="dontn">
-                     <h1 class="h3">PHOTON PLAYER </h1>
                      <button onclick="hideMiniPlayer()"><span class="material-symbols-outlined">
                         keyboard_arrow_down
-                        </span></button>
+                     </span></button>
+                     <h1 class="h3">PHOTON PLAYER </h1>
                   </div>
                   <div class="youtube">
                      <div id="lyrics-container" style="display: none;"></div>
