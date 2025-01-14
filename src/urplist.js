@@ -15,6 +15,7 @@ function loadPlaylists() {
   }
 }
 
+
   // Function to show the playlists modal
   function showPlaylistsModal() {
     document.getElementById('playlistsModal').style.display = 'block';
@@ -35,6 +36,8 @@ function loadPlaylists() {
   function closePlaylistsModal() {
     document.getElementById('playlistsModal').style.display = 'none';
   }
+
+
 // Function to create a new playlist
 function createPlaylist() {
   const playlistName = document.getElementById('newPlaylistName').value;
