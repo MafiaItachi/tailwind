@@ -15,25 +15,16 @@ function loadPlaylists() {
   }
 }
 
-// Function to show the playlists modal with transition
+// Function to show the playlists modal
 function showPlaylistsModal() {
-  const modal = document.getElementById('playlistsModal');
-  modal.style.display = 'block';
-  setTimeout(() => {
-    modal.classList.add('open'); // Apply the 'open' class after the modal is displayed
-  }, 10); // Small delay to ensure the modal is displayed before transition starts
+  document.getElementById('playlistsModal').style.display = 'block';
   displayPlaylists();
 }
 
-// Function to close the playlists modal with transition
+// Function to close the playlists modal
 function closePlaylistsModal() {
-  const modal = document.getElementById('playlistsModal');
-  modal.classList.remove('open'); // Remove the 'open' class to trigger the slide-up effect
-  setTimeout(() => {
-    modal.style.display = 'none'; // Hide the modal completely after the transition
-  }, 300); // Timeout matches the duration of the transition (0.3s)
+  document.getElementById('playlistsModal').style.display = 'none';
 }
-
 
 // Function to create a new playlist
 function createPlaylist() {
@@ -331,38 +322,4 @@ function editPlaylistName(oldName) {
 // Load playlists when the page loads
 window.onload = loadPlaylists;
 
-
-// Function to detect swipe-down gesture
-function detectSwipeDownGesture(event) {
-  const modal = document.getElementById('playlistsModal');
-  const modalContent = modal.querySelector('.modal-content'); // Adjust this selector as needed for your modal content
-  
-  // If the touch starts inside a form input (text box or button), don't trigger the gesture
-  if (event.target.closest('input, button')) {
-    return; // Prevent the swipe-down gesture when touching the text box or button
-  }
-
-  // Prevent the default action (browser refresh)
-  event.preventDefault();
-
-  const touchStart = event.touches[0].clientY;
-  let touchEnd = touchStart;
-
-  // Track the swipe move
-  event.target.addEventListener('touchmove', function(e) {
-    touchEnd = e.touches[0].clientY;
-  });
-
-  // Detect swipe down and close the modal
-  event.target.addEventListener('touchend', function() {
-    const swipeDistance = touchEnd - touchStart; // Difference between touch start and end positions
-    if (swipeDistance > 100) { // Swipe down threshold (100px or more)
-      closePlaylistsModal(); // Close the modal if swipe down is detected
-    }
-  });
-}
-
-// Apply the swipe-down gesture to the modal
-const modal = document.getElementById('playlistsModal');
-modal.addEventListener('touchstart', detectSwipeDownGesture);
 
