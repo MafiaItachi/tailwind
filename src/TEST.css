@@ -27,4 +27,17 @@
     transform: translateY(0); /* Reset position for visible state */
   }
   
-  
+  .modal-header button{
+    background-color: #181c28;
+    color: white;
+    box-shadow: none;
+    padding: 4PX 0 0 0;
+    font-weight: bolder;
+    font-size: 1.75rem;
+    width: 30PX;
+  }
+  .modal-header{
+    display: flex;
+    padding: 0 0 2PX 0;
+    align-items: center;
+  }

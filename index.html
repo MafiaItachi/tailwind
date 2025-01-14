@@ -387,9 +387,12 @@
        
        <div id="playlistsModal" class="modal">
          <div class="modal-content">
-<br>
-           <span  class="close" onclick="closePlaylistsModal()">cancle</span>
-           <h2 class="selectp">Select Playlist</h2>
+         <div class="modal-header">
+            <button onclick="closePlaylistsModal()"><span class="material-symbols-outlined">
+               keyboard_arrow_down
+               </span></button>
+                       <h3 class="selectp">SELECT PLAYLIST</h3>
+         </div>
            <div class="mc2">
             <input type="text" id="newPlaylistName" placeholder="New Playlist Name">
            <button onclick="createPlaylist()"><span class="material-symbols-outlined">
