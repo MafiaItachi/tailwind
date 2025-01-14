@@ -15,21 +15,40 @@ function loadPlaylists() {
   }
 }
 
-// Function to show the playlists modal with smooth appearing effect
-// Function to show the playlists modal
-function showPlaylistsModal() {
-  document.getElementById('playlistsModal').style.display = 'block';
-  displayPlaylists();
-}
+  // Function to show the playlists modal
+  function showPlaylistsModal() {
+    var modal = document.getElementById('playlistsModal');
+    var modalContent = document.querySelector('.modal-content');
 
-// Function to close the playlists modal
-function closePlaylistsModal() {
-  document.getElementById('playlistsModal').style.display = 'none';
-}
+    modal.style.display = 'block';
+    displayPlaylists();
 
+    // Reset animation state
+    modalContent.classList.remove('hidden');
 
+    // Add Hammer.js to detect swipe gestures
+    var hammer = new Hammer(modalContent);
+    hammer.get('swipe').set({ direction: Hammer.DIRECTION_VERTICAL });
 
+    // Listen for swipe down gesture
+    hammer.on('swipedown', function () {
+      closePlaylistsModal();
+    });
+  }
 
+  // Function to close the playlists modal with animation
+  function closePlaylistsModal() {
+    var modal = document.getElementById('playlistsModal');
+    var modalContent = document.querySelector('.modal-content');
+
+    // Add hidden class to trigger the translateY and opacity transition
+    modalContent.classList.add('hidden');
+
+    // Wait for the animation to finish, then hide the modal
+    setTimeout(function() {
+      modal.style.display = 'none';
+    }, 400);  // Duration matches the CSS transition time (0.4s)
+  }
 // Function to create a new playlist
 function createPlaylist() {
   const playlistName = document.getElementById('newPlaylistName').value;

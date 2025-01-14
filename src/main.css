@@ -571,10 +571,10 @@ body {
 /* urplist */
 
 .modal {
-  @apply hidden fixed z-13 left-0 top-0 w-full h-full overflow-auto backdrop-blur-md bg-opacity-10 ;
+  @apply hidden fixed z-13 left-0 top-0 w-full h-full overflow-auto  bg-opacity-10 ;
 }
 .modal-content {
-  @apply bg-body fixed left-0 top-0 w-full h-auto rounded-t-3xl p-5  ;
+  @apply bg-body fixed left-0 top-0 w-full h-full rounded-t-3xl p-5  ;
 }
 .modal-content button {
   @apply bg-green pt-2 px-3 rounded-md text-body 

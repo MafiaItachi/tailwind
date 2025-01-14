@@ -1990,9 +1990,6 @@ body {
   width: 100%;
   overflow: auto;
   --tw-bg-opacity: 0.1;
-  --tw-backdrop-blur: blur(12px);
-  -webkit-backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
-          backdrop-filter: var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);
   z-index: 13;
 }
 
@@ -2000,7 +1997,7 @@ body {
   position: fixed;
   left: 0px;
   top: 0px;
-  height: auto;
+  height: 100%;
   width: 100%;
   border-top-left-radius: 1.5rem;
   border-top-right-radius: 1.5rem;

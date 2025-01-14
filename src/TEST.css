@@ -14,18 +14,6 @@
     opacity: 0;
   }
   
-  #playlistsModal {
-    display: none; /* Hidden by default */
-    opacity: 0;
-    transform: translateY(100%); /* Slide in from below */
-    transition: opacity 0.3s ease, transform 0.3s ease;
-  }
-  
-  #playlistsModal.active {
-    display: block;
-    opacity: 1;
-    transform: translateY(0); /* Reset position for visible state */
-  }
   
   .modal-header button{
     background-color: #181c28;
@@ -41,3 +29,15 @@
     padding: 0 0 2PX 0;
     align-items: center;
   }
+
+  .modal-content {
+
+    transform: translateY(0);  /* Initial translate Y position */
+    transition: transform 0.4s ease-in-out, opacity 0.4s ease-in-out; /* Smooth transition for Y translation and opacity */
+  }
+  
+  .modal-content.hidden {
+    transform: translateY(100%);  /* Move content downwards */
+    opacity: 0;  /* Fade out */
+  }
+  
