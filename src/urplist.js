@@ -323,3 +323,56 @@ function editPlaylistName(oldName) {
 window.onload = loadPlaylists;
 
 
+// Add swipe functionality to modal-content
+document.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('playlistsModal');
+  const modalContent = modal.querySelector('.modal-content');
+  let startY = 0;
+  let isSwiping = false;
+
+  // Handle touch start
+  modalContent.addEventListener('touchstart', (e) => {
+    startY = e.touches[0].clientY;
+    isSwiping = true;
+  });
+
+  // Handle touch move
+  modalContent.addEventListener('touchmove', (e) => {
+    if (!isSwiping) return;
+
+    const currentY = e.touches[0].clientY;
+    const translateY = currentY - startY;
+
+    if (translateY > 0) {
+      // Swipe down (close modal)
+      modalContent.style.transform = `translateY(${translateY}px)`;
+    } else {
+      // Swipe up (expand modal)
+      modalContent.style.transform = `translateY(${translateY}px)`;
+    }
+
+    modalContent.style.transition = 'transform 0.3s ease-in-out';
+  });
+
+  // Handle touch end
+  modalContent.addEventListener('touchend', (e) => {
+    const endY = e.changedTouches[0].clientY;
+    const swipeDistance = endY - startY;
+
+    // Swipe down to close modal
+    if (swipeDistance > 50) {
+      closePlaylistsModal();
+    } else {
+      // Reset position if swipe distance is insufficient
+      modalContent.style.transform = 'translateY(0)';
+    }
+
+    isSwiping = false;
+  });
+
+  // Prevent interference with buttons inside modal-content
+  modalContent.querySelectorAll('button').forEach((button) => {
+    button.addEventListener('touchstart', (e) => e.stopPropagation());
+    button.addEventListener('click', (e) => e.stopPropagation());
+  });
+});
