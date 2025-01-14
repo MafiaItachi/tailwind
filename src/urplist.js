@@ -358,3 +358,6 @@ function detectSwipeDownGesture(event) {
 // Apply the swipe-down gesture to the modal
 const modal = document.getElementById('playlistsModal');
 modal.addEventListener('touchstart', detectSwipeDownGesture);
+modal.addEventListener('touchmove', function(e) {
+  e.preventDefault();  // Prevent scroll while swiping in the modal
+});
