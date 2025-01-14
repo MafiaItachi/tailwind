@@ -2002,7 +2002,6 @@ body {
   top: 12rem;
   height: 100%;
   width: 100%;
-  overflow-y: auto;
   border-radius: 1.5rem;
   --tw-bg-opacity: 1;
   background-color: rgb(24 28 40 / var(--tw-bg-opacity));
