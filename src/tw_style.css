@@ -1997,13 +1997,14 @@ body {
   position: fixed;
   left: 0px;
   top: 0px;
-  height: auto;
+  height: 100%;
   width: 100%;
   border-top-left-radius: 1.5rem;
   border-top-right-radius: 1.5rem;
   --tw-bg-opacity: 1;
   background-color: rgb(24 28 40 / var(--tw-bg-opacity));
-  padding: 1.25rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
 }
 
 .modal-content button {
