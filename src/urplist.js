@@ -11,9 +11,19 @@ function loadPlaylists() {
   const storedPlaylists = localStorage.getItem('playlists');
   if (storedPlaylists) {
     playlists = JSON.parse(storedPlaylists);
+
+    // Remove invalid entries from all playlists
+    for (const playlistName in playlists) {
+      playlists[playlistName] = playlists[playlistName].filter(
+        song => song.id && song.title
+      );
+    }
+
+    savePlaylists(); // Save cleaned data back to localStorage
     displayAddedSongs();
   }
 }
+
 
 
   // Function to show the playlists modal
@@ -310,8 +320,22 @@ function playSongsSequentially(songs, index = 0) {
 }
 
 function removeSongFromPlaylist(playlistName, songId) {
-  playlists[playlistName] = playlists[playlistName].filter(song => song.id !== songId);
-  savePlaylists();
+  if (!playlists[playlistName]) {
+    console.error(`Playlist "${playlistName}" does not exist.`);
+    return;
+  }
+
+  // Filter out songs with matching ID or invalid entries
+  playlists[playlistName] = playlists[playlistName].filter(song => {
+    if (!song.id || !song.title) {
+      // Log invalid song entries for debugging
+      console.warn(`Invalid song entry found in playlist "${playlistName}":`, song);
+      return false; // Remove invalid entries
+    }
+    return song.id !== songId;
+  });
+
+  savePlaylists(); // Update localStorage
   revealSongsList(playlistName); // Refresh the song list view
 }
 
