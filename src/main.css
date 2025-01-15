@@ -513,7 +513,7 @@ body {
   @apply rounded-full h-14 w-14 bg-primary text-body pt-1;
 }
 #lyrics-container {
-  @apply text-wrap mt-5 leading-normal overflow-y-auto h-80 text-center;
+  @apply text-wrap mt-5 leading-normal overflow-y-auto h-80 w-full text-center ;
 }
 
 /* ALERT */
