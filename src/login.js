@@ -74,15 +74,42 @@ function handleAuthClick() {
     tokenClient.requestAccessToken({ prompt: 'consent' });
 }
 
-// Fetch the Google user's profile information
+function togglePopup() {
+    const container = document.getElementById('profilePopupContainer');
+    const popup = document.getElementById('profilePopup');
+    
+    if (container.style.display === 'none' || container.style.display === '') {
+        container.style.display = 'flex'; // Show the overlay
+        popup.style.display = 'block'; // Ensure the popup is visible
+    } else {
+        container.style.display = 'none'; // Hide the overlay
+        popup.style.display = 'none'; // Hide the popup
+    }
+}
+
+// Close the popup when clicking outside
+document.addEventListener('click', (event) => {
+    const container = document.getElementById('profilePopupContainer');
+    const popup = document.getElementById('profilePopup');
+    const profileButton = document.querySelector('.profile');
+
+    if (
+        container.style.display === 'flex' && // Only act if the popup is visible
+        !popup.contains(event.target) && // Click is outside the popup
+        !profileButton.contains(event.target) // Click is outside the profile button
+    ) {
+        container.style.display = 'none'; // Hide the popup and overlay
+    }
+});
+
+
+// Load Google profile image into the popup
 async function getUserProfile() {
     console.log("Fetching user profile...");
     try {
         const response = await gapi.client.request({
             path: 'https://www.googleapis.com/oauth2/v1/userinfo',
         });
-
-        console.log("User profile response:", response);
 
         const userInfo = response.result;
         const profileImageUrl = userInfo.picture;
@@ -93,12 +120,10 @@ async function getUserProfile() {
             // Save the profile image URL to localStorage
             localStorage.setItem('profileImageUrl', profileImageUrl);
 
-            const loginButton = document.getElementById('loginButton');
-            if (loginButton) {
-                loginButton.innerHTML = `<img src="${profileImageUrl}" alt="Google User" style="border-radius: 50%; width: 50px; height: 50px;" />`;
-                console.log("Profile image updated in the DOM.");
-            } else {
-                console.error("Login button not found in the DOM.");
+            // Update the profile popup image
+            const profileImage = document.getElementById('googleProfileImage');
+            if (profileImage) {
+                profileImage.src = profileImageUrl;
             }
         } else {
             console.warn("Profile picture URL is missing in the user info.");
@@ -107,6 +132,19 @@ async function getUserProfile() {
         console.error("Error fetching user profile:", error);
     }
 }
+
+// On document load, populate the profile popup
+document.addEventListener('DOMContentLoaded', () => {
+    const savedProfileImageUrl = localStorage.getItem('profileImageUrl');
+    if (savedProfileImageUrl) {
+        const profileImage = document.getElementById('googleProfileImage');
+        if (profileImage) {
+            profileImage.src = savedProfileImageUrl;
+        }
+    }
+});
+
+
 
 // Fetch and display playlists (Updated to handle duplicates)
 async function getPlaylists() {
@@ -170,9 +208,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const savedProfileImageUrl = localStorage.getItem('profileImageUrl');
     if (savedProfileImageUrl) {
         console.log("Found saved profile image in localStorage.");
-        const loginButton = document.getElementById('loginButton');
-        if (loginButton) {
-            loginButton.innerHTML = `<img src="${savedProfileImageUrl}" alt="Google User" style="border-radius: 50%; width: 40px; height: 40px;" />`;
+        const profileButton = document.getElementById('profile');
+        if (profileButton) {
+            profileButton.innerHTML = `<img src="${savedProfileImageUrl}" alt="Google User" style="border-radius: 50%; width: 40px; height: 40px;" />`;
         }
     }
 

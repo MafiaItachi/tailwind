@@ -107,7 +107,6 @@
 
 }
 
-
 /* Styles for the "PHOTON PLAYER" text */
 .h1 span {
   text-align: center;
@@ -123,9 +122,37 @@
          <div class="faded">
             <div class="lefthf">    
                <h1 class="h1">
-                  <button id="loginButton" class="circle-button">
-                    <img src="image/songicon.jpg" alt="Icon">
-                  </button>
+                  <button class="profile circle-button" id="profile" onclick="togglePopup()">
+                     <img src="image/songicon.jpg" alt="Icon">
+                 </button>
+                 
+                 <div id="profilePopupContainer" class="popup-container" style="display: none;">
+                  
+                     <div id="profilePopup" class="profile-popup">
+                        <div class="ppc2">
+                        <img id="googleProfileImage" src="" alt="Google Profile" class="profile-image" />
+                        <button id="loginButton" class="login-button">Login</button>
+                        <div class="backup-container">
+                        <div class="backtext">
+                           <button onclick="backupLocalStorage()" class="action-button">
+                              <span class="material-symbols-outlined">edit_document</span>
+                          </button>
+                          <div>BACKUP</div>
+                        </div>
+                        <div class="restoretext">
+                           <button onclick="restoreLocalStorage()" class="action-button">
+                              <span class="material-symbols-outlined">restore</span>
+                          </button>
+                          <h2>RESTORE</h2>
+                        
+              <input type="file" id="fileInput" style="display: none;" />
+          </div>
+  
+                    </div>
+                  
+              </div>
+            </div>
+                 </div>
                   <span>PHOTON PLAYER</span>
                 </h1>                
                    
@@ -235,13 +262,9 @@
                   <div id="recommendations"></div>
                   </div>
                   <div class="backup-restore">
-                     <button onclick="backupLocalStorage()"><span class="material-symbols-outlined">
-                     edit_document
-                     </span></button>
+                     
                      <h4>BACKUP -- RESTORE</h4>
-                     <button onclick="document.getElementById('fileInput').click()"><span class="material-symbols-outlined">
-                     restore_page
-                     </span></button>
+                     
                      <input type="file" id="fileInput" style="display: none" onchange="restoreLocalStorage(event)">
                   </div>
                   <br></br><br></br><br></br><br></br>
