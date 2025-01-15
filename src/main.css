@@ -459,7 +459,7 @@ body {
   @apply w-0 h-full bg-body;
 }
 .mini-player {
-  @apply fixed -bottom-px left-0 right-0 flex items-center box-border flex-col  h-full bg-secondary rounded-lg  ease-in-out duration-300 tra;
+  @apply fixed bottom-0 left-0 right-0 flex items-center box-border flex-col  h-full bg-secondary rounded-lg  ease-in-out duration-300 tra;
 }
 #player {
   @apply w-full rounded-lg;
