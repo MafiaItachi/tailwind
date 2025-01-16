@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Video Data Fetcher</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      margin: 20px;
+    }
+    input {
+      padding: 10px;
+      width: 80%;
+      margin-bottom: 10px;
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #218838;
+    }
+    #result {
+      margin-top: 20px;
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 5px;
+      background: #f9f9f9;
+    }
+    img {
+      max-width: 100%;
+    }
+    h3 {
+      color: #007bff;
+    }
+  </style>
+</head>
+<body>
+  <h1>YouTube Video Data Fetcher</h1>
+  <label for="videoLink">Enter YouTube Video Link:</label>
+  <input type="text" id="videoLink" placeholder="https://www.youtube.com/watch?v=example">
+  <button onclick="fetchVideoData()">Fetch Video Data</button>
+
+  <div id="result"></div>
+
+  <script>
+   async function fetchVideoData() {
+  const videoLink = document.getElementById('videoLink').value;
+  const videoId = extractVideoId(videoLink);
+  
+  if (!videoId) {
+    alert('Invalid YouTube link. Please enter a valid URL.');
+    return;
+  }
+
+  const API_KEY = 'AIzaSyCvg75UUMA46CjILnhTcRcQVnxzmPDaRCU';
+  const API_URL = `https://www.googleapis.com/youtube/v3/videos?part=snippet,contentDetails,statistics,status,topicDetails&id=${videoId}&key=${API_KEY}`;
+
+  try {
+    const response = await fetch(API_URL);
+    const data = await response.json();
+
+    if (data.items && data.items.length > 0) {
+      const videoDetails = data.items[0];
+      const title = videoDetails.snippet.title;
+
+      // Display YouTube Video Details
+      displayVideoDetails(videoDetails);
+
+      // Fetch Original Artist from Audd.io
+      const originalArtist = await fetchOriginalArtist(title);
+      const artistDisplay = originalArtist
+        ? `<p><strong>Original Artist:</strong> ${originalArtist}</p>`
+        : `<p><strong>Original Artist:</strong> Not Found</p>`;
+
+      document.getElementById('result').innerHTML += artistDisplay;
+    } else {
+      alert('No video data found for the provided link.');
+    }
+  } catch (error) {
+    console.error('Error fetching video data:', error);
+    alert('An error occurred while fetching the data.');
+  }
+}
+async function fetchOriginalArtist(songTitle) {
+  const AUDD_API_URL = 'https://api.audd.io/findLyrics/';
+  const AUDD_API_KEY = 'e6a37c019a07052af2482bba6ea25f6d'; // Replace with your Audd.io API Key
+
+  try {
+    // Build the Audd.io API request
+    const response = await fetch(`${AUDD_API_URL}?q=${encodeURIComponent(songTitle)}&api_token=${AUDD_API_KEY}`);
+    const data = await response.json();
+
+    if (data && data.result && data.result.length > 0) {
+      // Return the artist name from the first result
+      return data.result[0].artist || 'Artist Unknown';
+    }
+  } catch (error) {
+    console.error('Error fetching original artist from Audd.io:', error);
+  }
+  return 'Artist Unknown';
+}
+
+
+
+    function extractVideoId(url) {
+      const regex = /(?:https?:\/\/)?(?:www\.)?youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/;
+      const match = url.match(regex);
+      return match ? match[1] : null;
+    }
+
+    function displayVideoDetails(video) {
+      const snippet = video.snippet;
+      const stats = video.statistics;
+      const contentDetails = video.contentDetails;
+      const status = video.status;
+      const topics = video.topicDetails ? video.topicDetails.topicCategories : null;
+
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = `
+        <h3>${snippet.title}</h3>
+        <img src="${snippet.thumbnails.high.url}" alt="Thumbnail">
+        <p><strong>Description:</strong> ${snippet.description || 'No description available.'}</p>
+        <p><strong>Channel:</strong> ${snippet.channelTitle}</p>
+        <p><strong>Published At:</strong> ${new Date(snippet.publishedAt).toLocaleString()}</p>
+        <p><strong>Tags:</strong> ${snippet.tags ? snippet.tags.join(', ') : 'No tags available.'}</p>
+        <p><strong>Duration:</strong> ${convertISO8601(contentDetails.duration)}</p>
+        <p><strong>Definition:</strong> ${contentDetails.definition.toUpperCase()}</p>
+        <p><strong>Dimension:</strong> ${contentDetails.dimension}</p>
+        <p><strong>Captions:</strong> ${contentDetails.caption === 'true' ? 'Available' : 'Not Available'}</p>
+        <p><strong>License:</strong> ${contentDetails.licensedContent ? 'YouTube License' : 'Creative Commons'}</p>
+        <p><strong>Privacy Status:</strong> ${status.privacyStatus}</p>
+        <p><strong>Embeddable:</strong> ${status.embeddable ? 'Yes' : 'No'}</p>
+        <p><strong>Upload Status:</strong> ${status.uploadStatus}</p>
+        <p><strong>View Count:</strong> ${stats.viewCount}</p>
+        <p><strong>Like Count:</strong> ${stats.likeCount}</p>
+        <p><strong>Comment Count:</strong> ${stats.commentCount}</p>
+        <p><strong>Topics:</strong> ${
+          topics
+            ? topics.map(topic => `<a href="${topic}" target="_blank">${topic}</a>`).join(', ')
+            : 'No topics available.'
+        }</p>
+      `;
+    }
+
+    function convertISO8601(duration) {
+      const matches = duration.match(/PT(\d+H)?(\d+M)?(\d+S)?/);
+      const hours = matches[1] ? matches[1].slice(0, -1) : 0;
+      const minutes = matches[2] ? matches[2].slice(0, -1) : 0;
+      const seconds = matches[3] ? matches[3].slice(0, -1) : 0;
+
+      return `${hours > 0 ? hours + 'h ' : ''}${minutes > 0 ? minutes + 'm ' : ''}${seconds}s`;
+    }
+  </script>
+</body>
+</html>

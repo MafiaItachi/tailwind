@@ -15,7 +15,8 @@ function fetchLyrics(artist, songTitle, videoChannel, albumName = '', duration =
   if (duration > 0 && !retryWithoutDuration) {
     apiUrl.searchParams.append('duration', duration);
   }
-
+   // Log the URL with all parameters added
+   console.log(`Constructed API URL: ${apiUrl.toString()}`);
   fetch(apiUrl, {
     headers: {
       'User-Agent': 'YourAppName v1.0 (https://yourapphomepage.com)',
@@ -88,6 +89,7 @@ function updateVideoTitle2() {
 
 
 function displayLyrics(lyrics, isSynced) {
+  console.log(lyrics);
   const lyricsContainer = document.getElementById('lyrics-container');
   if (!lyricsContainer) {
     console.error('Lyrics container not found in the DOM.');
