@@ -245,8 +245,10 @@ function revealSongsList(playlistName) {
           </button>
       `;
       songElement.addEventListener('click', function () {
-          playVideo(song.id);
-          setCurrentPlaylistContext(song.id, "revealSongsList", playlistName);
+        isShuffleActive = false; // Deactivate shuffle playback
+        setCurrentPlaylistContext(song.id, "revealSongsList", playlistName);
+        player.loadVideoById(song.id);
+        player.playVideo();
       });
       songsListDiv.appendChild(songElement);
   });
@@ -295,8 +297,17 @@ window.addEventListener('popstate', function(event) {
 });
 
 
+
+
+
+
+
+let isShuffleActive = false; // Tracks whether shuffle playback is active
+
+
 function playShuffledPlaylist(playlistName = "flatPlaylist") {
-  // Retrieve the playlists from localStorage
+  isShuffleActive = true; // Activate shuffle playback
+
   const storedPlaylists = localStorage.getItem("playlists");
   const storedPlaylist = localStorage.getItem("playlist");
 
@@ -336,35 +347,46 @@ function playShuffledPlaylist(playlistName = "flatPlaylist") {
   const shuffledPlaylist = [...playlistToShuffle].sort(() => Math.random() - 0.5);
   console.log(`Shuffled playlist (${playlistName}):`, shuffledPlaylist);
 
-  // Function to play videos sequentially from the shuffled playlist
   let shuffleIndex = 0;
+
   function playNextInShuffle() {
-      if (shuffleIndex < shuffledPlaylist.length) {
-          const video = shuffledPlaylist[shuffleIndex];
-          const videoId = video.id || video.videoId;
-          const videoTitle = video.title || video.videoTitle;
+      if (!isShuffleActive) {
+          console.log("Shuffle playback deactivated.");
+          return; // Exit if shuffle is no longer active
+      }
 
-          player.loadVideoById(videoId);
-          player.playVideo();
+      if (shuffleIndex >= shuffledPlaylist.length) {
+          console.log("Finished playing shuffled playlist. Restarting...");
+          shuffleIndex = 0;
+      }
 
-          console.log(`Playing shuffled video: ${videoTitle}`);
-          shuffleIndex++;
+      const video = shuffledPlaylist[shuffleIndex];
+      const videoId = video.id || video.videoId;
+      const videoTitle = video.title || video.videoTitle;
 
-          // Listen for video end to play the next in shuffle
-          player.addEventListener("onStateChange", function onStateChange(event) {
-              if (event.data === YT.PlayerState.ENDED) {
-                  player.removeEventListener("onStateChange", onStateChange);
-                  playNextInShuffle(); // Play the next shuffled video
-              }
-          });
-      } else {
-          console.log("Finished playing shuffled playlist.");
+      console.log(`Playing shuffled video: ${videoTitle}`);
+      setCurrentPlaylistContext(videoId, "playShuffledPlaylist", playlistName);
+
+      player.loadVideoById(videoId);
+      player.playVideo();
+      shuffleIndex++;
+  }
+
+  player.removeEventListener("onStateChange", onShuffledStateChange);
+
+  function onShuffledStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+          playNextInShuffle();
       }
   }
 
-  // Start playing the shuffled playlist
+  player.addEventListener("onStateChange", onShuffledStateChange);
   playNextInShuffle();
 }
+
+
+
+
 
 
 

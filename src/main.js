@@ -65,7 +65,6 @@ function onYouTubeIframeAPIReady() {
         width: '640',
         videoId: '', // Set the initial video ID here
         playerVars: {
-            'autoplay': 0,
             'controls': 1,
 
         },
@@ -78,19 +77,7 @@ function onYouTubeIframeAPIReady() {
         }
     });
 }
-document.addEventListener('visibilitychange', function () {
-    if (document.hidden) {
-        // Document is hidden, ensure playback continues
-        if (player.getPlayerState() === YT.PlayerState.PLAYING) {
-            // Keep the video playing, no action needed
-        }
-    } else {
-        // Document is visible again, ensure playback resumes
-        if (player.getPlayerState() === YT.PlayerState.PAUSED) {
-            player.playVideo(); // Resume playback if it was paused
-        }
-    }
-});
+
 
 
 function onPlayerReady(event) {
@@ -210,19 +197,7 @@ function seek(event) {
 
     player.seekTo(seekTime, true);
 }
-function toggleRepeatMode() {
-    const repeatToggle = document.getElementById('repeat-toggle');
-    if (repeatMode === 'no-repeat') {
-        repeatMode = 'repeat-all';
-        repeatToggle.innerHTML = '<span class="material-symbols-outlined">repeat</span>';
-    } else if (repeatMode === 'repeat-all') {
-        repeatMode = 'repeat-one';
-        repeatToggle.innerHTML = '<span class="material-symbols-outlined">repeat_one</span>';
-    } else {
-        repeatMode = 'no-repeat';
-        repeatToggle.innerHTML = '<span class="material-symbols-outlined">stop_circle</span>';
-    }
-}
+
 
  //var repeatMode = "repeat-all"; Set the default repeat mode to "no-repeat"
 
@@ -620,9 +595,15 @@ function onVideoStart(videoId) {
 
 
 
-
-
 function setCurrentPlaylistContext(videoId, sourceFunction, playlistName = null) {
+    
+    if (sourceFunction === "playShuffledPlaylist" && playlistName) {
+        // Context for shuffled playback
+        currentKey = playlistName === "flatPlaylist" ? "flatPlaylist" : "playlists";
+        currentPlaylistName = playlistName;
+        console.log(`Context set: key="${currentKey}", playlistName="${playlistName}"`);
+        return;
+    }
     if (sourceFunction === "displayPlaylist") {
         // Context for "flatPlaylist"
         currentKey = "flatPlaylist";
@@ -639,8 +620,10 @@ function setCurrentPlaylistContext(videoId, sourceFunction, playlistName = null)
         return;
     }
 
+
     console.error("Unable to set context: Invalid sourceFunction or playlistName.");
 }
+
 
 
 function initializePlayerWithVideo(videoId) {
@@ -652,7 +635,7 @@ function initializePlayerWithVideo(videoId) {
 
 
 
-
+//now shuffle playlist is no stopping (as i told you to do ) but now setCurrentPlaylistContext cant able to set context
 
 
 
@@ -762,75 +745,69 @@ function truncateTitle(title) {
 
 
 function displayPlaylist() {
-    var playlistDiv = document.getElementById("playlist");
+    const playlistDiv = document.getElementById("playlist");
     playlistDiv.innerHTML = "";
 
-    var storedPlaylist = localStorage.getItem("playlist");
+    const storedPlaylist = localStorage.getItem("playlist");
     if (storedPlaylist) {
-        playlistItems = JSON.parse(storedPlaylist);
-        for (var i = 0; i < playlistItems.length; i++) {
-            var playlistItem = document.createElement("div");
+        const playlistItems = JSON.parse(storedPlaylist);
+
+        playlistItems.forEach((item, index) => {
+            const playlistItem = document.createElement("div");
             playlistItem.className = "playlist-item";
 
             // Add thumbnail
-            var thumbnail = document.createElement("img");
-            thumbnail.src = "https://img.youtube.com/vi/" + playlistItems[i].videoId + "/mqdefault.jpg";
+            const thumbnail = document.createElement("img");
+            thumbnail.src = `https://img.youtube.com/vi/${item.videoId}/mqdefault.jpg`;
             playlistItem.appendChild(thumbnail);
 
             // Add video title
-            var videoTitle = playlistItems[i].videoTitle;
-            var truncatedTitle = truncateTitle(videoTitle);
-            var videoTitleDiv = document.createElement("div");
+            const truncatedTitle = truncateTitle(item.videoTitle);
+            const videoTitleDiv = document.createElement("div");
             videoTitleDiv.className = "bvideo-title";
             videoTitleDiv.textContent = truncatedTitle;
             playlistItem.appendChild(videoTitleDiv);
 
             // Play video when clicking on playlist item
-            playlistItem.addEventListener("click", function (index) {
-                return function () {
-                    currentVideoIndex = index;
-                    playVideo(playlistItems[currentVideoIndex].videoId);
+            playlistItem.addEventListener("click", () => {
+                isShuffleActive = false; // Stop shuffle playback
+                currentVideoIndex = index; // Update current video index
+                playVideo(item.videoId); // Play the selected video
 
-                    // Set context for flatPlaylist
-                    setCurrentPlaylistContext(playlistItems[currentVideoIndex].videoId, "displayPlaylist");
-                };
-            }(i));
+                // Set context for flatPlaylist
+                setCurrentPlaylistContext(item.videoId, "displayPlaylist");
+            });
 
             // Add controls (More Options Button and Dropdown)
-            var listItem = document.createElement("p");
-            var moreButton = document.createElement("button");
-            var moreDropdown = document.createElement("div");
+            const listItem = document.createElement("p");
+            const moreButton = document.createElement("button");
+            const moreDropdown = document.createElement("div");
             moreButton.innerHTML = '<span class="material-symbols-outlined">more_vert</span>';
             moreButton.className = "more-button";
-            moreButton.addEventListener("click", function (index) {
-                return function (event) {
-                    event.stopPropagation();
-                    toggleDropdown(index);
-                };
-            }(i));
+            moreButton.addEventListener("click", (event) => {
+                event.stopPropagation(); // Stop event propagation to prevent triggering playlistItem click
+                toggleDropdown(index); // Open/close the dropdown menu
+            });
 
             moreDropdown.className = "more-dropdown";
 
             // Add Remove Option
-            var removeOption = document.createElement("a");
+            const removeOption = document.createElement("a");
             removeOption.innerHTML = '<span class="material-symbols-outlined">cancel</span>';
             removeOption.href = "#";
-            removeOption.addEventListener("click", function (index) {
-                return function (event) {
-                    event.stopPropagation();
-                    removeFromPlaylist(index);
-                };
-            }(i));
+            removeOption.addEventListener("click", (event) => {
+                event.stopPropagation(); // Prevent parent click event
+                removeFromPlaylist(index); // Remove the selected video from the playlist
+            });
 
             // Add Download Option
-            var downloadOption = document.createElement("a");
+            const downloadOption = document.createElement("a");
             downloadOption.innerHTML = '<span class="material-symbols-outlined">download</span>';
-            downloadOption.href = "https://v3.mp3youtube.cc/download/" + playlistItems[i].videoId;
+            downloadOption.href = `https://v3.mp3youtube.cc/download/${item.videoId}`;
             downloadOption.setAttribute("target", "_blank");
             downloadOption.setAttribute("rel", "noopener noreferrer");
-
-            downloadOption.addEventListener("click", function (event) {
-                event.stopPropagation();
+            downloadOption.addEventListener("click", (event) => {
+                event.stopPropagation(); // Prevent parent click event
             });
 
             // Append options to dropdown
@@ -846,7 +823,7 @@ function displayPlaylist() {
 
             // Append playlist item to playlist div
             playlistDiv.appendChild(playlistItem);
-        }
+        });
     } else {
         playlistDiv.innerHTML = `
             <li>LIKED SONGS WILL APPEAR HERE</li>
