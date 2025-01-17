@@ -785,6 +785,17 @@ function displayPlaylist() {
             videoTitleDiv.textContent = truncatedTitle;
             playlistItem.appendChild(videoTitleDiv);
 
+            // Play video when clicking on playlist item
+            playlistItem.addEventListener("click", function (index) {
+                return function () {
+                    currentVideoIndex = index;
+                    playVideo(playlistItems[currentVideoIndex].videoId);
+
+                    // Set context for flatPlaylist
+                    setCurrentPlaylistContext(playlistItems[currentVideoIndex].videoId, "displayPlaylist");
+                };
+            }(i));
+
             // Add controls (More Options Button and Dropdown)
             var listItem = document.createElement("p");
             var moreButton = document.createElement("button");
@@ -799,21 +810,6 @@ function displayPlaylist() {
             }(i));
 
             moreDropdown.className = "more-dropdown";
-
-            // Add Play Option
-            var playOption = document.createElement("a");
-            playOption.innerHTML = '<span class="material-symbols-outlined">play_arrow</span>';
-            playOption.href = "#";
-            playOption.addEventListener("click", function (index) {
-                return function () {
-                    currentVideoIndex = index;
-                    playVideo(playlistItems[currentVideoIndex].videoId);
-
-                    // Set context for flatPlaylist
-                    setCurrentPlaylistContext(playlistItems[currentVideoIndex].videoId, "displayPlaylist");
-                    toggleDropdown(index);
-                };
-            }(i));
 
             // Add Remove Option
             var removeOption = document.createElement("a");
@@ -838,7 +834,6 @@ function displayPlaylist() {
             });
 
             // Append options to dropdown
-            moreDropdown.appendChild(playOption);
             moreDropdown.appendChild(removeOption);
             moreDropdown.appendChild(downloadOption);
 
@@ -862,6 +857,7 @@ function displayPlaylist() {
         `;
     }
 }
+
 
 
 function toggleDropdown(index) {
