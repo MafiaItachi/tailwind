@@ -1,0 +1,217 @@
+
+/* CSS rules for laptops and PCs */
+@media screen and (min-width: 1000px) {
+    ::-webkit-scrollbar {
+    display: none;
+}
+  body {
+    font-size: 16px;
+    overflow: hidden; /* Hide scrollbars */
+  }
+ 
+#pc{
+    display: flex;
+    height: 100vh;
+    padding-left: 20px;
+    padding-right: 10px;
+}
+.faded{
+    display: flex;
+    overflow: scroll;
+    width: 54vw;
+}
+ .lefthf {
+   width: 50vw;
+
+ }
+
+
+.righthf{
+width: 50vw;
+height: 100vh;
+
+}
+.trending-song-list li {
+   
+    min-width: 46vw;
+}
+.shuffle button {
+    width: 19%;
+
+}
+
+#controls {
+    position: relative;
+}
+
+.bbutton{
+    width: 59%;
+}
+.ppnbutton{
+    width: 66vw;
+}
+#seek-bar {
+    width: 44vw;
+}
+
+
+.mini-player{
+    height: 91vh;
+}
+.seekbar2{
+    display: none;
+}
+
+#player{
+    border: 10px solid #455174;
+}
+.mini-player{
+    background-color: #181c28;
+}
+.con{
+    /* background-color: #455174; */
+    height: 99%;
+}
+
+#controls{
+    background-color: #455174;
+    border-radius: 10px;
+    padding: 0;
+    height: 120px;
+    margin-top: 5px;
+   
+}
+.video-thumbnail {
+    height: 90px;
+    margin-left: 15px;
+    margin-right: 5px;
+}
+.bottom{
+    background-color: #455174;
+    justify-content: none;
+    height: 89%;
+    PADDING-BOTTOM: 40PX;
+    margin-top: 5px;
+}.video-title2 {
+    margin: 0px;
+    padding: 0px;
+    height: 0px;
+}
+
+
+.youtube{
+    width: 97%;
+    padding: 0;
+    height: 125%;
+}
+
+#player{
+    height: 100%;
+}
+.playlist-item img {
+    height: 67px;
+}
+button{
+    height: 50px;
+    width: 100.4px;
+}
+input[type="text"] {
+    height: 34px;
+}
+#searchInput, #artistSearchInput{
+    height: 34px;
+}
+.favorite-artist {
+ 
+    width: 168PX;}
+
+
+    .favorite-artist img{
+        width: 167px;
+    }
+    .backup-restore {
+
+    HEIGHT: 62PX;
+}
+.result-item img {
+    height: 115px;
+}
+
+
+#artistChannel img {
+    margin: 6PX;
+
+    height: 150px;
+}
+
+#artistVideos img {
+    height: 104px;
+    width: 162px;
+
+}
+#artistChannel button {
+    height: 151PX;
+    width: 141px;
+}
+.song-thumbnail {
+    height: 67px;
+}
+.trending-song-list li img {
+    
+    height: 67px;
+
+}
+.result-details {
+    width: 100%;
+}
+.result-buttons {
+
+    width: 100%;
+}
+.result-buttons button {
+
+    height: 49px;
+    width: 48%;
+
+}
+
+/* your playlist */
+
+
+.playlist {
+    width: 235px;
+}
+.yourplaylist-thumbnail {
+    height: 200px;
+    WIDTH: 235px;
+}
+.playlist-buttons button {
+
+    height: 57px;
+    width: 57px;
+}
+
+
+
+#plistbylink {
+    height: 269px;
+    width: 100%;
+}
+#plistbylink input[type="text"] {
+    height: 215px;
+    width: 203px;
+}
+#myplist{
+    width: 233px;
+}
+
+
+
+
+
+
+
+
+
+
+}
