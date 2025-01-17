@@ -65,3 +65,52 @@ function playNextVideo() {
         console.error("Next video is not available.");
     }
 }
+
+
+
+
+
+
+
+
+
+//i deleted the function for add youtube link to add song for playlist
+function fetchPlaylistItems(playlistId) {
+    var apiKey = getRandomAPIKey();
+    var url =
+        "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=100&playlistId=" +
+        playlistId +
+        "&key=" +
+        apiKey;
+
+    $.ajax({
+        url: url,
+        success: function (response) {
+            processPlaylistItems(response.items);
+        },
+        error: function (xhr) {
+            console.log(xhr);
+        },
+    });
+}
+
+function processPlaylistItems(items) {
+    var playlist = localStorage.getItem("playlist");
+    playlistItems = playlist ? JSON.parse(playlist) : [];
+
+    for (var i = 0; i < items.length; i++) {
+        var video = items[i].snippet;
+        var videoId = video.resourceId.videoId;
+        var videoTitle = video.title;
+
+        playlistItems.push({
+            videoId: videoId,
+            videoTitle: videoTitle,
+        });
+    }
+
+    localStorage.setItem("playlist", JSON.stringify(playlistItems));
+
+    displayPlaylist();
+}
+

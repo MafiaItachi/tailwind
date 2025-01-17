@@ -1,22 +1,54 @@
-if ('mediaSession' in navigator) {
-    navigator.mediaSession.setActionHandler('play', function() {
-        player.playVideo();
-    });
-    navigator.mediaSession.setActionHandler('pause', function() {
-        player.pauseVideo();
-    });
-    navigator.mediaSession.setActionHandler('seekbackward', function() {
-        player.seekBy(-10); // Seek backward by 10 seconds
-    });
-    navigator.mediaSession.setActionHandler('seekforward', function() {
-        player.seekBy(10); // Seek forward by 10 seconds
-    });
-    navigator.mediaSession.setActionHandler('stop', function() {
-        player.stopVideo();
-    });
+
+
+
+
+// Define the repeat mode (default is "off")
+let repeatMode = "off";
+
+// Function to toggle repeat mode
+function toggleRepeatMode() {
+    if (repeatMode === "off") {
+        // Switch to Repeat One mode
+        repeatMode = "repeat-one";
+    } else {
+        // Switch back to Repeat Off mode
+        repeatMode = "off";
+    }
+
+    // Update the UI to reflect the current repeat mode
+    updateRepeatModeButton();
+}
+
+// Function to update the repeat button's appearance
+function updateRepeatModeButton() {
+    const repeatButton = document.getElementById('repeat-button'); // Replace with your button's ID
+    if (repeatMode === "repeat-one") {
+        repeatButton.innerHTML = '<span class="material-symbols-outlined">repeat_one</span>';
+        repeatButton.setAttribute("title", "Repeat One");
+    } else {
+        repeatButton.innerHTML = '<span class="material-symbols-outlined">repeat</span>';
+        repeatButton.setAttribute("title", "Repeat Off");
+    }
 }
 
 
+
+
+// Update the button UI on page load
+updateRepeatModeButton();
+
+
+
+
+
+// Load the YouTube IFrame Player API asynchronously
+var tag = document.createElement('script');
+tag.src = 'https://www.youtube.com/iframe_api';
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+
+displayPlaylist();
 const fullscreenButton = document.getElementById('fullscreen-button');
 const greenDiv = document.getElementById('green-div');
 
@@ -53,11 +85,12 @@ document.addEventListener('dblclick', () => {
     }
 });
 
+// above code is for full screen 
+
+
 var player;
 var isPlaying = false;
 var progressInterval;
-var repeatMode = "repeat-all";
-var repeatModes = ["no-repeat", "repeat-one", "repeat-all"];
 
 function onYouTubeIframeAPIReady() {
     player = new YT.Player('player', {
@@ -86,8 +119,6 @@ function onPlayerReady(event) {
     $('#play-pause2').click(togglePlayPause);
     $('#seek-bar').click(seek);
     console.log("YouTube Player is ready.");
-    
-   // $('#repeat-mode').change(changeRepeatMode);
 }
 
 
@@ -99,21 +130,7 @@ function updateProgressBar() {
     $('#progress-bar').css('width', progress + '%');
     $('.progress-bar2').css('width', progress + '%');
 }
-function handleVideoEnd() {
-    
-    if (repeatMode === "repeat-one") {
-        player.playVideo();
-    } else if (repeatMode === "no-repeat") {
-        currentVideoIndex++;
-        if (currentVideoIndex >= playlistItems.length) {
-            currentVideoIndex = 0;
-        }
-        playVideo(playlistItems[currentVideoIndex].videoId);
-    } else {
-        isPlaying = false;
-        updatePlayPauseButton();
-    }
-}
+
 
 // Function to play the next track
 
@@ -164,29 +181,7 @@ function downloadCurrentSong() {
         console.error('Player not initialized.');
     }
 }
-function addToPlaylistFromVideo() {
-    // Get the currently playing video's videoId
-    var videoId = player.getVideoData().video_id;
 
-    // Get the video title
-    var videoTitle = player.getVideoData().title;
-
-    // Get the existing playlist from local storage
-    var storedPlaylist = localStorage.getItem("playlist");
-    var playlistItems = storedPlaylist ? JSON.parse(storedPlaylist) : [];
-
-    // Add the new video to the playlist
-    playlistItems.push({
-        videoId: videoId,
-        videoTitle: videoTitle
-    });
-
-    // Update the playlist in local storage
-    localStorage.setItem("playlist", JSON.stringify(playlistItems));
-
-    // Display the updated playlist
-    displayPlaylist();
-}
 
 
 function seek(event) {
@@ -199,25 +194,10 @@ function seek(event) {
 }
 
 
- //var repeatMode = "repeat-all"; Set the default repeat mode to "no-repeat"
 
-// Function to set the initial repeat mode icon based on the default value
-function setInitialRepeatModeIcon() {
-    const repeatToggle = document.getElementById('repeat-toggle');
-    if (repeatMode === 'no-repeat') {
-        repeatToggle.innerHTML = '<span class="material-symbols-outlined">stop_circle</span>';
-    } else if (repeatMode === 'repeat-all') {
-        repeatToggle.innerHTML = '<span class="material-symbols-outlined">repeat</span>';
-    } else {
-        repeatToggle.innerHTML = '<span class="material-symbols-outlined">repeat_one</span>';
-    }
-}
 
-// Call the function to set the initial icon based on the default mode
-setInitialRepeatModeIcon();
-
-var addTopic = true; // Initial state: Adding " - Topic"
-
+var addTopic = true; // Initial state: Adding " - Topics" to the search query
+// Function to toggle the addTopic state and update the button text
 function toggleTopic() {
     addTopic = !addTopic; // Toggle the state
     toggleButtonText(); // Change the button text
@@ -249,7 +229,7 @@ function search() {
     });
     document.getElementById("genre-songs").innerHTML ="";
 }
-
+// CLEAR SEARCH RESULTS IN SEARCH BOX
 function clearSearchResults() {
     var artistVideosDiv = document.getElementById("artistVideos");
     document.getElementById("suggestionsBox").innerHTML = "";
@@ -594,7 +574,7 @@ function onVideoStart(videoId) {
 
 
 
-
+// context for playlist and flatplaylist
 function setCurrentPlaylistContext(videoId, sourceFunction, playlistName = null) {
     
     if (sourceFunction === "playShuffledPlaylist" && playlistName) {
@@ -635,7 +615,6 @@ function initializePlayerWithVideo(videoId) {
 
 
 
-//now shuffle playlist is no stopping (as i told you to do ) but now setCurrentPlaylistContext cant able to set context
 
 
 
@@ -655,7 +634,7 @@ function initializePlayerWithVideo(videoId) {
 
 
 
-
+// search results
 function displayResults(response) {
     var results = document.getElementById("results");
     results.innerHTML = "";
@@ -697,32 +676,8 @@ function displayResults(response) {
 }
 
 
-function playVideos(videoId) {
-    repeatMode = 'no-repeat';
-    console.log(repeatMode);
-    if (player) {
-        currentVideoIndex = playlistItems.findIndex(item => item.videoId === videoId);
-        player.loadVideoById(videoId);
-        player.playVideo();
 
-        // Display video title and thumbnail
-        var currentVideo = playlistItems.find(function (item) {
-            return item.videoId === videoId;
-        });
-
-        if (currentVideo) {
-            var videoTitleElement = document.querySelector(".video-title");
-            var videoThumbnailElement = document.querySelector(".video-thumbnail");
-
-            var videoTitle = currentVideo.videoTitle;
-            var truncatedTitle = videoTitle.split(' ').splice(0, 5).join(' ');
-
-            videoTitleElement.textContent = truncatedTitle;
-            videoThumbnailElement.src = "https://img.youtube.com/vi/" + videoId + "/mqdefault.jpg";
-        }
-    }
-}
-
+// function for trim title
 function truncateTitle(title) {
     // Trim content within parentheses, curly braces, square brackets, and Japanese brackets
     title = title.replace(/\([^)]*\)|\{[^}]*\}|\[[^\]]*\]|【[^】]*】|「[^」]*」/g, '').trim();
@@ -836,7 +791,7 @@ function displayPlaylist() {
 }
 
 
-
+//toggle dropdown for like songs
 function toggleDropdown(index) {
     var dropdowns = document.getElementsByClassName("more-dropdown");
     for (var i = 0; i < dropdowns.length; i++) {
@@ -848,6 +803,7 @@ function toggleDropdown(index) {
     }
 }
 
+//edit later
 function removeFromPlaylist(index) {
     if (index >= 0 && index < playlistItems.length) {
         playlistItems.splice(index, 1);
@@ -857,7 +813,7 @@ function removeFromPlaylist(index) {
     }
 }
 
-
+// Function to clear the playlist
 function clearPlaylist() {
     localStorage.removeItem("playlist");
     playlistItems = [];
@@ -867,12 +823,8 @@ function clearPlaylist() {
         player.stopVideo();
     }
 }
-function stopVideo() {
-    if (player) {
-        player.stopVideo();
-    }
-}
 
+//backup and restore local storage
 function backupLocalStorage() {
     const localStorageData = JSON.stringify(localStorage);
     const blob = new Blob([localStorageData], { type: 'application/json' });
@@ -895,7 +847,7 @@ function backupLocalStorage() {
     URL.revokeObjectURL(url);
 }
 
-
+// Function to restore local storage from a backup file
 function restoreLocalStorage() {
     document.getElementById('fileInput').click();
 }
@@ -917,7 +869,7 @@ document.getElementById('fileInput').addEventListener('change', function (event)
 });
 
 
-
+//touch function only for playprevious and endcurrentsong
 var controlsElement = document.getElementById('controls');
 var startX, startY;
 
@@ -959,6 +911,8 @@ controlsElement.addEventListener('touchend', function (e) {
     }
 });
 
+// Initialize Hammer.js on the controls element
+//for swipe up and down
 var controlsHammer = new Hammer(controlsElement);
 
 
@@ -974,7 +928,6 @@ controlsHammer.on('swipedown', function () {
 });
 
 // Function to show the mini player
-// Function to show the mini player
 function showMiniPlayer() {
     var miniPlayer = document.getElementById('mini-player');
     miniPlayer.style.transform = 'translateY(0)';
@@ -986,38 +939,34 @@ function hideMiniPlayer() {
     var miniPlayer = document.getElementById('mini-player');
     miniPlayer.style.transform = 'translateY(100%)';
 }
+//like button
+function addToPlaylistFromVideo() {
+    // Get the currently playing video's videoId
+    var videoId = player.getVideoData().video_id;
 
+    // Get the video title
+    var videoTitle = player.getVideoData().title;
 
-function shuffleAndPlay() {
-    repeatMode = 'repeat-all';
-    console.log(repeatMode);
+    // Get the existing playlist from local storage
     var storedPlaylist = localStorage.getItem("playlist");
-    if (!storedPlaylist) {
-        showAlert("Playlist is empty. Add videos to the playlist first.");
-        return;
-    }
+    var playlistItems = storedPlaylist ? JSON.parse(storedPlaylist) : [];
 
-    playlistItems = JSON.parse(storedPlaylist);
-    shuffleArray(playlistItems);
-    currentVideoIndex = 0;
+    // Add the new video to the playlist
+    playlistItems.push({
+        videoId: videoId,
+        videoTitle: videoTitle
+    });
 
+    // Update the playlist in local storage
+    localStorage.setItem("playlist", JSON.stringify(playlistItems));
 
-    if (player) {
-        playVideo(playlistItems[currentVideoIndex].videoId);
-    }
+    // Display the updated playlist
+    displayPlaylist();
 }
 
 
-function addPlaylistByLink() {
-    var playlistLink = document.getElementById("2playlistLinkInput").value;
-    var playlistId = extractPlaylistId(playlistLink);
-    document.getElementById("2playlistLinkInput").value = "";
-    if (playlistId) {
-        fetchPlaylistItems(playlistId);
-    } else {
-        showAlert("Invalid YouTube playlist link. Please enter a valid link.");
-    }
-}
+
+
 
 function extractPlaylistId(playlistLink) {
     var regex = /[&?](?:list|p)=([a-zA-Z0-9_-]{34})/;
@@ -1030,63 +979,8 @@ function extractPlaylistId(playlistLink) {
     return null;
 }
 
-function fetchPlaylistItems(playlistId) {
-    var apiKey = getRandomAPIKey();
-    var url =
-        "https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=100&playlistId=" +
-        playlistId +
-        "&key=" +
-        apiKey;
 
-    $.ajax({
-        url: url,
-        success: function (response) {
-            processPlaylistItems(response.items);
-        },
-        error: function (xhr) {
-            console.log(xhr);
-        },
-    });
-}
 
-function processPlaylistItems(items) {
-    var playlist = localStorage.getItem("playlist");
-    playlistItems = playlist ? JSON.parse(playlist) : [];
-
-    for (var i = 0; i < items.length; i++) {
-        var video = items[i].snippet;
-        var videoId = video.resourceId.videoId;
-        var videoTitle = video.title;
-
-        playlistItems.push({
-            videoId: videoId,
-            videoTitle: videoTitle,
-        });
-    }
-
-    localStorage.setItem("playlist", JSON.stringify(playlistItems));
-
-    displayPlaylist();
-}
-
-displayPlaylist();
-
-function shuffleArray(array) {
-    var currentIndex = array.length,
-        temporaryValue,
-        randomIndex;
-
-    while (0 !== currentIndex) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-
-        temporaryValue = array[currentIndex];
-        array[currentIndex] = array[randomIndex];
-        array[randomIndex] = temporaryValue;
-    }
-
-    return array;
-}
 
 
 
@@ -1140,13 +1034,21 @@ function onPlayerStateChange(event) {
     }
 
     if (event.data === YT.PlayerState.ENDED) {
-        playNextVideo(); // Automatically play the next video
+        if (repeatMode === "repeat-one") {
+            // Replay the current video when Repeat One is active
+            player.seekTo(0); // Restart video from the beginning
+            player.playVideo();
+        } else {
+            playNextVideo(); // Automatically play the next video
+        }
     }
+
     updatePlayPauseButton();
     updatePlayPauseButton2();
 }
 
 
+//mini player
 function updateVideoTitleAndThumbnail(title, videoId) {
     // Find the video title and thumbnail elements in your controls
     var videoTitleElement = document.querySelector('.video-title');
@@ -1176,6 +1078,9 @@ function updateMiniPlayer(videoId, videoTitle) {
     miniThumbnail.src = `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
     miniTitle.textContent = truncatedTitle;
 }
+
+
+
 // Get the input field
 var input = document.getElementById("searchInput");
 
@@ -1226,35 +1131,6 @@ input.addEventListener("keyup", function (event) {
 
 
 
-// function updateVideoTitle2() {
-//     var videoTitle = player.getVideoData().title;
-//     var videoTitleElement = document.querySelector('.video-title2');
-//     videoTitleElement.textContent = videoTitle;
-// }
-function updateVideoTitleAndThumbnail(title, videoId) {
-    // Find the video title and thumbnail elements in your controls
-    var videoTitleElement = document.querySelector('.video-title');
-    var videoThumbnailElement = document.querySelector('.video-thumbnail');
-
-    // Split the title into words
-    var words = title.split(' ');
-
-    // If the title has more than 6 words, truncate it
-    if (words.length > 6) {
-        title = words.slice(0, 6).join(' ') + '...';
-    }
-
-    // Set the new video title and thumbnail
-    videoTitleElement.textContent = title;
-    videoThumbnailElement.src = "https://img.youtube.com/vi/" + videoId + "/mqdefault.jpg";
-}
-
-// Load the YouTube IFrame Player API asynchronously
-// Load the YouTube IFrame Player API asynchronously
-var tag = document.createElement('script');
-tag.src = 'https://www.youtube.com/iframe_api';
-var firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
 function shareCurrentVideo() {
     var currentVideoId = getCurrentVideoId();
@@ -1331,34 +1207,7 @@ function endCurrentSong() {
 }
 
 
-// Define a variable to store the previous mode
-var previousRepeatMode = repeatMode;
 
-function toggleRepeatOneMode() {
-    if (repeatMode !== "repeat-one") {
-        // Set the previous mode and then set the current mode to "repeat-one"
-        previousRepeatMode = repeatMode;
-        repeatMode = "repeat-one";
-    } else {
-        // Toggle back to the previous mode
-        repeatMode = previousRepeatMode;
-    }
-
-    // Update the icon or UI to reflect the current repeat mode (if needed)
-    updateRepeatModeButton();
-}
-function updateRepeatModeButton() {
-    var repeatButton = document.getElementById('repeat-button'); // Replace 'repeat-button' with your button's ID
-    if (repeatMode === "repeat-one") {
-        repeatButton.innerHTML = '<span class="material-symbols-outlined">repeat_one</span>';
-        // You can modify the button's text, style, or icon to indicate 'repeat-one' mode
-        // Example: repeatButton.style.backgroundColor = "green";
-        // Example: repeatButton.classList.add('active');
-    } else {
-        repeatButton.innerHTML = '<span class="material-symbols-outlined">repeat</span>';
-        // Modify the button's appearance for other modes if needed
-    }
-}
 
 function showAlert(message) {
     var modal = document.getElementById("radixAlert");
