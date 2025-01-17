@@ -52,7 +52,7 @@ document.addEventListener('dblclick', () => {
         document.exitFullscreen();
     }
 });
-var currentVideoIndex = -1;
+
 var player;
 var isPlaying = false;
 var progressInterval;
@@ -98,6 +98,7 @@ function onPlayerReady(event) {
     $('#play-pause').click(togglePlayPause);
     $('#play-pause2').click(togglePlayPause);
     $('#seek-bar').click(seek);
+    console.log("YouTube Player is ready.");
     
    // $('#repeat-mode').change(changeRepeatMode);
 }
@@ -115,7 +116,7 @@ function handleVideoEnd() {
     
     if (repeatMode === "repeat-one") {
         player.playVideo();
-    } else if (repeatMode === "repeat-all") {
+    } else if (repeatMode === "no-repeat") {
         currentVideoIndex++;
         if (currentVideoIndex >= playlistItems.length) {
             currentVideoIndex = 0;
@@ -129,14 +130,7 @@ function handleVideoEnd() {
 
 // Function to play the next track
 
-// Function to play the previous track
-function playPreviousTrack() {
-    currentVideoIndex--;
-    if (currentVideoIndex < 0) {
-        currentVideoIndex = playlistItems.length - 1;
-    }
-    playVideo(playlistItems[currentVideoIndex].videoId);
-}
+
 
 function togglePlayPause() {
     if (isPlaying) {
@@ -261,7 +255,7 @@ function search() {
     document.getElementById("suggestionsBox").innerHTML = "";
     var query = document.getElementById("searchInput").value;
     if (addTopic) {
-        query += " - Topic"; // Append " - Topic" if addTopic is true
+        query += " - Topics"; // Append " - Topic" if addTopic is true
     }
     console.log(query);
     var apiKey = getRandomAPIKey();
@@ -330,6 +324,355 @@ function addToPlaylist(videoId, videoTitle) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//queue list
+// Variables to remember the current context
+let currentKey = null; // "flatPlaylist" or "playlists"
+let currentPlaylistName = null; // Playlist name like "DD" or "new"
+
+// Function to play the next video in the current playlist
+function playNextVideo() {
+    if (!currentKey || !currentPlaylistName) {
+        console.error("No current playlist context. Please start playing a video first.");
+        return;
+    }
+
+    const storedPlaylists = localStorage.getItem("playlists");
+    const storedPlaylist = localStorage.getItem("playlist");
+
+    let playlists = {};
+    let flatPlaylist = [];
+
+    // Parse the "playlists" key if it exists
+    if (storedPlaylists) {
+        try {
+            playlists = JSON.parse(storedPlaylists);
+        } catch (e) {
+            console.error("Failed to parse 'playlists' from localStorage:", e);
+            return;
+        }
+    }
+
+    // Parse the "playlist" key if it exists
+    if (storedPlaylist) {
+        try {
+            flatPlaylist = JSON.parse(storedPlaylist);
+        } catch (e) {
+            console.error("Failed to parse 'playlist' from localStorage:", e);
+            return;
+        }
+    }
+
+    // Get the current playlist based on the context
+    const currentPlaylist =
+        currentKey === "playlists"
+            ? playlists[currentPlaylistName]
+            : currentKey === "flatPlaylist"
+            ? flatPlaylist
+            : null;
+
+    if (!currentPlaylist || currentPlaylist.length === 0) {
+        console.error("Current playlist is empty or not found.");
+        return;
+    }
+
+    // Get the current video ID and index
+    const currentVideoId = player.getVideoData().video_id;
+    const currentIndex = currentPlaylist.findIndex(item => item.id === currentVideoId || item.videoId === currentVideoId);
+
+    if (currentIndex === -1) {
+        console.error("Current video not found in the current playlist.");
+        return;
+    }
+
+    // Determine the next index
+    let nextIndex = currentIndex + 1;
+
+    // Loop back to the start if at the end
+    if (nextIndex >= currentPlaylist.length) {
+        console.log("Reached the end of the current playlist. Restarting from the beginning.");
+        nextIndex = 0;
+    }
+
+    const nextVideo = currentPlaylist[nextIndex];
+    console.log("Next Video:", nextVideo);
+
+    // Play the next video
+    if (nextVideo) {
+        const videoId = nextVideo.id || nextVideo.videoId;
+        const videoTitle = nextVideo.title || nextVideo.videoTitle;
+
+        // Update the context to the same playlist
+        player.loadVideoById(videoId);
+        player.playVideo();
+        console.log(`Playing next video: ${videoTitle}`);
+    } else {
+        console.error("Next video is not available.");
+    }
+}
+
+// Function to play the previous video in the current playlist
+function playPreviousTrack() {
+    if (!currentKey || !currentPlaylistName) {
+        console.error("No current playlist context. Please start playing a video first.");
+        return;
+    }
+
+    const storedPlaylists = localStorage.getItem("playlists");
+    const storedPlaylist = localStorage.getItem("playlist");
+
+    let playlists = {};
+    let flatPlaylist = [];
+
+    if (storedPlaylists) {
+        try {
+            playlists = JSON.parse(storedPlaylists);
+        } catch (e) {
+            console.error("Failed to parse 'playlists' from localStorage:", e);
+            return;
+        }
+    }
+
+    if (storedPlaylist) {
+        try {
+            flatPlaylist = JSON.parse(storedPlaylist);
+        } catch (e) {
+            console.error("Failed to parse 'playlist' from localStorage:", e);
+            return;
+        }
+    }
+
+    const currentPlaylist =
+        currentKey === "playlists"
+            ? playlists[currentPlaylistName]
+            : currentKey === "flatPlaylist"
+            ? flatPlaylist
+            : null;
+
+    if (!currentPlaylist || currentPlaylist.length === 0) {
+        console.error("Current playlist is empty or not found.");
+        return;
+    }
+
+    const currentVideoId = player.getVideoData().video_id;
+    const currentIndex = currentPlaylist.findIndex(item => item.id === currentVideoId || item.videoId === currentVideoId);
+
+    if (currentIndex === -1) {
+        console.error("Current video not found in the current playlist.");
+        return;
+    }
+
+    let previousIndex = currentIndex - 1;
+
+    if (previousIndex < 0) {
+        console.log("Reached the beginning of the current playlist. Looping to the last video.");
+        previousIndex = currentPlaylist.length - 1;
+    }
+
+    const previousVideo = currentPlaylist[previousIndex];
+    console.log("Previous Video:", previousVideo);
+
+    if (previousVideo) {
+        const videoId = previousVideo.id || previousVideo.videoId;
+        const videoTitle = previousVideo.title || previousVideo.videoTitle;
+
+        player.loadVideoById(videoId);
+        player.playVideo();
+        console.log(`Playing previous video: ${videoTitle}`);
+    } else {
+        console.error("Previous video is not available.");
+    }
+}
+
+// Function to set the current context when a video starts playing
+function setCurrentContext(key, playlistName) {
+    currentKey = key;
+    currentPlaylistName = playlistName;
+    console.log(`Context set: key=${key}, playlistName=${playlistName}`);
+}
+
+// Example: Call `setCurrentContext` when a video starts playing
+function onVideoStart(videoId) {
+    // Determine the playlist and key for the current video
+    const storedPlaylists = localStorage.getItem("playlists");
+    const storedPlaylist = localStorage.getItem("playlist");
+
+    let playlists = {};
+    let flatPlaylist = [];
+
+    if (storedPlaylists) {
+        try {
+            playlists = JSON.parse(storedPlaylists);
+        } catch (e) {
+            console.error("Failed to parse 'playlists' from localStorage:", e);
+            return;
+        }
+    }
+
+    if (storedPlaylist) {
+        try {
+            flatPlaylist = JSON.parse(storedPlaylist);
+        } catch (e) {
+            console.error("Failed to parse 'playlist' from localStorage:", e);
+            return;
+        }
+    }
+
+    for (const key in playlists) {
+        const playlist = playlists[key];
+        if (playlist.some(item => item.id === videoId)) {
+            setCurrentContext("playlists", key);
+            return;
+        }
+    }
+
+    if (flatPlaylist.some(item => item.videoId === videoId)) {
+        setCurrentContext("flatPlaylist", "flatPlaylist");
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function setCurrentPlaylistContext(videoId, sourceFunction, playlistName = null) {
+    if (sourceFunction === "displayPlaylist") {
+        // Context for "flatPlaylist"
+        currentKey = "flatPlaylist";
+        currentPlaylistName = "flatPlaylist";
+        console.log(`Context set: key="flatPlaylist", playlistName="flatPlaylist"`);
+        return;
+    }
+
+    if (sourceFunction === "revealSongsList" && playlistName) {
+        // Context for "playlists"
+        currentKey = "playlists";
+        currentPlaylistName = playlistName;
+        console.log(`Context set: key="playlists", playlistName="${playlistName}"`);
+        return;
+    }
+
+    console.error("Unable to set context: Invalid sourceFunction or playlistName.");
+}
+
+
+function initializePlayerWithVideo(videoId) {
+    player.loadVideoById(videoId);
+    setCurrentPlaylistContext(videoId);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function displayResults(response) {
     var results = document.getElementById("results");
     results.innerHTML = "";
@@ -372,7 +715,7 @@ function displayResults(response) {
 
 
 function playVideos(videoId) {
-    repeatMode = 'repeat-all';
+    repeatMode = 'no-repeat';
     console.log(repeatMode);
     if (player) {
         currentVideoIndex = playlistItems.findIndex(item => item.videoId === videoId);
@@ -428,84 +771,98 @@ function displayPlaylist() {
         for (var i = 0; i < playlistItems.length; i++) {
             var playlistItem = document.createElement("div");
             playlistItem.className = "playlist-item";
+
+            // Add thumbnail
             var thumbnail = document.createElement("img");
             thumbnail.src = "https://img.youtube.com/vi/" + playlistItems[i].videoId + "/mqdefault.jpg";
-            playlistItem.setAttribute("onclick", "playVideos('" + playlistItems[i].videoId + "')");
+            playlistItem.appendChild(thumbnail);
 
-            var listItem = document.createElement("p");
-            var moreButton = document.createElement("button");
-            var moreDropdown = document.createElement("div");
-            var playlistControls = document.createElement("div");
-            var playOption = document.createElement("a");
-            var removeOption = document.createElement("a");
+            // Add video title
             var videoTitle = playlistItems[i].videoTitle;
-           
             var truncatedTitle = truncateTitle(videoTitle);
-
-            // listItem.innerHTML = "<strong>" + (i + 1) + " </strong>" + truncatedTitle;
-
             var videoTitleDiv = document.createElement("div");
             videoTitleDiv.className = "bvideo-title";
             videoTitleDiv.textContent = truncatedTitle;
-            console.log(truncatedTitle);
+            playlistItem.appendChild(videoTitleDiv);
+
+            // Add controls (More Options Button and Dropdown)
+            var listItem = document.createElement("p");
+            var moreButton = document.createElement("button");
+            var moreDropdown = document.createElement("div");
             moreButton.innerHTML = '<span class="material-symbols-outlined">more_vert</span>';
             moreButton.className = "more-button";
             moreButton.addEventListener("click", function (index) {
                 return function (event) {
-                    event.stopPropagation(); // Stop event propagation to prevent triggering playlistItem onclick
+                    event.stopPropagation();
                     toggleDropdown(index);
                 };
             }(i));
-            
 
             moreDropdown.className = "more-dropdown";
 
-             playOption.innerHTML = '<span class="material-symbols-outlined">play_arrow</span>';
+            // Add Play Option
+            var playOption = document.createElement("a");
+            playOption.innerHTML = '<span class="material-symbols-outlined">play_arrow</span>';
             playOption.href = "#";
             playOption.addEventListener("click", function (index) {
                 return function () {
                     currentVideoIndex = index;
                     playVideo(playlistItems[currentVideoIndex].videoId);
+
+                    // Set context for flatPlaylist
+                    setCurrentPlaylistContext(playlistItems[currentVideoIndex].videoId, "displayPlaylist");
                     toggleDropdown(index);
                 };
-             }(i));
+            }(i));
+
+            // Add Remove Option
+            var removeOption = document.createElement("a");
             removeOption.innerHTML = '<span class="material-symbols-outlined">cancel</span>';
             removeOption.href = "#";
             removeOption.addEventListener("click", function (index) {
                 return function (event) {
-                    event.stopPropagation(); // Stop event propagation to prevent triggering playlistItem onclick
-                    console.log(index);
+                    event.stopPropagation();
                     removeFromPlaylist(index);
-                    
                 };
             }(i));
+
+            // Add Download Option
             var downloadOption = document.createElement("a");
             downloadOption.innerHTML = '<span class="material-symbols-outlined">download</span>';
-            downloadOption.href = "https://v3.mp3youtube.cc/download/" + playlistItems[i].videoId; // Using yout.com URL
-
-            downloadOption.setAttribute("target", "_blank"); // Open in a new tab
-            downloadOption.setAttribute("rel", "noopener noreferrer"); // Security best practice
+            downloadOption.href = "https://v3.mp3youtube.cc/download/" + playlistItems[i].videoId;
+            downloadOption.setAttribute("target", "_blank");
+            downloadOption.setAttribute("rel", "noopener noreferrer");
 
             downloadOption.addEventListener("click", function (event) {
                 event.stopPropagation();
             });
 
+            // Append options to dropdown
             moreDropdown.appendChild(playOption);
             moreDropdown.appendChild(removeOption);
             moreDropdown.appendChild(downloadOption);
-            
+
+            // Append controls to list item
             listItem.appendChild(moreDropdown);
             listItem.appendChild(moreButton);
-            
-            playlistItem.appendChild(thumbnail);
-            playlistItem.appendChild(videoTitleDiv);
+
+            // Append controls to playlist item
             playlistItem.appendChild(listItem);
+
+            // Append playlist item to playlist div
             playlistDiv.appendChild(playlistItem);
         }
     } else {
-        playlistDiv.innerHTML = "<li>LIKED SONGS WILL APPEAR HERE</li> <li>SWIPE UP THE MINI PLAYER TO SEE VIDEO</li> <li>LOGIN TO GOOGLE ACCOUT TO IMPORT YOUTUBE PLAYLIST</li>  <li>BOOKMARK SONGS WILL APPEAR HERE</li> <li>ENTER YOUTUBE LINK TO ADD SONG HERE</li>  ";
+        playlistDiv.innerHTML = `
+            <li>LIKED SONGS WILL APPEAR HERE</li>
+            <li>SWIPE UP THE MINI PLAYER TO SEE VIDEO</li>
+            <li>LOGIN TO GOOGLE ACCOUNT TO IMPORT YOUTUBE PLAYLIST</li>
+            <li>BOOKMARK SONGS WILL APPEAR HERE</li>
+            <li>ENTER YOUTUBE LINK TO ADD SONG HERE</li>
+        `;
     }
 }
+
 
 function toggleDropdown(index) {
     var dropdowns = document.getElementsByClassName("more-dropdown");
@@ -586,14 +943,7 @@ document.getElementById('fileInput').addEventListener('change', function (event)
     reader.readAsText(file);
 });
 
-// Function to play the previous track
-function playPreviousTrack() {
-    currentVideoIndex--;
-    if (currentVideoIndex < 0) {
-        currentVideoIndex = playlistItems.length - 1;
-    }
-    playVideo(playlistItems[currentVideoIndex].videoId);
-}
+
 
 var controlsElement = document.getElementById('controls');
 var startX, startY;
@@ -767,11 +1117,11 @@ function shuffleArray(array) {
 
 
 
-
-function playVideo(videoId) {
+function playVideo(videoId, playlistKey = null, playlistName = null) {
     if (player) {
         player.loadVideoById(videoId);
         player.playVideo();
+        console.log(`Playing video ID: ${videoId}`);
 
         // Fetch video title using YouTube API
         var url = `https://www.googleapis.com/youtube/v3/videos?part=snippet&id=${videoId}&key=${apiKey}`;
@@ -781,11 +1131,17 @@ function playVideo(videoId) {
             success: function (response) {
                 var videoTitle = response.items[0].snippet.title;
                 updateMiniPlayer(videoId, videoTitle);
+ 
             },
             error: function (xhr) {
                 console.log(xhr);
             }
         });
+        currentPlaylistKey = playlistKey;
+        currentPlaylistName = playlistName;
+        console.log(`Current Playlist Context: Key=${currentPlaylistKey}, Name=${currentPlaylistName}`);
+    } else {
+        console.error("Player is not initialized.");
     }
 }
 function onPlayerStateChange(event) {
@@ -799,15 +1155,24 @@ function onPlayerStateChange(event) {
 
         // Update the video title and thumbnail in your controls
         updateVideoTitleAndThumbnail(videoTitle, videoId);
+        updateVideoTitle2();
+        const currentVideoId = player.getVideoData().video_id;
+        console.log("Video started playing:", currentVideoId);
+
+        // Set the current playlist context
+        setCurrentPlaylistContext(currentVideoId);
     } else {
         isPlaying = false;
         stopProgressInterval();
     }
 
     if (event.data === YT.PlayerState.ENDED) {
-        handleVideoEnd();
+        playNextVideo(); // Automatically play the next video
     }
+    updatePlayPauseButton();
+    updatePlayPauseButton2();
 }
+
 
 function updateVideoTitleAndThumbnail(title, videoId) {
     // Find the video title and thumbnail elements in your controls
@@ -887,28 +1252,7 @@ input.addEventListener("keyup", function (event) {
 
 
 
-function onPlayerStateChange(event) {
-    if (event.data === YT.PlayerState.PLAYING) {
-        isPlaying = true;
-        startProgressInterval();
-        // Get the video title and videoId
-        var videoTitle = player.getVideoData().title;
-        var videoId = player.getVideoData().video_id;
 
-        // Update the video title and thumbnail in your controls
-        updateVideoTitleAndThumbnail(videoTitle, videoId);
-    } else {
-        isPlaying = false;
-        stopProgressInterval();
-    }
-
-    if (event.data === YT.PlayerState.ENDED) {
-        handleVideoEnd();
-    }
-    updateVideoTitle2();
-    updatePlayPauseButton();
-    updatePlayPauseButton2();
-}
 // function updateVideoTitle2() {
 //     var videoTitle = player.getVideoData().title;
 //     var videoTitleElement = document.querySelector('.video-title2');
