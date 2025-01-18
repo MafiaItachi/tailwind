@@ -1,12 +1,63 @@
+function fetchLyrics(artist, songTitle, videoChannel, albumName = '', duration = 0, retryWithoutDuration = false) {
+  // Validate that artist and songTitle are not empty
+  if (!artist || !songTitle) {
+    console.error('Artist or song title is missing. Cannot fetch lyrics.');
+    displayLyrics('Error: Missing artist or song title', false);
+    return; // Exit the function if artist or songTitle is missing
+  }
 
-// Make the function async
-async function updateVideoTitle2() {
+  const apiUrl = new URL('https://lrclib.net/api/get');
+  apiUrl.searchParams.append('track_name', songTitle);
+  apiUrl.searchParams.append('artist_name', artist);
+  if (albumName) {
+    apiUrl.searchParams.append('album_name', albumName);
+  }
+  if (duration > 0 && !retryWithoutDuration) {
+    apiUrl.searchParams.append('duration', duration);
+  }
+   // Log the URL with all parameters added
+   console.log(`Constructed API URL: ${apiUrl.toString()}`);
+  fetch(apiUrl, {
+    headers: {
+      'User-Agent': 'YourAppName v1.0 (https://yourapphomepage.com)',
+    },
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`Lyrics not found: ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (data.syncedLyrics && !retryWithoutDuration) {
+        displayLyrics(data.syncedLyrics, true); // Display synchronized lyrics
+      } else if (data.plainLyrics) {
+        displayLyrics(data.plainLyrics, false); // Display plain lyrics without syncing
+      } else {
+        displayLyrics('Lyrics not found', false);
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching lyrics:', error);
+      if (!retryWithoutDuration) {
+        // Retry without duration parameter
+        console.log('Retrying without duration...');
+        fetchLyrics(artist, songTitle, videoChannel, albumName, 0, true);
+      } else {
+        displayLyrics('Error fetching lyrics', false); // Display error message
+      }
+    });
+}
+
+
+
+
+function updateVideoTitle2() {
   const videoData = player.getVideoData();
   let videoTitle = videoData.title;
   let videoChannel = videoData.author;
   const videoDuration = Math.floor(player.getDuration()); // Get video duration
 
-  // Clean up video title and channel
   const channelWords = videoChannel.split(' ');
   if (channelWords.length > 2) {
     videoChannel = channelWords.slice(0, -2).join(' ');
@@ -15,101 +66,26 @@ async function updateVideoTitle2() {
     videoChannel = videoChannel.slice(0, -4).trim();
   }
 
-  // Remove unnecessary parts from the video title
   videoTitle = videoTitle.replace(/\([^()]*\)|\[[^\[\]]*\]/g, '').trim();
   videoTitle = videoTitle.replace(/\sft\.\s.*(?=\s-\s)|\sft\.\s.*$/, '').trim();
   videoTitle = videoTitle.replace(/\sFeat\.\s.*(?=\s-\s)|\sFeat\.\s.*$/, '').trim();
 
-  // Search for song details using the Genius API
-  try {
-    // Ensure the search function is awaited in an async function
-    const songDetails = await searchSongOnGenius(videoTitle);
-    console.log(`Found song: ${songDetails.title} by ${songDetails.artist}`);
-
-    
-    // Update video title display
-    const updatedTitle = `${songDetails.title} - By ${songDetails.artist}`;
-    const videoTitleElement = document.querySelector('.video-title2');
-    if (videoTitleElement) {
-      videoTitleElement.textContent = updatedTitle;
-    }
-  } catch (error) {
-    console.error('Error fetching song details:', error);
-
-  }
-}
-async function searchSongOnGenius(query) {
-  const token = '1I-8HxUkbKWKHWMpfeIIjfo229taakB0c6BXwb96-Cfo2I--cq6rIb2McGeSAjdrCPKys3WK6p_32kFtJ7UjAw'; // Your Genius access token
-  const url = `https://api.genius.com/search?q=${encodeURIComponent(query)}`;
-
-  const response = await fetch(url, {
-    headers: {
-      'Authorization': `Bearer ${token}`
-    }
-  });
-
-  if (response.ok) {
-    const data = await response.json();
-    if (data.response.hits.length > 0) {
-      const song = data.response.hits[0].result;
-      return {
-        title: song.title,
-        artist: song.primary_artist.name
-      };
-    } else {
-      throw new Error('No song found');
-    }
+  const splitTitle = videoTitle.split(' - ');
+  if (splitTitle.length === 2) {
+    const artist = splitTitle[0];
+    const songTitle = splitTitle[1];
+    fetchLyrics(artist, songTitle, videoChannel, '', videoDuration);
   } else {
-    throw new Error('Failed to search song on Genius');
+    fetchLyrics(videoChannel, videoTitle, videoChannel, '', videoDuration);
+  }
+
+  const updatedTitle = `${videoTitle} - By ${videoChannel}`;
+  console.log(updatedTitle);
+  const videoTitleElement = document.querySelector('.video-title2');
+  if (videoTitleElement) {
+    videoTitleElement.textContent = updatedTitle;
   }
 }
-async function getLyricsFromLRC(artist, title) {
-  const apiUrl = new URL('https://lrclib.net/api/get');
-  apiUrl.searchParams.append('track_name', title);
-  apiUrl.searchParams.append('artist_name', artist);
-
-  const response = await fetch(apiUrl, {
-    headers: {
-      'User-Agent': 'YourAppName v1.0 (https://yourapphomepage.com)'
-    }
-  });
-
-  if (response.ok) {
-    const data = await response.json();
-    return data;
-  } else {
-    throw new Error('Failed to fetch lyrics from LRC API');
-  }
-}
-
-async function findAndDisplayLyrics(query) {
-  try {
-    const songDetails = await searchSongOnGenius(query);
-    console.log(`Found song: ${songDetails.title} by ${songDetails.artist}`);
-
-    const lyricsData = await getLyricsFromLRC(songDetails.artist, songDetails.title);
-
-    if (lyricsData.syncedLyrics) {
-      console.log('Displaying synchronized lyrics');
-      displayLyrics(lyricsData.syncedLyrics, true); // display synced lyrics
-    } else if (lyricsData.plainLyrics) {
-      console.log('Displaying plain lyrics');
-      displayLyrics(lyricsData.plainLyrics, false); // display plain lyrics
-    } else {
-      console.error('Lyrics not found');
-    }
-  } catch (error) {
-    console.error('Error:', error.message);
-  }
-}
-
-// Call this function with the user's query to get and display lyrics
-findAndDisplayLyrics('Song title or part of lyrics');
-
-
-
-
-
 
 
 function displayLyrics(lyrics, isSynced) {
