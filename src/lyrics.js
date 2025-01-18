@@ -39,7 +39,7 @@ async function updateVideoTitle2() {
   }
 }
 async function searchSongOnGenius(query) {
-  const token = 'okOR2qtvb7IXv-H1kttSda3ANSWQWvTAkE_xsCH1UYH_qFIzKI_dLkXZ1Z42ntM_'; // Your Genius access token
+  const token = '1I-8HxUkbKWKHWMpfeIIjfo229taakB0c6BXwb96-Cfo2I--cq6rIb2McGeSAjdrCPKys3WK6p_32kFtJ7UjAw'; // Your Genius access token
   const url = `https://api.genius.com/search?q=${encodeURIComponent(query)}`;
 
   const response = await fetch(url, {
