@@ -15,10 +15,17 @@ function updateVideoTitle2() {
 
   // Clean up the video title
   videoTitle = videoTitle
-    .replace(/\([^()]*\)|\[[^\[\]]*\]/g, '') // Remove text in parentheses and brackets
-    .replace(/\s-\s|\s&\s|\s\|\s/g, ' ') // Replace separators (-, &, |) with spaces
-    .replace(/\sft\.\s.*(?=\s)|\sFeat\.\s.*$/, '') // Remove "ft." or "Feat."
-    .trim();
+  .replace(/\([^()]*\)|\[[^\[\]]*\]/g, '') // Remove text in parentheses and brackets
+  .replace(/\s-\s|\s&\s|\s\|\s/g, ' ') // Replace separators (-, &, |) with spaces
+  .replace(/\sft\.\s.*(?=\s)|\sFeat\.\s.*$/, '') // Remove "ft." or "Feat."
+    .replace(/[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}]/gu, '') // Remove emojis
+    .replace(/[^\w\s]|_/g, '') // Remove symbols (non-word characters except spaces)
+    .replace(/「[^」]*」|【[^】]*】/g, '') // Remove text within 「」 and 【】
+    .replace(/→|\+|,/g, '') // Remove specific symbols (→, +, and commas)
+    .replace(/\b(Nightcore|Anime|MV|Slowed|Reverb|lyrics|song|AMV)\b/gi, '') // Remove unwanted words
+    .replace(/-\s*AMV\s*-/gi, '') // Remove "-AMV-" specifically
+    .replace(/\s+/g, ' ') // Replace multiple spaces with a single space
+    .trim(); // Trim any remaining whitespace
 
   // Log the cleaned title and channel
   console.log(`Cleaned Title: ${videoTitle}`);
@@ -35,6 +42,8 @@ function updateVideoTitle2() {
     videoTitleElement.textContent = updatedTitle;
   }
 }
+
+
 
 function fetchLyrics(videoTitle, videoChannel, videoDuration) {
   const searchApiUrl = (query) =>
