@@ -1,63 +1,10 @@
-function fetchLyrics(artist, songTitle, videoChannel, albumName = '', duration = 0, retryWithoutDuration = false) {
-  // Validate that artist and songTitle are not empty
-  if (!artist || !songTitle) {
-    console.error('Artist or song title is missing. Cannot fetch lyrics.');
-    displayLyrics('Error: Missing artist or song title', false);
-    return; // Exit the function if artist or songTitle is missing
-  }
-
-  const apiUrl = new URL('https://lrclib.net/api/get');
-  apiUrl.searchParams.append('track_name', songTitle);
-  apiUrl.searchParams.append('artist_name', artist);
-  if (albumName) {
-    apiUrl.searchParams.append('album_name', albumName);
-  }
-  if (duration > 0 && !retryWithoutDuration) {
-    apiUrl.searchParams.append('duration', duration);
-  }
-   // Log the URL with all parameters added
-   console.log(`Constructed API URL: ${apiUrl.toString()}`);
-  fetch(apiUrl, {
-    headers: {
-      'User-Agent': 'YourAppName v1.0 (https://yourapphomepage.com)',
-    },
-  })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error(`Lyrics not found: ${response.statusText}`);
-      }
-      return response.json();
-    })
-    .then(data => {
-      if (data.syncedLyrics && !retryWithoutDuration) {
-        displayLyrics(data.syncedLyrics, true); // Display synchronized lyrics
-      } else if (data.plainLyrics) {
-        displayLyrics(data.plainLyrics, false); // Display plain lyrics without syncing
-      } else {
-        displayLyrics('Lyrics not found', false);
-      }
-    })
-    .catch(error => {
-      console.error('Error fetching lyrics:', error);
-      if (!retryWithoutDuration) {
-        // Retry without duration parameter
-        console.log('Retrying without duration...');
-        fetchLyrics(artist, songTitle, videoChannel, albumName, 0, true);
-      } else {
-        displayLyrics('Error fetching lyrics', false); // Display error message
-      }
-    });
-}
-
-
-
-
 function updateVideoTitle2() {
   const videoData = player.getVideoData();
   let videoTitle = videoData.title;
   let videoChannel = videoData.author;
   const videoDuration = Math.floor(player.getDuration()); // Get video duration
 
+  // Clean up the channel name
   const channelWords = videoChannel.split(' ');
   if (channelWords.length > 2) {
     videoChannel = channelWords.slice(0, -2).join(' ');
@@ -66,19 +13,21 @@ function updateVideoTitle2() {
     videoChannel = videoChannel.slice(0, -4).trim();
   }
 
-  videoTitle = videoTitle.replace(/\([^()]*\)|\[[^\[\]]*\]/g, '').trim();
-  videoTitle = videoTitle.replace(/\sft\.\s.*(?=\s-\s)|\sft\.\s.*$/, '').trim();
-  videoTitle = videoTitle.replace(/\sFeat\.\s.*(?=\s-\s)|\sFeat\.\s.*$/, '').trim();
+  // Clean up the video title
+  videoTitle = videoTitle
+    .replace(/\([^()]*\)|\[[^\[\]]*\]/g, '') // Remove text in parentheses and brackets
+    .replace(/\s-\s|\s&\s|\s\|\s/g, ' ') // Replace separators (-, &, |) with spaces
+    .replace(/\sft\.\s.*(?=\s)|\sFeat\.\s.*$/, '') // Remove "ft." or "Feat."
+    .trim();
 
-  const splitTitle = videoTitle.split(' - ');
-  if (splitTitle.length === 2) {
-    const artist = splitTitle[0];
-    const songTitle = splitTitle[1];
-    fetchLyrics(artist, songTitle, videoChannel, '', videoDuration);
-  } else {
-    fetchLyrics(videoChannel, videoTitle, videoChannel, '', videoDuration);
-  }
+  // Log the cleaned title and channel
+  console.log(`Cleaned Title: ${videoTitle}`);
+  console.log(`Cleaned Channel: ${videoChannel}`);
 
+  // Fetch lyrics using the cleaned video data
+  fetchLyrics(videoTitle, videoChannel, videoDuration);
+
+  // Update the DOM with the cleaned title
   const updatedTitle = `${videoTitle} - By ${videoChannel}`;
   console.log(updatedTitle);
   const videoTitleElement = document.querySelector('.video-title2');
@@ -86,6 +35,70 @@ function updateVideoTitle2() {
     videoTitleElement.textContent = updatedTitle;
   }
 }
+
+function fetchLyrics(videoTitle, videoChannel, videoDuration) {
+  const searchApiUrl = (query) =>
+    `https://lrclib.net/api/search?q=${encodeURIComponent(query)}`;
+
+  // Helper function to fetch lyrics using an ID
+  const fetchLyricsById = (id) =>
+    fetch(`https://lrclib.net/api/get/${id}`, {
+      headers: {
+        'User-Agent': 'YourAppName v1.0 (https://yourapphomepage.com)',
+      },
+    });
+
+  // Attempt to fetch with both title and channel, then fallback to title only
+  const attemptFetch = (query) =>
+    fetch(searchApiUrl(query), {
+      headers: {
+        'User-Agent': 'YourAppName v1.0 (https://yourapphomepage.com)',
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Error fetching search results: ${response.statusText}`);
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (!data || data.length === 0) {
+          throw new Error('No results found.');
+        }
+        return data[0].id; // Return the first result ID
+      });
+
+  attemptFetch(`${videoTitle} ${videoChannel}`)
+    .catch(() => {
+      console.log(`Retrying with videoTitle only: ${videoTitle}`);
+      return attemptFetch(videoTitle); // Retry with videoTitle only
+    })
+    .then((id) => {
+      console.log(`Fetched ID: ${id}`);
+      return fetchLyricsById(id);
+    })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Error fetching lyrics: ${response.statusText}`);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (data.syncedLyrics && Math.abs(data.duration - videoDuration) <= 2) {
+        displayLyrics(data.syncedLyrics, true); // Display synchronized lyrics
+      } else if (data.plainLyrics) {
+        displayLyrics(data.plainLyrics, false); // Display plain lyrics
+      } else {
+        throw new Error('No suitable lyrics found.');
+      }
+    })
+    .catch((error) => {
+      console.error('Error fetching or processing lyrics:', error);
+      displayLyrics('Error fetching lyrics', false);
+    });
+}
+
+
 
 
 function displayLyrics(lyrics, isSynced) {
