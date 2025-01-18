@@ -746,14 +746,17 @@ function displayPlaylist() {
 
             moreDropdown.className = "more-dropdown";
 
-            // Add Remove Option
-            const removeOption = document.createElement("a");
-            removeOption.innerHTML = '<span class="material-symbols-outlined">cancel</span>';
-            removeOption.href = "#";
-            removeOption.addEventListener("click", (event) => {
-                event.stopPropagation(); // Prevent parent click event
-                removeFromPlaylist(index); // Remove the selected video from the playlist
-            });
+           // Add Remove Option
+const removeOption = document.createElement("a");
+removeOption.innerHTML = '<span class="material-symbols-outlined">cancel</span>';
+removeOption.href = "#";
+removeOption.addEventListener("click", (function (index) {
+    return function (event) {
+        event.stopPropagation(); // Prevent parent click event
+        removeFromPlaylist(index); // Remove the selected video from the playlist
+    };
+})(index)); // Pass the index correctly using a closure
+
 
             // Add Download Option
             const downloadOption = document.createElement("a");
@@ -803,15 +806,34 @@ function toggleDropdown(index) {
     }
 }
 
-//edit later
 function removeFromPlaylist(index) {
+    // Retrieve the playlist from localStorage
+    const storedPlaylist = localStorage.getItem("playlist");
+    if (!storedPlaylist) {
+        console.error("Playlist not found in localStorage.");
+        return;
+    }
+
+    // Parse the playlist
+    const playlistItems = JSON.parse(storedPlaylist);
+
+    // Validate the index
     if (index >= 0 && index < playlistItems.length) {
+        // Remove the video at the specified index
         playlistItems.splice(index, 1);
+
+        // Save the updated playlist back to localStorage
         localStorage.setItem("playlist", JSON.stringify(playlistItems));
+
+        // Refresh the displayed playlist
         displayPlaylist();
-        console.log(playlistItems);
+
+        console.log("Updated playlist:", playlistItems);
+    } else {
+        console.error("Invalid index for removal.");
     }
 }
+
 
 // Function to clear the playlist
 function clearPlaylist() {
