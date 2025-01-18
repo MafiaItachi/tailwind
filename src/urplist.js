@@ -164,7 +164,7 @@ function displayAddedSongs() {
       playlistInfo.className = 'uplistb';
       playlistInfo.innerHTML = `
         <h3 class="uplfull">${playlistName}</h3>
-        <button onclick="shufflePlaylist('${playlistName}')">
+        <button onclick="playShuffledPlaylist('${playlistName}')">
           <span class="material-symbols-outlined">shuffle</span>
         </button>
       `;
@@ -181,44 +181,39 @@ function revealSongsList(playlistName) {
   const playlistDiv = document.getElementById('urplist');
   playlistDiv.innerHTML = '';
 
-  // Create a container for the playlist thumbnail and songs list
   const containerDiv = document.createElement('div');
   containerDiv.className = 'playlist-container';
 
-  // Add the playlist thumbnail
   const playlistThumbnail = document.createElement('div');
   playlistThumbnail.className = 'playlist-thumbnail centered';
 
-  // Add the first 4 song thumbnails to the playlist thumbnail
   const thumbnailGrid = document.createElement('div');
   thumbnailGrid.className = 'thumbnail-grid';
 
   playlists[playlistName].slice(0, 4).forEach(song => {
-    const thumbnail = document.createElement('img');
-    thumbnail.src = `https://img.youtube.com/vi/${song.id}/mqdefault.jpg`;
-    thumbnail.alt = song.title;
-    thumbnailGrid.appendChild(thumbnail);
+      const thumbnail = document.createElement('img');
+      thumbnail.src = `https://img.youtube.com/vi/${song.id}/mqdefault.jpg`;
+      thumbnail.alt = song.title;
+      thumbnailGrid.appendChild(thumbnail);
   });
 
   playlistThumbnail.appendChild(thumbnailGrid);
 
-  // Add playlist name and shuffle button
   const playlistInfo = document.createElement('div');
   playlistInfo.className = 'uplistb';
   playlistInfo.innerHTML = `
-    <h3 class="uplfull">${playlistName}</h3>
-    <button onclick="editPlaylistName('${playlistName}')">
-      <span class="material-symbols-outlined">edit</span>
-    </button>
-    <button onclick="shufflePlaylist('${playlistName}')">
-      <span class="material-symbols-outlined">shuffle</span>
-    </button>
+      <h3 class="uplfull">${playlistName}</h3>
+      <button onclick="editPlaylistName('${playlistName}')">
+          <span class="material-symbols-outlined">edit</span>
+      </button>
+      <button onclick="playShuffledPlaylist('${playlistName}')">
+          <span class="material-symbols-outlined">shuffle</span>
+      </button>
   `;
   playlistThumbnail.appendChild(playlistInfo);
 
   containerDiv.appendChild(playlistThumbnail);
 
-  // Add the songs list below the playlist thumbnail
   const songsListDiv = document.createElement('div');
   songsListDiv.className = 'songs-list';
 
@@ -240,27 +235,30 @@ function revealSongsList(playlistName) {
   });
 
   playlistSongs.forEach(song => {
-    const songElement = document.createElement('div');
-    songElement.className = 'song';
-    songElement.innerHTML = `
-      <img src="https://img.youtube.com/vi/${song.id}/mqdefault.jpg" alt="${song.title}">
-      <p>${song.title}</p>
-      <button onclick="removeSongFromPlaylist('${playlistName}', '${song.id}')"><span class="material-symbols-outlined">more_vert</span></button>
-    `;
-        // Add a click event to play the song when clicked
-        songElement.addEventListener('click', function() {
-          playSong(song.id);  // Function to play the song
-        });
-    songsListDiv.appendChild(songElement);
+      const songElement = document.createElement('div');
+      songElement.className = 'song';
+      songElement.innerHTML = `
+          <img src="https://img.youtube.com/vi/${song.id}/mqdefault.jpg" alt="${song.title}">
+          <p>${song.title}</p>
+          <button onclick="removeSongFromPlaylist('${playlistName}', '${song.id}')">
+              <span class="material-symbols-outlined">more_vert</span>
+          </button>
+      `;
+      songElement.addEventListener('click', function () {
+        isShuffleActive = false; // Deactivate shuffle playback
+        setCurrentPlaylistContext(song.id, "revealSongsList", playlistName);
+        player.loadVideoById(song.id);
+        player.playVideo();
+      });
+      songsListDiv.appendChild(songElement);
   });
 
   containerDiv.appendChild(songsListDiv);
 
-  // Add a back button at the top of the playlistDiv
   const backButton = document.createElement('button');
-  backButton.innerHTML = `<div class="cut"><button ><span class="material-symbols-outlined">keyboard_backspace</span></button><span>Back</span>`;
-  backButton.onclick = function() {
-    history.back();
+  backButton.innerHTML = `<div class="cut"><button><span class="material-symbols-outlined">keyboard_backspace</span></button><span>Back</span>`;
+  backButton.onclick = function () {
+      history.back();
   };
 
   history.pushState({ view: 'playlist' }, '', '#playlist');
@@ -268,6 +266,7 @@ function revealSongsList(playlistName) {
   playlistDiv.appendChild(backButton);
   playlistDiv.appendChild(containerDiv);
 }
+
 
 // Handle the Back Gesture using popstate
 window.addEventListener('popstate', function(event) {
@@ -299,25 +298,98 @@ window.addEventListener('popstate', function(event) {
 
 
 
-// Function to shuffle and play the playlist
-function shufflePlaylist(playlistName) {
-  repeatMode = 'no-repeat';
-  const shuffledSongs = [...playlists[playlistName]].sort(() => Math.random() - 0.5);
-  playSongsSequentially(shuffledSongs);
+
+
+
+
+let isShuffleActive = false; // Tracks whether shuffle playback is active
+
+
+function playShuffledPlaylist(playlistName = "flatPlaylist") {
+  isShuffleActive = true; // Activate shuffle playback
+
+  const storedPlaylists = localStorage.getItem("playlists");
+  const storedPlaylist = localStorage.getItem("playlist");
+
+  let playlists = {};
+  let flatPlaylist = [];
+
+  if (storedPlaylists) {
+      try {
+          playlists = JSON.parse(storedPlaylists);
+      } catch (e) {
+          console.error("Failed to parse 'playlists' from localStorage:", e);
+          return;
+      }
+  }
+
+  if (storedPlaylist) {
+      try {
+          flatPlaylist = JSON.parse(storedPlaylist);
+      } catch (e) {
+          console.error("Failed to parse 'playlist' from localStorage:", e);
+          return;
+      }
+  }
+
+  // Determine the playlist to shuffle
+  let playlistToShuffle = [];
+  if (playlistName === "flatPlaylist") {
+      playlistToShuffle = flatPlaylist;
+  } else if (playlists[playlistName]) {
+      playlistToShuffle = playlists[playlistName];
+  } else {
+      console.error("Playlist not found.");
+      return;
+  }
+
+  // Shuffle the playlist
+  const shuffledPlaylist = [...playlistToShuffle].sort(() => Math.random() - 0.5);
+  console.log(`Shuffled playlist (${playlistName}):`, shuffledPlaylist);
+
+  let shuffleIndex = 0;
+
+  function playNextInShuffle() {
+      if (!isShuffleActive) {
+          console.log("Shuffle playback deactivated.");
+          return; // Exit if shuffle is no longer active
+      }
+
+      if (shuffleIndex >= shuffledPlaylist.length) {
+          console.log("Finished playing shuffled playlist. Restarting...");
+          shuffleIndex = 0;
+      }
+
+      const video = shuffledPlaylist[shuffleIndex];
+      const videoId = video.id || video.videoId;
+      const videoTitle = video.title || video.videoTitle;
+
+      console.log(`Playing shuffled video: ${videoTitle}`);
+      setCurrentPlaylistContext(videoId, "playShuffledPlaylist", playlistName);
+
+      player.loadVideoById(videoId);
+      player.playVideo();
+      shuffleIndex++;
+  }
+
+  player.removeEventListener("onStateChange", onShuffledStateChange);
+
+  function onShuffledStateChange(event) {
+      if (event.data === YT.PlayerState.ENDED) {
+          playNextInShuffle();
+      }
+  }
+
+  player.addEventListener("onStateChange", onShuffledStateChange);
+  playNextInShuffle();
 }
 
-// Function to play songs sequentially
-function playSongsSequentially(songs, index = 0) {
-  if (index < songs.length) {
-    playSong(songs[index].id);
-    player.addEventListener('onStateChange', function onStateChange(event) {
-      if (event.data === YT.PlayerState.ENDED) {
-        player.removeEventListener('onStateChange', onStateChange);
-        playSongsSequentially(songs, index + 1);
-      }
-    });
-  }
-}
+
+
+
+
+
+
 
 function removeSongFromPlaylist(playlistName, songId) {
   if (!playlists[playlistName]) {

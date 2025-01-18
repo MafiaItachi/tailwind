@@ -232,7 +232,7 @@
                <div id="playlist-section">
                   <div class=" shuffle ">
                      <h1 class=" h2">LIKE SONGS</h1>
-                     <button class=" " onclick="shuffleAndPlay()"><span class="material-symbols-outlined">
+                     <button class=" " onclick="playShuffledPlaylist()"><span class="material-symbols-outlined">
                      shuffle
                      </span></button>
                   </div>
@@ -343,7 +343,7 @@
                            <button id="share-video" onclick="shareCurrentVideo()"><span class="material-symbols-outlined">
                            share
                            </span></button>
-                           <button id="repeat-button" onclick="toggleRepeatOneMode()"><span class="material-icons">
+                           <button id="repeat-button" onclick="toggleRepeatMode()"><span class="material-icons">
                            repeat
                            </span></button>
                            <button id="toggle-lyrics-btn" onclick="toggleLyrics(); togglePlayer()"><span
@@ -458,8 +458,9 @@ add
          <script src="https://apis.google.com/js/api.js"></script>
 
 
+         <script src="src/urplist.js"></script>
+         <script src="src/main.js"></script>
       <script src="src/apikeys.js"></script>
-      <script src="src/main.js"></script>
       <script src="src/trending.js"></script>
       <script src="src/your-playlist.js"></script>
       <script src="src/timer.js"></script>
@@ -470,9 +471,9 @@ add
       <script src="src/searchplist.js"></script>
       <script src="src/reco.js"></script>
       <script src="src/mood.js"></script>
-       <script src="src/urplist.js"></script>
-       <script src="src/Suggestions.js"></script>
+      <script src="src/Suggestions.js"></script>
       <script src="src/icon.js"></script>
       <script src="src/login.js"></script>
+      <!-- <script src="src/queue.js"></script> -->
    </body>
 </html>
