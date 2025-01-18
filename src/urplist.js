@@ -175,7 +175,7 @@ function displayAddedSongs() {
   }
 }
 
-// Function to reveal songs list in a playlist with thumbnails
+// Function to reveal songs list in a playlist with thumbnails and dropdown controls
 function revealSongsList(playlistName) {
   const playlistSongs = playlists[playlistName];
   const playlistDiv = document.getElementById('urplist');
@@ -184,6 +184,7 @@ function revealSongsList(playlistName) {
   const containerDiv = document.createElement('div');
   containerDiv.className = 'playlist-container';
 
+  // Playlist Thumbnail Section
   const playlistThumbnail = document.createElement('div');
   playlistThumbnail.className = 'playlist-thumbnail centered';
 
@@ -214,12 +215,12 @@ function revealSongsList(playlistName) {
 
   containerDiv.appendChild(playlistThumbnail);
 
+  // Songs List Section
   const songsListDiv = document.createElement('div');
   songsListDiv.className = 'songs-list';
-
   // Hide the specified elements
   const elementsToHide = [
-    document.querySelector('.mixedforyou'),   // Assuming 'mixedforyou' is the ID of the element
+    document.querySelector('.mixedforyou'),
     document.querySelector('.home-songs'),
     document.querySelector('.backup-restore'),
     document.querySelector('.h1'),
@@ -233,30 +234,89 @@ function revealSongsList(playlistName) {
       element.classList.add('hidden');
     }
   });
-
-  playlistSongs.forEach(song => {
+  
+  playlistSongs.forEach((song, index) => {
       const songElement = document.createElement('div');
       songElement.className = 'song';
-      songElement.innerHTML = `
-          <img src="https://img.youtube.com/vi/${song.id}/mqdefault.jpg" alt="${song.title}">
-          <p>${song.title}</p>
-          <button onclick="removeSongFromPlaylist('${playlistName}', '${song.id}')">
-              <span class="material-symbols-outlined">more_vert</span>
-          </button>
-      `;
-      songElement.addEventListener('click', function () {
-        isShuffleActive = false; // Deactivate shuffle playback
-        setCurrentPlaylistContext(song.id, "revealSongsList", playlistName);
-        player.loadVideoById(song.id);
-        player.playVideo();
+
+      // Song Thumbnail and Title
+      const songThumbnail = document.createElement('img');
+      songThumbnail.src = `https://img.youtube.com/vi/${song.id}/mqdefault.jpg`;
+      songThumbnail.alt = song.title;
+
+      const songTitle = document.createElement('div');
+      songTitle.textContent = song.title;
+
+      // Dropdown Menu for Each Song
+      const listItem = document.createElement('p');
+      const moreButton = document.createElement('button');
+      const moreDropdown = document.createElement('div');
+      moreButton.innerHTML = '<span class="material-symbols-outlined">more_vert</span>';
+      moreButton.className = 'more-button';
+      moreButton.setAttribute("data-index", index); // Assign a unique index
+      moreButton.addEventListener('click', (event) => {
+          event.stopPropagation(); // Prevent parent click event
+          toggleDropdownfp(index, 'urplist'); // Scoped to this container
       });
+
+      moreDropdown.className = 'more-dropdown';
+
+      // Remove Option
+      const removeOption = document.createElement('a');
+      removeOption.innerHTML = '<span class="material-symbols-outlined">cancel</span>';
+      removeOption.href = '#';
+      removeOption.addEventListener('click', (function (index) {
+          return function (event) {
+              event.stopPropagation(); // Prevent parent click event
+              removeSongFromPlaylist(index, playlistName); // Remove the song from the playlist
+          };
+      })(index)); // Pass the index using a closure
+
+      // Download Option
+      const downloadOption = document.createElement('a');
+      downloadOption.innerHTML = '<span class="material-symbols-outlined">download</span>';
+      downloadOption.href = `https://v3.mp3youtube.cc/download/${song.id}`;
+      downloadOption.setAttribute('target', '_blank');
+      downloadOption.setAttribute('rel', 'noopener noreferrer');
+      downloadOption.addEventListener('click', (event) => {
+          event.stopPropagation(); // Prevent parent click event
+      });
+
+      // Append Dropdown Options
+      moreDropdown.appendChild(removeOption);
+      moreDropdown.appendChild(downloadOption);
+
+      // Append Controls to Song Element
+      listItem.appendChild(moreDropdown);
+      listItem.appendChild(moreButton);
+
+      songElement.appendChild(songThumbnail);
+      songElement.appendChild(songTitle);
+      songElement.appendChild(listItem);
+
+      // Play the video on click
+      songElement.addEventListener('click', () => {
+          isShuffleActive = false; // Deactivate shuffle playback
+          setCurrentPlaylistContext(song.id, 'revealSongsList', playlistName);
+          player.loadVideoById(song.id);
+          player.playVideo();
+      });
+
       songsListDiv.appendChild(songElement);
   });
 
   containerDiv.appendChild(songsListDiv);
 
+  // Back Button
   const backButton = document.createElement('button');
-  backButton.innerHTML = `<div class="cut"><button><span class="material-symbols-outlined">keyboard_backspace</span></button><span>Back</span>`;
+  backButton.innerHTML = `
+      <div class="cut">
+          <button>
+              <span class="material-symbols-outlined">keyboard_backspace</span>
+          </button>
+          <span>Back</span>
+      </div>
+  `;
   backButton.onclick = function () {
       history.back();
   };
@@ -265,6 +325,23 @@ function revealSongsList(playlistName) {
 
   playlistDiv.appendChild(backButton);
   playlistDiv.appendChild(containerDiv);
+}
+
+
+
+//toggle dropdown for like songs as well as playlist(urplist.js)
+function toggleDropdownfp(index, containerId) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+
+  const dropdowns = container.querySelectorAll(".more-dropdown");
+  dropdowns.forEach((dropdown, i) => {
+      if (i === index) {
+          dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+      } else {
+          dropdown.style.display = "none";
+      }
+  });
 }
 
 

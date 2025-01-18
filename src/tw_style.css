@@ -1972,12 +1972,21 @@ body {
      object-fit: cover;
 }
 
-.song p {
+.song div {
   width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   padding-left: 0.25rem;
+  font-weight: 500;
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.song p {
+  display: flex;
+  --tw-text-opacity: 1;
+  color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
 /* urplist */
@@ -2017,6 +2026,62 @@ body {
   padding-top: 0.5rem;
   --tw-text-opacity: 1;
   color: rgb(24 28 40 / var(--tw-text-opacity));
+}
+
+.model {
+  background-color: transparent;
+}
+
+.playlists-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+  /* 2 columns with 10px spacing (equivalent to Tailwind's gap-2) */
+}
+
+/* Make the playlist-thumbnail smaller */
+
+.playlist-thumbnail.small {
+  margin: 0px;
+  width: 10rem;
+  padding: 0px;
+  overflow: inherit;
+  /* Width of 169px (42.25rem in Tailwind) and no margin or padding */
+  height: auto;
+  /* Tailwind does not support height: auto directly, so it needs to remain in plain CSS */
+}
+
+/* Grid for the song thumbnails inside each playlist */
+
+.thumbnail-grid.small {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  /* 2 thumbnails per row */
+}
+
+.thumbnail-grid.small img {
+  width: 100%;
+  /* Width 100% */
+  height: auto;
+  /* Tailwind does not support height: auto directly */
+}
+
+.urplist span {
+  padding-bottom: 0.25rem;
+  padding-left: 0.25rem;
+  HEIGHT: -webkit-fill-available;
+  /* Padding bottom and padding left */
+}
+
+.urplist {
+  display: flex;
+  width: -moz-fit-content;
+  width: fit-content;
+  flex-direction: column;
+  border-radius: 0.375rem;
+  --tw-bg-opacity: 1;
+  background-color: rgb(69 81 116 / var(--tw-bg-opacity));
+  padding: 0.375rem;
 }
 
 .close {
@@ -2239,49 +2304,17 @@ body {
   }
 }
 
-.model {
-  background-color: transparent;
+/* select playlist option */
+
+.selectp {
+  padding: 0.5rem;
+  /* Padding 2 */
 }
 
-.playlists-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.5rem;
-  /* 2 columns with 10px spacing (equivalent to Tailwind's gap-2) */
-}
-
-/* Make the playlist-thumbnail smaller */
-
-.playlist-thumbnail.small {
-  margin: 0px;
-  width: 10rem;
-  padding: 0px;
-  overflow: inherit;
-  /* Width of 169px (42.25rem in Tailwind) and no margin or padding */
-  height: auto;
-  /* Tailwind does not support height: auto directly, so it needs to remain in plain CSS */
-}
-
-/* Grid for the song thumbnails inside each playlist */
-
-.thumbnail-grid.small {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  /* 2 thumbnails per row */
-}
-
-.thumbnail-grid.small img {
+.mc2 {
+  display: flex;
   width: 100%;
-  /* Width 100% */
-  height: auto;
-  /* Tailwind does not support height: auto directly */
-}
-
-.urplist span {
-  padding-bottom: 0.25rem;
-  padding-left: 0.25rem;
-  HEIGHT: -webkit-fill-available;
-  /* Padding bottom and padding left */
+  justify-content: space-between;
 }
 
 #newPlaylistName {
@@ -2291,26 +2324,4 @@ body {
   background-color: rgb(69 81 116 / var(--tw-bg-opacity));
   padding: 0.25rem;
   /* Width 85% */
-}
-
-.mc2 {
-  display: flex;
-  width: 100%;
-  justify-content: space-between;
-}
-
-.urplist {
-  display: flex;
-  width: -moz-fit-content;
-  width: fit-content;
-  flex-direction: column;
-  border-radius: 0.375rem;
-  --tw-bg-opacity: 1;
-  background-color: rgb(69 81 116 / var(--tw-bg-opacity));
-  padding: 0.375rem;
-}
-
-.selectp {
-  padding: 0.5rem;
-  /* Padding 2 */
 }

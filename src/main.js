@@ -794,17 +794,18 @@ removeOption.addEventListener("click", (function (index) {
 }
 
 
-//toggle dropdown for like songs
+//toggle dropdown for  playlist(urplist.js)
 function toggleDropdown(index) {
-    var dropdowns = document.getElementsByClassName("more-dropdown");
-    for (var i = 0; i < dropdowns.length; i++) {
+    const dropdowns = document.querySelectorAll(".more-dropdown");
+    dropdowns.forEach((dropdown, i) => {
         if (i === index) {
-            dropdowns[i].style.display = dropdowns[i].style.display === "block" ? "none" : "block";
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
         } else {
-            dropdowns[i].style.display = "none";
+            dropdown.style.display = "none";
         }
-    }
+    });
 }
+
 
 function removeFromPlaylist(index) {
     // Retrieve the playlist from localStorage

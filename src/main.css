@@ -564,8 +564,11 @@ body {
 .song img {
   @apply h-16 w-20 object-cover rounded-md flex flex-wrap;
 }
+.song div{
+  @apply text-white w-full pl-1 font-medium text-ellipsis overflow-hidden whitespace-nowrap;
+}
 .song p {
-  @apply pl-1 text-ellipsis overflow-hidden whitespace-nowrap w-full ;
+  @apply text-white flex;;
 }
 
 /* urplist */
@@ -578,6 +581,33 @@ body {
 }
 .modal-content button {
   @apply bg-green pt-2 px-3 rounded-md text-body 
+}
+.model{
+  @apply bg-transparent;
+}
+.playlists-grid {
+  @apply grid grid-cols-2 gap-2; /* 2 columns with 10px spacing (equivalent to Tailwind's gap-2) */
+}
+/* Make the playlist-thumbnail smaller */
+.playlist-thumbnail.small {
+  @apply w-40 overflow-inherit m-0 p-0; /* Width of 169px (42.25rem in Tailwind) and no margin or padding */
+  height: auto; /* Tailwind does not support height: auto directly, so it needs to remain in plain CSS */
+}
+/* Grid for the song thumbnails inside each playlist */
+.thumbnail-grid.small {
+  @apply grid grid-cols-2; /* 2 thumbnails per row */
+}
+.thumbnail-grid.small img {
+  @apply w-full; /* Width 100% */
+  height: auto; /* Tailwind does not support height: auto directly */
+}
+
+
+.urplist span {
+  @apply pb-1 pl-1 WEB-FULL; /* Padding bottom and padding left */
+}
+.urplist{
+  @apply flex flex-col bg-secondary rounded-md p-1.5 w-fit
 }
 .close {
   @apply to-white float-right size-6 font-bold;
@@ -684,39 +714,14 @@ body {
 
 
 
+/* select playlist option */
 
-
-.model{
-  @apply bg-transparent;
-}
-.playlists-grid {
-  @apply grid grid-cols-2 gap-2; /* 2 columns with 10px spacing (equivalent to Tailwind's gap-2) */
-}
-/* Make the playlist-thumbnail smaller */
-.playlist-thumbnail.small {
-  @apply w-40 overflow-inherit m-0 p-0; /* Width of 169px (42.25rem in Tailwind) and no margin or padding */
-  height: auto; /* Tailwind does not support height: auto directly, so it needs to remain in plain CSS */
-}
-/* Grid for the song thumbnails inside each playlist */
-.thumbnail-grid.small {
-  @apply grid grid-cols-2; /* 2 thumbnails per row */
-}
-.thumbnail-grid.small img {
-  @apply w-full; /* Width 100% */
-  height: auto; /* Tailwind does not support height: auto directly */
-}
-.urplist span {
-  @apply pb-1 pl-1 WEB-FULL; /* Padding bottom and padding left */
-}
-#newPlaylistName {
-  @apply w-[85%] rounded bg-secondary p-1; /* Width 85% */
+.selectp {
+  @apply p-2; /* Padding 2 */
 }
 .mc2{
   @apply flex justify-between w-full
 }
-.urplist{
-  @apply flex flex-col bg-secondary rounded-md p-1.5 w-fit
-}
-.selectp {
-  @apply p-2; /* Padding 2 */
+#newPlaylistName {
+  @apply w-[85%] rounded bg-secondary p-1; /* Width 85% */
 }
