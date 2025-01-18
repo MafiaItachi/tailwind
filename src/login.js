@@ -3,6 +3,11 @@
 //const clientId = '637980846129-vi3estjf3mehsarbbf44ongjltci9sue.apps.googleusercontent.com';
 
 //https://maps.googleapis.com/maps/api/js?key=AIzaSyCnd1JW8BZS6WShR1j4twmeTES-l-FCxoU
+function normalizeZoom() {
+  const targetZoom = 0.9; // 90% zoom
+  document.body.style.zoom = targetZoom; // Apply the zoom level
+}
+normalizeZoom();
 
 // OAuth2 setup
 const CLIENT_IDe = '78183444968-nq7r22h10p4p2j83sbkvh9j60bb6isek.apps.googleusercontent.com';
