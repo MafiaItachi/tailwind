@@ -300,7 +300,8 @@ let currentPlaylistName = null; // Playlist name like "DD" or "new"
 
 function playNextVideo() {
     if (!currentKey || !currentPlaylistName) {
-        console.error("No current playlist context. Please start playing a video first.");
+        playShuffledPlaylist();
+        console.log("No current playlist context. Please start playing a video first.");
         return;
     }
 

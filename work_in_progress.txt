@@ -16,12 +16,13 @@ title: "Tum Se Hi (Unplugged) Lyrical Video: Shahid Kapoor, Kareena Kapoor Khan 
 
 make a update youtube playlist button to sync playlist with youtube account place in under login button 
 edit the login file to fetch youtube account playlist same value structure 
-  ✅✅✅✅✅✅✅✅✅✅✅✅ done
 make continue play for yourplaylist
 make shuffle play for yourplaylist
 make a favourite button to add the playlist in urplist.js update every time if new video id is comming or not 
+handel video unavailable error
+play shuffle in No current playlist context. Please start playing a video first.
 
-
+  ✅✅✅✅✅✅✅✅✅✅✅✅ done
 
 
 
