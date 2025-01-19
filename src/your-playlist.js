@@ -151,14 +151,19 @@ async function fetchAllPlaylistSongs(playlistId, apiKey) {
 
 
 
+
 function revealSongs(playlistKey) {
     const savedPlaylists = JSON.parse(localStorage.getItem('savedPlaylists')) || {};
+    const playlists = JSON.parse(localStorage.getItem('playlists')) || {}; // Existing playlists storage
     const songs = savedPlaylists[playlistKey];
 
     if (!songs || songs.length === 0) {
         showAlert('No songs found in this playlist.');
         return;
     }
+
+    // Clean playlist name: remove parentheses and text inside them
+    const cleanedPlaylistKey = playlistKey.replace(/\s*\([^)]*\)/g, '').trim();
 
     // Set the current context for the playlist
     setCurrentPlaylistContext(null, "savedPlaylists", playlistKey);
@@ -178,20 +183,43 @@ function revealSongs(playlistKey) {
     const playlistThumbnailElement = document.createElement('img');
     playlistThumbnailElement.classList.add('clicked-playlist-thumbnail');
     playlistThumbnailElement.src = playlistThumbnail;
-    playlistThumbnailElement.alt = playlistKey;
+    playlistThumbnailElement.alt = cleanedPlaylistKey;
 
     const clickedPlaylistInfo = document.createElement('div');
     clickedPlaylistInfo.classList.add('clicked-playlist-info');
     clickedPlaylistInfo.appendChild(playlistThumbnailElement);
 
-    // Add playlist title and shuffle button
+    // Add playlist title, favorite button, and shuffle button
     const playlistInfo = document.createElement('div');
     playlistInfo.classList.add('clicked-playlist-info-extra');
 
     // Playlist title
     const playlistTitleElement = document.createElement('div');
     playlistTitleElement.classList.add('playlist-title');
-    playlistTitleElement.textContent = playlistKey.split('(')[0]; // Display only the playlist name
+    playlistTitleElement.textContent = cleanedPlaylistKey; // Display cleaned playlist name
+
+    // Favorite button
+    const favoriteButton = document.createElement('button');
+    favoriteButton.classList.add('favorite-button');
+    favoriteButton.innerHTML = playlists[cleanedPlaylistKey]
+        ? '<span class="material-symbols-outlined">favorite</span>' // Filled heart if favorite
+        : '<span class="material-symbols-outlined">favorite_border</span>'; // Unfilled heart if not favorite
+
+    favoriteButton.addEventListener('click', () => {
+        if (playlists[cleanedPlaylistKey]) {
+            // Remove from favorites
+            delete playlists[cleanedPlaylistKey];
+            localStorage.setItem('playlists', JSON.stringify(playlists));
+            favoriteButton.innerHTML = '<span class="material-symbols-outlined">favorite_border</span>';
+            showAlert(`${cleanedPlaylistKey} removed from favorites.`);
+        } else {
+            // Add to favorites
+            playlists[cleanedPlaylistKey] = songs.map(song => ({ id: song.id, title: song.title }));
+            localStorage.setItem('playlists', JSON.stringify(playlists));
+            favoriteButton.innerHTML = '<span class="material-symbols-outlined">favorite</span>';
+            showAlert(`${cleanedPlaylistKey} added to favorites.`);
+        }
+    });
 
     // Shuffle button
     const shuffleButton = document.createElement('button');
@@ -203,6 +231,7 @@ function revealSongs(playlistKey) {
     });
 
     playlistInfo.appendChild(playlistTitleElement);
+    playlistInfo.appendChild(favoriteButton); // Add favorite button above shuffle button
     playlistInfo.appendChild(shuffleButton);
 
     clickedPlaylistInfo.appendChild(playlistInfo);
@@ -240,6 +269,8 @@ function revealSongs(playlistKey) {
 
     songListContainer.appendChild(songList);
 }
+
+
 
 
 

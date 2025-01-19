@@ -621,7 +621,7 @@ body {
   @apply w-full h-full overflow-auto whitespace-nowrap ;
 }
 .playlist-thumbnail {
-  @apply inline-block whitespace-nowrap rounded-lg w-[284px] overflow-hidden p-2 m-1 bg-secondary rounded-lg;
+  @apply inline-block whitespace-nowrap rounded-lg w-[340px] overflow-hidden p-2 m-1 bg-secondary rounded-lg;
 }
 .thumbnail-grid {
   @apply grid grid-cols-2 grid-rows-2 bg-[#181c28] rounded-lg relative overflow-hidden;
@@ -630,7 +630,7 @@ body {
   @apply w-full h-auto object-cover z-10 ;
 }
 .centered {
-  @apply relative left-1/2 transform -translate-x-1/2 max-w-[600px] p-5;
+  @apply relative left-1/2 transform -translate-x-1/2 max-w-[600px] ;
 }
 .uplistb {
   @apply flex justify-end items-center ;

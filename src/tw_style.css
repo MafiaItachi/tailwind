@@ -2128,7 +2128,7 @@ body {
 .playlist-thumbnail {
   margin: 0.25rem;
   display: inline-block;
-  width: 284px;
+  width: 340px;
   overflow: hidden;
   white-space: nowrap;
   border-radius: 0.5rem;
@@ -2162,7 +2162,6 @@ body {
   max-width: 600px;
   --tw-translate-x: -50%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
-  padding: 1.25rem;
 }
 
 .uplistb {
