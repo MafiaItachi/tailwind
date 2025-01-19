@@ -1,3 +1,19 @@
+function clearAllPlaylists() {
+    // Confirm with the user before clearing playlists
+    const confirmation = confirm('Are you sure you want to delete all playlists? This action cannot be undone.');
+    if (!confirmation) return;
+
+    // Remove savedPlaylists from local storage
+    localStorage.removeItem('savedPlaylists');
+
+    // Update the UI
+    displaySavedPlaylists(); // This will clear the displayed playlists
+
+    // Notify the user
+    showAlert('All playlists have been deleted.');
+}
+
+
 function getPlaylistIdFromLink(link) {
     // Extract playlist ID from the YouTube link
     var regex = /[?&]list=([^#\&\?]+)/;
