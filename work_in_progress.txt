@@ -1,0 +1,23 @@
+in your-playlist,js file save the playlist video id Locally so that dont have to use api every time to load
+save the playlist in local storage in this format so that in future i can work to make contimue play and shuffle play 
+
+
+
+DD(playlist name):[{id: "Kq3GX0BFGJg",title:"Main Agar Kahoon (Lyrics)..."},{.....}]
+0:{id: "Kq3GX0BFGJg",Main Agar Kahoon (Lyrics)...}
+id: "Kq3GX0BFGJg"
+title: "Main Agar Kahoon (Lyrics)|Om Shanti Om|Sonu Nigam, Shreya Ghoshal|@tseries #songlyrics #viral"
+1: {id: "RO51nJRiSgQ", title: "Main Agar Kahoon | Om Shanti Om | Lirik - Terjemahan Indonesia"}
+id: "RO51nJRiSgQ"
+title: "Main Agar Kahoon | Om Shanti Om | Lirik - Terjemahan Indonesia"
+2: {id: "nWxz9BdtTPs",…}
+id: "nWxz9BdtTPs"
+title: "Tum Se Hi (Unplugged) Lyrical Video: Shahid Kapoor, Kareena Kapoor Khan | Sarthak S | \"Jab We Met\""
+
+
+
+make continue play for yourplaylist
+make shuffle play for yourplaylist
+make a favourite button to add the playlist in urplist.js update every time if new video id is comming or not 
+make a update youtube playlist button to sync playlist with youtube account place in under login button 
+
