@@ -107,6 +107,9 @@ You can go ahead and check out my website at https://mafiaitachi.github.io/tailw
 | Background play        | ✅ |
 | Discovery section      | ✅ |
 | Trending section       | ✅ |
+| youtube account login  | ✅ |
+| sync lyric             | ✅ |
+
 
 
 
