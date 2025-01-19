@@ -103,7 +103,8 @@ function onYouTubeIframeAPIReady() {
         },
         events: {
             'onReady': onPlayerReady,
-            'onStateChange': onPlayerStateChange
+            'onStateChange': onPlayerStateChange,
+            'onError': onPlayerError // Handle errors
         },
         playerVars: {
             'origin': 'https://yourwebsite.com'
@@ -996,6 +997,7 @@ function playVideo(videoId, playlistKey = null, playlistName = null) {
         console.error("Player is not initialized.");
     }
 }
+// Handle the state change event
 function onPlayerStateChange(event) {
     if (event.data === YT.PlayerState.PLAYING) {
         isPlaying = true;
@@ -1030,6 +1032,19 @@ function onPlayerStateChange(event) {
 
     updatePlayPauseButton();
     updatePlayPauseButton2();
+}
+
+// Handle errors
+function onPlayerError(event) {
+    console.log("An error occurred: ", event.data);
+
+    // Only skip to the next video if there is a specific error
+    if (event.data === 2 || event.data === 100 || event.data === 101 || event.data === 150) {
+        console.log("Video unavailable. Waiting 2 seconds before skipping to the next video...");
+        setTimeout(function() {
+            playNextVideo(); // Automatically play the next video if the current video is unavailable
+        }, 2000); // Wait for 2 seconds
+    }
 }
 
 
