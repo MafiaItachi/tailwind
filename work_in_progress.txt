@@ -15,8 +15,8 @@ id: "nWxz9BdtTPs"
 title: "Tum Se Hi (Unplugged) Lyrical Video: Shahid Kapoor, Kareena Kapoor Khan | Sarthak S | \"Jab We Met\""
 
 make a update youtube playlist button to sync playlist with youtube account place in under login button 
-  ✅✅✅✅✅✅✅✅✅✅✅✅ done
 edit the login file to fetch youtube account playlist same value structure 
+  ✅✅✅✅✅✅✅✅✅✅✅✅ done
 make continue play for yourplaylist
 make shuffle play for yourplaylist
 make a favourite button to add the playlist in urplist.js update every time if new video id is comming or not 
@@ -71,3 +71,22 @@ in revealSongs function get the id and title from localstorage and show them(don
 
 now load the 1st song thumbnail as a playlist thumbnail show the song in songlistcontainer after clicking the  playlist thumbnail load song thumbnail use the previous (file your-playlist.js) class and id name make changes to function addPlaylist , revealSongs displaySavedPlaylists
 
+
+
+
+
+this is my login.js file , in this file i load youtube account playlist , and save them to key savedPlaylists , change the getPlaylists function to follow the same structure to value , and save the song id and title 
+
+this is the structure
+{
+    "My Playlist (PL12345)": [
+        { "id": "abc123", "title": "Song A" },
+        { "id": "def456", "title": "Song B" }
+    ],
+    "Another Playlist (PL67890)": [
+        { "id": "ghi789", "title": "Song C" },
+        { "id": "jkl012", "title": "Song D" }
+    ]
+}
+
+this is the file (login.js)

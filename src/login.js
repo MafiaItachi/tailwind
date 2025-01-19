@@ -151,60 +151,104 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 
-// Fetch and display playlists (Updated to handle duplicates)
 async function getPlaylists() {
     console.log("Fetching playlists...");
     try {
         const response = await gapi.client.youtube.playlists.list({
             part: 'snippet',
             mine: true,
-            maxResults: 50, // Fetch 50 playlists per page
+            maxResults: 50, // Fetch up to 50 playlists
         });
 
-        console.log("Playlists response:", response);
         const playlists = response.result.items;
+        const savedPlaylists = JSON.parse(localStorage.getItem('savedPlaylists')) || {};
 
-        playlists.forEach((playlist) => {
+        for (const playlist of playlists) {
             const playlistId = playlist.id;
             const playlistTitle = playlist.snippet.title;
-            const playlistThumbnail = playlist.snippet.thumbnails.medium.url;
-
             console.log("Processing playlist:", { playlistId, playlistTitle });
 
-            // Retrieve the stored playlists from localStorage
-            const storedPlaylists = JSON.parse(localStorage.getItem('savedPlaylists')) || [];
-
-            // Check for duplicates by playlist ID
-            const existingPlaylistIndex = storedPlaylists.findIndex(p => p.id === playlistId);
-            if (existingPlaylistIndex !== -1) {
-                console.log("Duplicate playlist found. Removing old entry:", storedPlaylists[existingPlaylistIndex]);
-                storedPlaylists.splice(existingPlaylistIndex, 1);
+            // Fetch songs for this playlist
+            const songs = await fetchPlaylistSongs(playlistId);
+            if (!songs || songs.length === 0) {
+                console.warn(`No songs found for playlist: ${playlistTitle}`);
+                continue;
             }
 
-            // Add the new playlist to the list
-            storedPlaylists.push({ id: playlistId, title: playlistTitle, thumbnail: playlistThumbnail });
-
-            // Store the updated list in localStorage
-            localStorage.setItem('savedPlaylists', JSON.stringify(storedPlaylists));
+            // Save playlist to localStorage in the required structure
+            savedPlaylists[`${playlistTitle} (${playlistId})`] = songs;
 
             // Add the playlist to the DOM
-            const playlistsSection = document.getElementById('addedPlaylists');
-            const playlistContainer = document.createElement('div');
-            playlistContainer.classList.add('playlist');
-            playlistContainer.setAttribute('data-id', playlistId);
+            addPlaylistToDOM(playlistTitle, playlistId, songs[0]?.id); // Use the first song's thumbnail
+        }
 
-            const playlistThumbnailElement = document.createElement('img');
-            playlistThumbnailElement.classList.add('yourplaylist-thumbnail');
-            playlistThumbnailElement.src = playlistThumbnail;
-            playlistThumbnailElement.alt = playlistTitle;
-
-            playlistContainer.appendChild(playlistThumbnailElement);
-            playlistsSection.appendChild(playlistContainer);
-        });
+        // Update localStorage
+        localStorage.setItem('savedPlaylists', JSON.stringify(savedPlaylists));
+        console.log("Playlists saved to localStorage:", savedPlaylists);
     } catch (error) {
         console.error('Error fetching playlists:', error);
     }
 }
+
+// Helper function to fetch all songs in a playlist
+async function fetchPlaylistSongs(playlistId) {
+    let pageToken = '';
+    const songs = [];
+
+    try {
+        while (true) {
+            const response = await gapi.client.youtube.playlistItems.list({
+                part: 'snippet',
+                playlistId: playlistId,
+                maxResults: 50,
+                pageToken: pageToken,
+            });
+
+            const items = response.result.items || [];
+            for (const item of items) {
+                const snippet = item.snippet;
+                if (snippet.resourceId && snippet.resourceId.videoId) {
+                    songs.push({
+                        id: snippet.resourceId.videoId,
+                        title: snippet.title,
+                    });
+                }
+            }
+
+            pageToken = response.result.nextPageToken;
+            if (!pageToken) break; // Exit loop if no more pages
+        }
+    } catch (error) {
+        console.error(`Error fetching songs for playlist ${playlistId}:`, error);
+    }
+
+    return songs;
+}
+
+// Helper function to add playlist to the DOM
+function addPlaylistToDOM(playlistTitle, playlistId, thumbnailVideoId) {
+    const playlistsSection = document.getElementById('addedPlaylists');
+    const playlistContainer = document.createElement('div');
+    playlistContainer.classList.add('playlist');
+    playlistContainer.setAttribute('data-id', playlistId);
+
+    const playlistThumbnailElement = document.createElement('img');
+    playlistThumbnailElement.classList.add('yourplaylist-thumbnail');
+    playlistThumbnailElement.src = thumbnailVideoId
+        ? `https://img.youtube.com/vi/${thumbnailVideoId}/mqdefault.jpg`
+        : 'default-thumbnail.jpg'; // Provide a default thumbnail if none exists
+    playlistThumbnailElement.alt = playlistTitle;
+
+    playlistContainer.appendChild(playlistThumbnailElement);
+
+    const playlistTitleElement = document.createElement('div');
+    playlistTitleElement.classList.add('playlist-title');
+    playlistTitleElement.textContent = playlistTitle;
+
+    playlistContainer.appendChild(playlistTitleElement);
+    playlistsSection.appendChild(playlistContainer);
+}
+
 
 // Load the profile image from localStorage if available
 document.addEventListener('DOMContentLoaded', () => {
