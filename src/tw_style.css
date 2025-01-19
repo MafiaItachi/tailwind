@@ -1174,7 +1174,7 @@ body {
   outline-offset: 2px;
 }
 
-.shuffle-button button {
+.favorite-button {
   margin-left: 0.5rem;
   margin-top: 0.5rem;
   height: 100%;
@@ -1191,7 +1191,7 @@ body {
   color: rgb(24 28 40 / var(--tw-text-opacity));
 }
 
-.shuffle-button button:focus {
+.favorite-button:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
 }

@@ -279,7 +279,7 @@ body {
 .shuffle-button {
   @apply bg-primary  h-full focus:outline-none text-body font-medium rounded-full px-3 pt-3 pb-1.5  align-middle ml-2 mt-2;
 }
-.shuffle-button button {
+.favorite-button {
   @apply bg-primary  h-full focus:outline-none text-body font-medium rounded-full px-3 pt-3 pb-1.5  align-middle ml-2 mt-2;
 }
 .clicked-playlist-info-extra{

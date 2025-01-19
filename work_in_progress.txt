@@ -49,7 +49,7 @@ make a favourite button to add the playlist in urplist.js update every time if n
 
 
 
-
+/////////////////////////////////////////////modifing the yourplaylist section 
 
 THIS IS ANOTHER PART OF MY CODE 
 THIS PART i save the playlist by there id and fletch the song in revealSongs function by using page token to fetch all..... the song ,this use so much api call, i want to change this 
@@ -71,9 +71,19 @@ in revealSongs function get the id and title from localstorage and show them(don
 
 now load the 1st song thumbnail as a playlist thumbnail show the song in songlistcontainer after clicking the  playlist thumbnail load song thumbnail use the previous (file your-playlist.js) class and id name make changes to function addPlaylist , revealSongs displaySavedPlaylists
 
+/////////////////shuffle button for yourplaylist
+
+now add a shuffle button just side of the playlist title in displaySavedPlaylists function 
+use the same playShuffledPlaylist function the play suffly 
+changes those function 
+//////////////////////play forward and packward for yourplaylist
+did you remember how you build playnextvideo , playprevioustrack, setcurrentcontext, onvideostart, and setCurrentPlaylistContext function to set context using key and playlist , and continue playing from Specific playlist , 
+
+so now add for savedPlaylists (key) to get the same Functionality 
+the savedPlaylists follows the same value structure as playlists(key)
 
 
-
+////////////////////// chenging the structure for youtube playlist
 
 this is my login.js file , in this file i load youtube account playlist , and save them to key savedPlaylists , change the getPlaylists function to follow the same structure to value , and save the song id and title 
 
@@ -90,3 +100,77 @@ this is the structure
 }
 
 this is the file (login.js)
+
+////////////////////////////favoriteButton for playlist
+
+add a dynamic(if on fill the heart logo , if off unfill the heart logo) favourite button just above the shuffle button in revealSongs function 
+
+this button if on it will make a copy of the playlist name and all song id and name inside the playlist and put it in  local storage key value for playlists
+
+
+
+
+
+
+
+
+
+
+/////////////////////////sync the favourate
+
+
+when syncPlaylists is clicked also add the new song id for the playlist which is favourite
+
+    favoriteButton.addEventListener('click', () => {
+        if (playlists[playlistKey]) {
+            // Remove from favorites
+            delete playlists[playlistKey];
+            localStorage.setItem('playlists', JSON.stringify(playlists));
+            favoriteButton.innerHTML = '<span class="material-symbols-outlined">favorite_border</span>';
+            showAlert(`${playlistKey} removed from favorites.`);
+        } else {
+            // Add to favorites
+            playlists[playlistKey] = songs.map(song => ({ id: song.id, title: song.title }));
+            localStorage.setItem('playlists', JSON.stringify(playlists));
+            favoriteButton.innerHTML = '<span class="material-symbols-outlined">favorite</span>';
+            showAlert(`${playlistKey} added to favorites.`);
+        }
+    });
+
+    async function syncPlaylists() {
+    const savedPlaylists = JSON.parse(localStorage.getItem('savedPlaylists')) || {};
+    const apiKey = getRandomAPIKey();
+    let syncCount = 0;
+
+    for (const playlistKey in savedPlaylists) {
+        const playlistId = extractPlaylistId(playlistKey);
+        if (!playlistId) continue;
+
+        console.log(`Syncing playlist: ${playlistKey}`);
+
+        // Fetch all songs in the playlist
+        const updatedSongs = await fetchAllPlaylistSongs(playlistId, apiKey);
+        if (!updatedSongs || updatedSongs.length === 0) {
+            console.warn(`No songs found for playlist: ${playlistKey}`);
+            continue;
+        }
+
+        // Compare and update local storage
+        const existingSongs = savedPlaylists[playlistKey];
+        const newSongs = updatedSongs.filter(
+            newSong => !existingSongs.some(existingSong => existingSong.id === newSong.id)
+        );
+
+        if (newSongs.length > 0) {
+            savedPlaylists[playlistKey] = [...existingSongs, ...newSongs];
+            syncCount += newSongs.length;
+            console.log(`Added ${newSongs.length} new songs to playlist: ${playlistKey}`);
+        }
+    }
+
+    // Save updated playlists back to local storage
+    localStorage.setItem('savedPlaylists', JSON.stringify(savedPlaylists));
+    displaySavedPlaylists(); // Refresh UI
+
+    showAlert(`${syncCount} new songs synced across all playlists.`);
+}
