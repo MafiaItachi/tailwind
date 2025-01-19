@@ -1,58 +1,3 @@
-function addPlaylist() {
-    var playlistLink = document.getElementById('playlistLinkInput').value;
-    document.getElementById("playlistLinkInput").value = "";
-    if (playlistLink.trim() === '') {
-        showAlert('Please enter a valid YouTube playlist link.');
-        return;
-    }
-
-    // Extract playlist ID from the link
-    var playlistId = getPlaylistIdFromLink(playlistLink);
-    if (!playlistId) {
-        showAlert('Invalid YouTube playlist link.');
-        return;
-    }
-    var apiKey = getRandomAPIKey();
-    // Fetch playlist details using YouTube Data API
-    var playlistDetailsUrl =
-        'https://www.googleapis.com/youtube/v3/playlists?part=snippet&id=' +
-        playlistId +
-        '&key=' +
-        apiKey;
-
-    $.getJSON(playlistDetailsUrl, function (response) {
-        var playlist = response.items[0];
-        var playlistThumbnail = playlist.snippet.thumbnails.medium.url;
-        var playlistTitle = playlist.snippet.title;
-
-        // Create HTML elements to display playlist thumbnail and reveal songs
-        var playlistContainer = document.createElement('div');
-        playlistContainer.classList.add('playlist');
-        playlistContainer.setAttribute('data-id', playlistId);
-
-        var playlistThumbnailElement = document.createElement('img');
-        playlistThumbnailElement.classList.add('yourplaylist-thumbnail');
-        playlistThumbnailElement.src = playlistThumbnail;
-        playlistThumbnailElement.alt = playlistTitle;
-
-        playlistThumbnailElement.addEventListener('click', function () {
-            
-            revealSongs(playlistId);
-        });
-
-        playlistContainer.appendChild(playlistThumbnailElement);
-
-        // Save playlist details in local storage
-        var storedPlaylists = JSON.parse(localStorage.getItem('savedPlaylists')) || [];
-        storedPlaylists.push({ id: playlistId, title: playlistTitle, thumbnail: playlistThumbnail });
-        localStorage.setItem('savedPlaylists', JSON.stringify(storedPlaylists));
-
-        // Append the playlist container to a specific section in your HTML
-        var playlistsSection = document.getElementById('addedPlaylists');
-        playlistsSection.appendChild(playlistContainer);
-    });
-}
-
 function getPlaylistIdFromLink(link) {
     // Extract playlist ID from the YouTube link
     var regex = /[?&]list=([^#\&\?]+)/;
@@ -60,197 +5,264 @@ function getPlaylistIdFromLink(link) {
     return match && match[1] ? match[1] : null;
 }
 
+async function addPlaylist() {
+    const playlistLink = document.getElementById('playlistLinkInput').value.trim();
+    document.getElementById('playlistLinkInput').value = '';
+
+    if (!playlistLink) {
+        showAlert('Please enter a valid YouTube playlist link.');
+        return;
+    }
+
+    // Extract playlist ID from the link
+    const playlistId = getPlaylistIdFromLink(playlistLink);
+    if (!playlistId) {
+        showAlert('Invalid YouTube playlist link.');
+        return;
+    }
+
+    const apiKey = getRandomAPIKey();
+
+    try {
+        // Fetch playlist details
+        const playlistDetailsUrl = `https://www.googleapis.com/youtube/v3/playlists?part=snippet&id=${playlistId}&key=${apiKey}`;
+        const playlistDetailsResponse = await fetch(playlistDetailsUrl);
+        const playlistDetailsData = await playlistDetailsResponse.json();
+
+        if (!playlistDetailsData.items || playlistDetailsData.items.length === 0) {
+            showAlert('Playlist not found.');
+            return;
+        }
+
+        const playlist = playlistDetailsData.items[0];
+        const playlistThumbnail = playlist.snippet.thumbnails.medium.url;
+        const playlistTitle = playlist.snippet.title;
+
+        // Fetch playlist songs and store in local storage
+        const songs = await fetchAllPlaylistSongs(playlistId, apiKey);
+
+        // Save playlist and songs in local storage
+        const savedPlaylists = JSON.parse(localStorage.getItem('savedPlaylists')) || {};
+        savedPlaylists[`${playlistTitle}(${playlistId})`] = songs;
+        localStorage.setItem('savedPlaylists', JSON.stringify(savedPlaylists));
+
+        // Update the UI
+        displaySavedPlaylists();
+        showAlert('Playlist added successfully!');
+    } catch (error) {
+        console.error('Error adding playlist:', error);
+        showAlert('An error occurred while adding the playlist.');
+    }
+}
+
+async function syncPlaylists() {
+    const savedPlaylists = JSON.parse(localStorage.getItem('savedPlaylists')) || {};
+    const apiKey = getRandomAPIKey();
+    let syncCount = 0;
+
+    for (const playlistKey in savedPlaylists) {
+        const playlistId = extractPlaylistId(playlistKey);
+        if (!playlistId) continue;
+
+        console.log(`Syncing playlist: ${playlistKey}`);
+
+        // Fetch all songs in the playlist
+        const updatedSongs = await fetchAllPlaylistSongs(playlistId, apiKey);
+        if (!updatedSongs || updatedSongs.length === 0) {
+            console.warn(`No songs found for playlist: ${playlistKey}`);
+            continue;
+        }
+
+        // Compare and update local storage
+        const existingSongs = savedPlaylists[playlistKey];
+        const newSongs = updatedSongs.filter(
+            newSong => !existingSongs.some(existingSong => existingSong.id === newSong.id)
+        );
+
+        if (newSongs.length > 0) {
+            savedPlaylists[playlistKey] = [...existingSongs, ...newSongs];
+            syncCount += newSongs.length;
+            console.log(`Added ${newSongs.length} new songs to playlist: ${playlistKey}`);
+        }
+    }
+
+    // Save updated playlists back to local storage
+    localStorage.setItem('savedPlaylists', JSON.stringify(savedPlaylists));
+    displaySavedPlaylists(); // Refresh UI
+
+    showAlert(`${syncCount} new songs synced across all playlists.`);
+}
+
+// Helper function to extract playlist ID from the key
+function extractPlaylistId(playlistKey) {
+    const match = playlistKey.match(/\((.*?)\)$/); // Extract text inside parentheses
+    return match ? match[1] : null;
+}
+
+
+// Helper function to fetch all songs in a playlist
+async function fetchAllPlaylistSongs(playlistId, apiKey) {
+    let pageToken = '';
+    const songs = [];
+
+    try {
+        while (true) {
+            const playlistItemsUrl = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${apiKey}&pageToken=${pageToken}`;
+            const response = await fetch(playlistItemsUrl);
+            const data = await response.json();
+
+            if (!data.items || data.items.length === 0) break;
+
+            data.items.forEach(item => {
+                const snippet = item.snippet;
+                if (snippet.resourceId && snippet.resourceId.videoId) {
+                    songs.push({
+                        id: snippet.resourceId.videoId,
+                        title: snippet.title,
+                    });
+                }
+            });
+
+            pageToken = data.nextPageToken;
+            if (!pageToken) break;
+        }
+    } catch (error) {
+        console.error('Error fetching playlist songs:', error);
+    }
+
+    return songs;
+}
 
 
 
-// Global variable to track the visibility state
-//var isPlaylistContainerVisible = true;
-//var isFavoriteArtistsContainerVisible = true;
+function revealSongs(playlistKey) {
+    const savedPlaylists = JSON.parse(localStorage.getItem('savedPlaylists')) || {};
+    const songs = savedPlaylists[playlistKey];
 
-//document.addEventListener('DOMContentLoaded', function () {
-    // Add event listener to the added-playlists element
-   // var addedPlaylistsElement = document.getElementByClassName('yourplaylist-thumbnail');
-   // addedPlaylistsElement.addEventListener('click', function () {
-        // Toggle the visibility of the yourplaylist
-   //     isPlaylistContainerVisible = !isPlaylistContainerVisible;
-   //     togglePlaylistContainerVisibility();
-         // Toggle the visibility of the favoriteArtistsContainer
-   //      isFavoriteArtistsContainerVisible = true; // Ensure it's visible when clicking on a playlist
-   //      toggleFavoriteArtistsContainerVisibility();
- //   });
-//});
+    if (!songs || songs.length === 0) {
+        showAlert('No songs found in this playlist.');
+        return;
+    }
+
+    const songListContainer = document.getElementById('songListContainer');
+    songListContainer.innerHTML = `
+        <div class="cut">
+            <button onclick="clearplistsong()">
+                <span class="material-symbols-outlined">keyboard_backspace</span>
+            </button>
+            <span>Back</span>
+        </div>
+    `;
+
+    const playlistThumbnail = songs[0] ? `https://img.youtube.com/vi/${songs[0].id}/mqdefault.jpg` : '';
+    const playlistThumbnailElement = document.createElement('img');
+    playlistThumbnailElement.classList.add('clicked-playlist-thumbnail');
+    playlistThumbnailElement.src = playlistThumbnail;
+    playlistThumbnailElement.alt = playlistKey;
+
+    const clickedPlaylistInfo = document.createElement('div');
+    clickedPlaylistInfo.classList.add('clicked-playlist-info');
+    clickedPlaylistInfo.appendChild(playlistThumbnailElement);
+
+    songListContainer.appendChild(clickedPlaylistInfo);
+
+    const songList = document.createElement('ul');
+    songList.classList.add('song-list');
+
+    songs.forEach(song => {
+        const listItem = document.createElement('li');
+        listItem.classList.add('song-list-item');
+
+        const thumbnail = document.createElement('img');
+        thumbnail.classList.add('song-thumbnail');
+        thumbnail.src = `https://img.youtube.com/vi/${song.id}/mqdefault.jpg`;
+        thumbnail.alt = song.title;
+
+        const title = document.createElement('div');
+        title.classList.add('song-title');
+        title.textContent = truncateTitle(song.title);
+
+        listItem.appendChild(thumbnail);
+        listItem.appendChild(title);
+
+        listItem.addEventListener('click', () => playVideo(song.id));
+        songList.appendChild(listItem);
+    });
+
+    songListContainer.appendChild(songList);
+}
+
+function displaySavedPlaylists() {
+    const savedPlaylists = JSON.parse(localStorage.getItem('savedPlaylists')) || {};
+    const playlistsSection = document.getElementById('addedPlaylists');
+    playlistsSection.innerHTML = '';
+
+    Object.keys(savedPlaylists).forEach(playlistKey => {
+        const songs = savedPlaylists[playlistKey];
+        if (!songs || songs.length === 0) return;
+
+        const playlistContainer = document.createElement('div');
+        playlistContainer.classList.add('playlist');
+        playlistContainer.setAttribute('data-key', playlistKey);
+
+        const playlistThumbnail = songs[0] ? `https://img.youtube.com/vi/${songs[0].id}/mqdefault.jpg` : '';
+        const playlistThumbnailElement = document.createElement('img');
+        playlistThumbnailElement.classList.add('yourplaylist-thumbnail');
+        playlistThumbnailElement.src = playlistThumbnail;
+        playlistThumbnailElement.alt = playlistKey;
+
+        playlistThumbnailElement.addEventListener('click', () => revealSongs(playlistKey));
+
+        playlistContainer.appendChild(playlistThumbnailElement);
+
+        const playlistTitleElement = document.createElement('div');
+        playlistTitleElement.classList.add('playlist-title');
+        playlistTitleElement.textContent = playlistKey.split('(')[0]; // Display only the playlist name
+
+        playlistContainer.appendChild(playlistTitleElement);
+        playlistsSection.appendChild(playlistContainer);
+    });
+}
+
+
+
+//visiblity on off 
+// Visibility toggle variables
 var isPlaylistContainerVisible = true;
 var isFavoriteArtistsContainerVisible = true;
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Add event listener to the added-playlists element
-    var addedPlaylistsElement = document.getElementByClassName('yourplaylist-thumbnail');
-    addedPlaylistsElement.addEventListener('click', function () {
-        // Toggle the visibility of the yourplaylist
-        isPlaylistContainerVisible = !isPlaylistContainerVisible;
-        togglePlaylistContainerVisibility();
-         // Toggle the visibility of the favoriteArtistsContainer
-         isFavoriteArtistsContainerVisible = true; // Ensure it's visible when clicking on a playlist
-         toggleFavoriteArtistsContainerVisibility();
-    });
+    // Add event listeners to all elements with the 'yourplaylist-thumbnail' class
+    var addedPlaylistsElements = document.getElementsByClassName('yourplaylist-thumbnail');
+    for (var i = 0; i < addedPlaylistsElements.length; i++) {
+        addedPlaylistsElements[i].addEventListener('click', function () {
+            // Toggle the visibility of the playlist container
+            isPlaylistContainerVisible = !isPlaylistContainerVisible;
+            togglePlaylistContainerVisibility();
+
+            // Ensure the favoriteArtistsContainer is visible when clicking on a playlist
+            isFavoriteArtistsContainerVisible = false;
+            toggleFavoriteArtistsContainerVisibility();
+        });
+    }
 });
 
-
-async function revealSongs(playlistId) {
-  
-    history.pushState({ playlistId }, null, window.location.href);
-    // Clear the existing song list
-    var songListContainer = document.getElementById('songListContainer');
-    songListContainer.innerHTML = '<div class="cut"><button onclick="clearplistsong()"><span class="material-symbols-outlined">keyboard_backspace</span></button><span>Back</span>';
-      // Toggle the visibility of the yourplaylist
-    isPlaylistContainerVisible = false;
-    togglePlaylistContainerVisibility();
-
-    // Toggle the visibility of the favoriteArtistsContainer
-    isFavoriteArtistsContainerVisible = false;
-    toggleFavoriteArtistsContainerVisibility();
-
-
-   
-
-
-    var savedPlaylists = JSON.parse(localStorage.getItem('savedPlaylists')) || [];
-    var clickedPlaylist = savedPlaylists.find(playlist => playlist.id === playlistId);
-
-       // Display the clicked playlist thumbnail, title, and Shuffle button before the song list
-       if (clickedPlaylist) {
-        var clickedPlaylistInfo = document.createElement('div');
-        clickedPlaylistInfo.classList.add('clicked-playlist-info');
-
-        var clickedPlaylistThumbnail = document.createElement('img');
-        clickedPlaylistThumbnail.classList.add('clicked-playlist-thumbnail');
-        clickedPlaylistThumbnail.src = clickedPlaylist.thumbnail;
-        clickedPlaylistThumbnail.alt = clickedPlaylist.title;
-
-        var playlistDetails = document.createElement('div');
-        playlistDetails.classList.add('playlist-details');
-
-        var clickedPlaylistTitle = document.createElement('div');
-        clickedPlaylistTitle.classList.add('clicked-playlist-title');
-        clickedPlaylistTitle.textContent = clickedPlaylist.title;
-
-        var deleteButton = document.createElement('button');
-        deleteButton.innerHTML = '<span class="material-symbols-outlined">cancel</span>';
-        deleteButton.classList.add('delete-button');
-        deleteButton.addEventListener('click', function () {
-            removePlaylist(playlistId);
-        });
-
-        var shuffleButton = document.createElement('button');
-        shuffleButton.innerHTML = '<span class="material-symbols-outlined">play_arrow</span>';
-        shuffleButton.classList.add('shuffle-button');
-        shuffleButton.addEventListener('click', function () {
-            shuffleAndPlaySongs(playlistId);
-        });
-
-        playlistDetails.appendChild(clickedPlaylistTitle);
-        playlistDetails.appendChild(deleteButton);
-        playlistDetails.appendChild(shuffleButton);
-
-        clickedPlaylistInfo.appendChild(clickedPlaylistThumbnail);
-        clickedPlaylistInfo.appendChild(playlistDetails);
-
-        // Append the clicked playlist info before the song list
-        songListContainer.appendChild(clickedPlaylistInfo);
-    }
-
-    var apiKey = getRandomAPIKey(); // Replace 'YOUR_API_KEY' with your actual YouTube Data API key
-    var pageToken = ''; // Initialize page token for pagination
-
-    try {
-        while (true) {
-            // Fetch playlist items using YouTube Data API with pagination
-            var playlistItemsUrl =
-                'https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=' +
-                playlistId +
-                '&key=' +
-                apiKey +
-                '&pageToken=' +
-                pageToken;
-
-            const response = await fetch(playlistItemsUrl);
-            const data = await response.json();
-
-            var items = data.items;
-
-            if (items.length === 0) {
-                // No more songs left
-                break;
-            }
-
-            var songList = document.createElement('ul');
-            songList.classList.add('song-list');
-
-            items.forEach(function (item) {
-                var video = item.snippet;
-            
-                // Check if the 'default' thumbnail is available
-                if (video.thumbnails && video.thumbnails.default && video.thumbnails.default.url) {
-                    var videoId = video.resourceId.videoId;
-                    var videoTitle = video.title;
-                    var videoThumbnailUrl = video.thumbnails.medium.url;
-            
-                    var listItem = document.createElement('li');
-                    listItem.classList.add('song-list-item');
-            
-                    var thumbnail = document.createElement('img');
-                    thumbnail.classList.add('song-thumbnail');
-                    thumbnail.src = videoThumbnailUrl;
-                    thumbnail.alt = videoTitle;
-            
-                    var title = document.createElement('div');
-                    title.classList.add('song-title');
-                   var truncatedTitle = truncateTitle(videoTitle);
-                    title.textContent = truncatedTitle;
-                    
-                    listItem.appendChild(thumbnail);
-                    listItem.appendChild(title);
-            
-                    // Add click event to play the song
-                    listItem.addEventListener('click', function () {
-                        playVideo(videoId);
-                    });
-            
-                    songList.appendChild(listItem);
-                } else {
-                    console.warn('Video thumbnail information not available for video:', video);
-                }
-            });
-            
-            // Append fetched songs to the song list container
-            songListContainer.appendChild(songList);
-
-            // Check for next page token and update pageToken
-            if (data.nextPageToken) {
-                pageToken = data.nextPageToken;
-            } else {
-                // No more pages left
-                break;
-            }
-        }
-    }   catch (error) {
-        console.error('An error occurred:', error);
-    songListContainer.innerHTML = 'Error fetching songs. Please try again later. ' + error.message;
-}
-}
-
+// Toggle the visibility of the playlist container
 function togglePlaylistContainerVisibility() {
     var addedPlaylistsContainer = document.querySelector('.yourplaylist');
-    addedPlaylistsContainer.style.display = isPlaylistContainerVisible ? 'block' : 'none';
+    if (addedPlaylistsContainer) {
+        addedPlaylistsContainer.style.display = isPlaylistContainerVisible ? 'block' : 'none';
+    }
 }
 
+// Toggle the visibility of the favorite artists container
 function toggleFavoriteArtistsContainerVisibility() {
-    // Replace 'favoriteArtistsContainer' with the actual ID or class of your container
     var favoriteArtistsContainer = document.getElementById('favArtists');
     if (favoriteArtistsContainer) {
         favoriteArtistsContainer.style.display = isFavoriteArtistsContainerVisible ? 'block' : 'none';
     }
 }
+
 // Call the function to display saved playlists on page load
 displaySavedPlaylists();
 
@@ -301,57 +313,6 @@ function goBack() {
 }
 
 
-function displaySavedPlaylists() {
-    var savedPlaylists = JSON.parse(localStorage.getItem('savedPlaylists')) || [];
-    var playlistsSection = document.getElementById('addedPlaylists');
-    playlistsSection.innerHTML = ''; // Clear existing content
-
-    savedPlaylists.forEach(function (playlist) {
-        var playlistContainer = document.createElement('div');
-        playlistContainer.classList.add('playlist');
-        playlistContainer.setAttribute('data-id', playlist.id);
-
-        var playlistThumbnailElement = document.createElement('img');
-        playlistThumbnailElement.classList.add('yourplaylist-thumbnail');
-        playlistThumbnailElement.src = playlist.thumbnail;
-        playlistThumbnailElement.alt = playlist.title;
-
-        playlistThumbnailElement.addEventListener('click', function () {
-            revealSongs(playlist.id);
-        });
-
-        playlistContainer.appendChild(playlistThumbnailElement);
-
-        var playlistInfo = document.createElement('div');
-        playlistInfo.classList.add('playlist-info');
-
-        var playlistTitleElement = document.createElement('div');
-        playlistTitleElement.classList.add('playlist-title');
-        playlistTitleElement.textContent = playlist.title;
-
-        var buttonsDiv = document.createElement('div');
-        buttonsDiv.classList.add('playlist-buttons');
-
-       
-
-        var shuffleButton = document.createElement('button');
-        shuffleButton.innerHTML = '<span class="material-symbols-outlined">play_arrow</span>';
-        shuffleButton.classList.add('shuffle-button');
-        shuffleButton.addEventListener('click', function () {
-            shuffleAndPlaySongs(playlist.id);
-        });
-
-       
-        buttonsDiv.appendChild(shuffleButton);
-
-        playlistInfo.appendChild(playlistTitleElement);
-        playlistInfo.appendChild(buttonsDiv); // Adding buttons inside playlist-info
-
-        playlistContainer.appendChild(playlistInfo);
-
-        playlistsSection.appendChild(playlistContainer);
-    });
-}
 
 
 function removePlaylist(playlistId) {
@@ -463,15 +424,6 @@ function shuffleArray2(array) {
 
     return array;
 }
-
-
-
-
-
-
-
-
-
 
 // Function to play a video in the YouTube iframe player
 function playVideo(videoId) {

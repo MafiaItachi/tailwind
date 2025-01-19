@@ -14,10 +14,60 @@ title: "Main Agar Kahoon | Om Shanti Om | Lirik - Terjemahan Indonesia"
 id: "nWxz9BdtTPs"
 title: "Tum Se Hi (Unplugged) Lyrical Video: Shahid Kapoor, Kareena Kapoor Khan | Sarthak S | \"Jab We Met\""
 
-
-
+make a update youtube playlist button to sync playlist with youtube account place in under login button 
+  ✅✅✅✅✅✅✅✅✅✅✅✅ done
+edit the login file to fetch youtube account playlist same value structure 
 make continue play for yourplaylist
 make shuffle play for yourplaylist
 make a favourite button to add the playlist in urplist.js update every time if new video id is comming or not 
-make a update youtube playlist button to sync playlist with youtube account place in under login button 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+THIS IS ANOTHER PART OF MY CODE 
+THIS PART i save the playlist by there id and fletch the song in revealSongs function by using page token to fetch all..... the song ,this use so much api call, i want to change this 
+
+not only saving the playlist id , but also fetch the playlist song (using page token) and save the song id and title in local storage for the first time under key name (savedPlaylists) and the value are in this format for example dd is playlist name and "xz9RiSO51Kq3 "this is the playlist id 
+
+DD(xz9RiSO51Kq3): [{id: "Kq3GX0BFGJg",title:"Main Agar Kahoon (Lyrics)..."},{.....}] 
+0:{id: "Kq3GX0BFGJg",Main Agar Kahoon (Lyrics)...}
+id: "Kq3GX0BFGJg"
+title: "Main Agar Kahoon (Lyrics)" 
+1: {id: "RO51nJRiSgQ", title: "Main Agar Kahoon "} 
+id: "RO51nJRiSgQ"
+title: "Main Agar Kahoon | Om Shanti Om " 
+2: {id: "nWxz9BdtTPs",…}
+id: "nWxz9BdtTPs"
+title: "Tum Se Hi (Unplugged) Lyrical Video: Shahid Kapoor" 
+
+in revealSongs function get the id and title from localstorage and show them(don't need to make api call here )
+
+now load the 1st song thumbnail as a playlist thumbnail show the song in songlistcontainer after clicking the  playlist thumbnail load song thumbnail use the previous (file your-playlist.js) class and id name make changes to function addPlaylist , revealSongs displaySavedPlaylists
 
