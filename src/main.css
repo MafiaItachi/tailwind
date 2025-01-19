@@ -276,13 +276,15 @@ body {
 .playlist-title {
   @apply text-white w-full items-center overflow-hidden whitespace-nowrap;
 }
-.playlist-buttons {
-  @apply flex justify-normal items-center;
-}
-.playlist-buttons button {
+.shuffle-button {
   @apply bg-primary  h-full focus:outline-none text-body font-medium rounded-full px-3 pt-3 pb-1.5  align-middle ml-2 mt-2;
 }
-
+.shuffle-button button {
+  @apply bg-primary  h-full focus:outline-none text-body font-medium rounded-full px-3 pt-3 pb-1.5  align-middle ml-2 mt-2;
+}
+.clicked-playlist-info-extra{
+  @apply flex justify-between items-center;
+}
 .song-list-item {
   @apply flex bg-secondary rounded-lg mb-1 items-center;
 }

@@ -1152,13 +1152,7 @@ body {
   color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
-.playlist-buttons {
-  display: flex;
-  align-items: center;
-  justify-content: normal;
-}
-
-.playlist-buttons button {
+.shuffle-button {
   margin-left: 0.5rem;
   margin-top: 0.5rem;
   height: 100%;
@@ -1175,9 +1169,37 @@ body {
   color: rgb(24 28 40 / var(--tw-text-opacity));
 }
 
-.playlist-buttons button:focus {
+.shuffle-button:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
+}
+
+.shuffle-button button {
+  margin-left: 0.5rem;
+  margin-top: 0.5rem;
+  height: 100%;
+  border-radius: 9999px;
+  --tw-bg-opacity: 1;
+  background-color: rgb(35 169 145 / var(--tw-bg-opacity));
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.375rem;
+  vertical-align: middle;
+  font-weight: 500;
+  --tw-text-opacity: 1;
+  color: rgb(24 28 40 / var(--tw-text-opacity));
+}
+
+.shuffle-button button:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.clicked-playlist-info-extra {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .song-list-item {

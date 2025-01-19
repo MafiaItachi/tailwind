@@ -160,6 +160,9 @@ function revealSongs(playlistKey) {
         return;
     }
 
+    // Set the current context for the playlist
+    setCurrentPlaylistContext(null, "savedPlaylists", playlistKey);
+
     const songListContainer = document.getElementById('songListContainer');
     songListContainer.innerHTML = `
         <div class="cut">
@@ -170,6 +173,7 @@ function revealSongs(playlistKey) {
         </div>
     `;
 
+    // Add playlist thumbnail
     const playlistThumbnail = songs[0] ? `https://img.youtube.com/vi/${songs[0].id}/mqdefault.jpg` : '';
     const playlistThumbnailElement = document.createElement('img');
     playlistThumbnailElement.classList.add('clicked-playlist-thumbnail');
@@ -180,8 +184,31 @@ function revealSongs(playlistKey) {
     clickedPlaylistInfo.classList.add('clicked-playlist-info');
     clickedPlaylistInfo.appendChild(playlistThumbnailElement);
 
+    // Add playlist title and shuffle button
+    const playlistInfo = document.createElement('div');
+    playlistInfo.classList.add('clicked-playlist-info-extra');
+
+    // Playlist title
+    const playlistTitleElement = document.createElement('div');
+    playlistTitleElement.classList.add('playlist-title');
+    playlistTitleElement.textContent = playlistKey.split('(')[0]; // Display only the playlist name
+
+    // Shuffle button
+    const shuffleButton = document.createElement('button');
+    shuffleButton.classList.add('shuffle-button');
+    shuffleButton.innerHTML = '<span class="material-symbols-outlined">shuffle</span>';
+    shuffleButton.addEventListener('click', () => {
+        setCurrentPlaylistContext(null, "savedPlaylists", playlistKey); // Set context
+        playShuffledPlaylist(playlistKey); // Start shuffle playback
+    });
+
+    playlistInfo.appendChild(playlistTitleElement);
+    playlistInfo.appendChild(shuffleButton);
+
+    clickedPlaylistInfo.appendChild(playlistInfo);
     songListContainer.appendChild(clickedPlaylistInfo);
 
+    // Add song list
     const songList = document.createElement('ul');
     songList.classList.add('song-list');
 
@@ -201,12 +228,20 @@ function revealSongs(playlistKey) {
         listItem.appendChild(thumbnail);
         listItem.appendChild(title);
 
-        listItem.addEventListener('click', () => playVideo(song.id));
+        // Add click event to play the video
+        listItem.addEventListener('click', () => {
+            isShuffleActive = false; // Stop shuffle playback
+            playVideo(song.id);
+            setCurrentPlaylistContext(song.id, "savedPlaylists", playlistKey); // Set context for the specific song
+        });
+
         songList.appendChild(listItem);
     });
 
     songListContainer.appendChild(songList);
 }
+
+
 
 function displaySavedPlaylists() {
     const savedPlaylists = JSON.parse(localStorage.getItem('savedPlaylists')) || {};
@@ -227,18 +262,44 @@ function displaySavedPlaylists() {
         playlistThumbnailElement.src = playlistThumbnail;
         playlistThumbnailElement.alt = playlistKey;
 
-        playlistThumbnailElement.addEventListener('click', () => revealSongs(playlistKey));
+        // Set the context when the playlist thumbnail is clicked
+        playlistThumbnailElement.addEventListener('click', () => {
+            setCurrentPlaylistContext(null, "savedPlaylists", playlistKey); // Set context for the saved playlist
+            revealSongs(playlistKey);
+        });
 
         playlistContainer.appendChild(playlistThumbnailElement);
 
+        const playlistInfo = document.createElement('div');
+        playlistInfo.classList.add('playlist-info');
+
+        // Playlist title
         const playlistTitleElement = document.createElement('div');
         playlistTitleElement.classList.add('playlist-title');
         playlistTitleElement.textContent = playlistKey.split('(')[0]; // Display only the playlist name
 
-        playlistContainer.appendChild(playlistTitleElement);
+        // Shuffle button
+        const shuffleButton = document.createElement('button');
+        shuffleButton.classList.add('shuffle-button');
+        shuffleButton.innerHTML = '<span class="material-symbols-outlined">shuffle</span>';
+
+        // Set the context and play shuffled playlist when the shuffle button is clicked
+        shuffleButton.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevent triggering playlist thumbnail click
+            setCurrentPlaylistContext(null, "savedPlaylists", playlistKey); // Set context for the saved playlist
+            playShuffledPlaylist(playlistKey); // Start shuffle playback for this playlist
+        });
+
+        playlistInfo.appendChild(playlistTitleElement);
+        playlistInfo.appendChild(shuffleButton);
+
+        playlistContainer.appendChild(playlistInfo);
         playlistsSection.appendChild(playlistContainer);
     });
 }
+
+
+
 
 
 

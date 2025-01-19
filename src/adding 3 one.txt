@@ -1,0 +1,230 @@
+// Function to play the next video in the current playlist
+function playNextVideo() {
+    if (!currentKey || !currentPlaylistName) {
+        console.error("No current playlist context. Please start playing a video first.");
+        return;
+    }
+
+    const storedPlaylists = localStorage.getItem("playlists");
+    const storedPlaylist = localStorage.getItem("playlist");
+
+    let playlists = {};
+    let flatPlaylist = [];
+
+    // Parse the "playlists" key if it exists
+    if (storedPlaylists) {
+        try {
+            playlists = JSON.parse(storedPlaylists);
+        } catch (e) {
+            console.error("Failed to parse 'playlists' from localStorage:", e);
+            return;
+        }
+    }
+
+    // Parse the "playlist" key if it exists
+    if (storedPlaylist) {
+        try {
+            flatPlaylist = JSON.parse(storedPlaylist);
+        } catch (e) {
+            console.error("Failed to parse 'playlist' from localStorage:", e);
+            return;
+        }
+    }
+
+    // Get the current playlist based on the context
+    const currentPlaylist =
+        currentKey === "playlists"
+            ? playlists[currentPlaylistName]
+            : currentKey === "flatPlaylist"
+            ? flatPlaylist
+            : null;
+
+    if (!currentPlaylist || currentPlaylist.length === 0) {
+        console.error("Current playlist is empty or not found.");
+        return;
+    }
+
+    // Get the current video ID and index
+    const currentVideoId = player.getVideoData().video_id;
+    const currentIndex = currentPlaylist.findIndex(item => item.id === currentVideoId || item.videoId === currentVideoId);
+
+    if (currentIndex === -1) {
+        console.error("Current video not found in the current playlist.");
+        return;
+    }
+
+    // Determine the next index
+    let nextIndex = currentIndex + 1;
+
+    // Loop back to the start if at the end
+    if (nextIndex >= currentPlaylist.length) {
+        console.log("Reached the end of the current playlist. Restarting from the beginning.");
+        nextIndex = 0;
+    }
+
+    const nextVideo = currentPlaylist[nextIndex];
+    console.log("Next Video:", nextVideo);
+
+    // Play the next video
+    if (nextVideo) {
+        const videoId = nextVideo.id || nextVideo.videoId;
+        const videoTitle = nextVideo.title || nextVideo.videoTitle;
+
+        // Update the context to the same playlist
+        player.loadVideoById(videoId);
+        player.playVideo();
+        console.log(`Playing next video: ${videoTitle}`);
+    } else {
+        console.error("Next video is not available.");
+    }
+}
+
+// Function to play the previous video in the current playlist
+function playPreviousTrack() {
+    if (!currentKey || !currentPlaylistName) {
+        console.error("No current playlist context. Please start playing a video first.");
+        return;
+    }
+
+    const storedPlaylists = localStorage.getItem("playlists");
+    const storedPlaylist = localStorage.getItem("playlist");
+
+    let playlists = {};
+    let flatPlaylist = [];
+
+    if (storedPlaylists) {
+        try {
+            playlists = JSON.parse(storedPlaylists);
+        } catch (e) {
+            console.error("Failed to parse 'playlists' from localStorage:", e);
+            return;
+        }
+    }
+
+    if (storedPlaylist) {
+        try {
+            flatPlaylist = JSON.parse(storedPlaylist);
+        } catch (e) {
+            console.error("Failed to parse 'playlist' from localStorage:", e);
+            return;
+        }
+    }
+
+    const currentPlaylist =
+        currentKey === "playlists"
+            ? playlists[currentPlaylistName]
+            : currentKey === "flatPlaylist"
+            ? flatPlaylist
+            : null;
+
+    if (!currentPlaylist || currentPlaylist.length === 0) {
+        console.error("Current playlist is empty or not found.");
+        return;
+    }
+
+    const currentVideoId = player.getVideoData().video_id;
+    const currentIndex = currentPlaylist.findIndex(item => item.id === currentVideoId || item.videoId === currentVideoId);
+
+    if (currentIndex === -1) {
+        console.error("Current video not found in the current playlist.");
+        return;
+    }
+
+    let previousIndex = currentIndex - 1;
+
+    if (previousIndex < 0) {
+        console.log("Reached the beginning of the current playlist. Looping to the last video.");
+        previousIndex = currentPlaylist.length - 1;
+    }
+
+    const previousVideo = currentPlaylist[previousIndex];
+    console.log("Previous Video:", previousVideo);
+
+    if (previousVideo) {
+        const videoId = previousVideo.id || previousVideo.videoId;
+        const videoTitle = previousVideo.title || previousVideo.videoTitle;
+
+        player.loadVideoById(videoId);
+        player.playVideo();
+        console.log(`Playing previous video: ${videoTitle}`);
+    } else {
+        console.error("Previous video is not available.");
+    }
+}
+
+// Function to set the current context when a video starts playing
+function setCurrentContext(key, playlistName) {
+    currentKey = key;
+    currentPlaylistName = playlistName;
+    console.log(`Context set: key=${key}, playlistName=${playlistName}`);
+}
+
+// Example: Call `setCurrentContext` when a video starts playing
+function onVideoStart(videoId) {
+    // Determine the playlist and key for the current video
+    const storedPlaylists = localStorage.getItem("playlists");
+    const storedPlaylist = localStorage.getItem("playlist");
+
+    let playlists = {};
+    let flatPlaylist = [];
+
+    if (storedPlaylists) {
+        try {
+            playlists = JSON.parse(storedPlaylists);
+        } catch (e) {
+            console.error("Failed to parse 'playlists' from localStorage:", e);
+            return;
+        }
+    }
+
+    if (storedPlaylist) {
+        try {
+            flatPlaylist = JSON.parse(storedPlaylist);
+        } catch (e) {
+            console.error("Failed to parse 'playlist' from localStorage:", e);
+            return;
+        }
+    }
+
+    for (const key in playlists) {
+        const playlist = playlists[key];
+        if (playlist.some(item => item.id === videoId)) {
+            setCurrentContext("playlists", key);
+            return;
+        }
+    }
+
+    if (flatPlaylist.some(item => item.videoId === videoId)) {
+        setCurrentContext("flatPlaylist", "flatPlaylist");
+    }
+}
+
+// context for playlist and flatplaylist
+function setCurrentPlaylistContext(videoId, sourceFunction, playlistName = null) {
+    
+    if (sourceFunction === "playShuffledPlaylist" && playlistName) {
+        // Context for shuffled playback
+        currentKey = playlistName === "flatPlaylist" ? "flatPlaylist" : "playlists";
+        currentPlaylistName = playlistName;
+        console.log(`Context set: key="${currentKey}", playlistName="${playlistName}"`);
+        return;
+    }
+    if (sourceFunction === "displayPlaylist") {
+        // Context for "flatPlaylist"
+        currentKey = "flatPlaylist";
+        currentPlaylistName = "flatPlaylist";
+        console.log(`Context set: key="flatPlaylist", playlistName="flatPlaylist"`);
+        return;
+    }
+
+    if (sourceFunction === "revealSongsList" && playlistName) {
+        // Context for "playlists"
+        currentKey = "playlists";
+        currentPlaylistName = playlistName;
+        console.log(`Context set: key="playlists", playlistName="${playlistName}"`);
+        return;
+    }
+
+
+    console.error("Unable to set context: Invalid sourceFunction or playlistName.");
+}

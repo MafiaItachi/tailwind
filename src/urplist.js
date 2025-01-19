@@ -387,9 +387,11 @@ function playShuffledPlaylist(playlistName = "flatPlaylist") {
 
   const storedPlaylists = localStorage.getItem("playlists");
   const storedPlaylist = localStorage.getItem("playlist");
+  const savedPlaylists = localStorage.getItem("savedPlaylists");
 
   let playlists = {};
   let flatPlaylist = [];
+  let saved = {};
 
   if (storedPlaylists) {
       try {
@@ -409,12 +411,24 @@ function playShuffledPlaylist(playlistName = "flatPlaylist") {
       }
   }
 
+  if (savedPlaylists) {
+      try {
+          saved = JSON.parse(savedPlaylists);
+      } catch (e) {
+          console.error("Failed to parse 'savedPlaylists' from localStorage:", e);
+          return;
+      }
+  }
+
   // Determine the playlist to shuffle
   let playlistToShuffle = [];
   if (playlistName === "flatPlaylist") {
       playlistToShuffle = flatPlaylist;
   } else if (playlists[playlistName]) {
       playlistToShuffle = playlists[playlistName];
+  } else if (saved[playlistName]) {
+      playlistToShuffle = saved[playlistName];
+      setCurrentPlaylistContext(null, "savedPlaylists", playlistName); // Correctly set context for savedPlaylists
   } else {
       console.error("Playlist not found.");
       return;
@@ -460,6 +474,8 @@ function playShuffledPlaylist(playlistName = "flatPlaylist") {
   player.addEventListener("onStateChange", onShuffledStateChange);
   playNextInShuffle();
 }
+
+
 
 
 

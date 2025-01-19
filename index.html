@@ -135,6 +135,9 @@
                         <button id="syncPlaylistsButton" onclick="syncPlaylists()">
                            <span class="material-symbols-outlined">sync</span> Sync
                        </button>
+                       <button style="margin-left: 10px;" id="clearPlaylistsButton" onclick="clearAllPlaylists()">
+                        <span class="material-symbols-outlined">delete</span> Clear All Playlists
+                    </button>
                         <div class="backup-container">
                         <div class="backtext">
                            <button onclick="backupLocalStorage()" class="action-button">
@@ -275,9 +278,6 @@
                <div id="library-section" style="display: none;">
                   <div class="yourplaylist">
                      <h1 class="h2 ">YOUR PLAYLIST</h1>
-                     <button style="margin-left: 10px;" id="clearPlaylistsButton" onclick="clearAllPlaylists()">
-                        <span class="material-symbols-outlined">delete</span> Clear All
-                    </button>
                      <div class="added-playlists-container ">
                         <div id="addedPlaylists" class="added-playlists ">
                         </div>
