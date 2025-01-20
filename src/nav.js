@@ -34,8 +34,7 @@ function toggleSection(section) {
   clearSearchResults();
   clearplistsong();
   clearfavsong();
-  document.getElementById("genre-songs").innerHTML ="";
-  
+  document.getElementById("genre-songs").innerHTML = "";
 }
 
 document.getElementById("playlist-button").classList.add("active");
@@ -126,7 +125,7 @@ function displayQuickPick(playlistItems) {
   for (var i = 0; i < playlistItems.length; i++) {
     var video = playlistItems[i].snippet;
     var videoId = video.resourceId.videoId;
-    var videoTitle = truncateTitle(video.title);//truncateTitle(video.title);
+    var videoTitle = truncateTitle(video.title); //truncateTitle(video.title);
     var thumbnailUrl = video.thumbnails.medium.url;
 
     var div = document.createElement("div");
