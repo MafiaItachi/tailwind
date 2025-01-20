@@ -1,36 +1,34 @@
-let backGestureCount = 0; // Use a counter to track state changes
+let backGestureCount = 0; // Counter to track unique back gestures
 
-function simulateBackGesture() {
+// Function to simulate a back gesture
+function simulateBackGesture(playlistId = null) {
   console.log("simulateBackGesture() called");
   backGestureCount++;
-  window.history.pushState(
-    { backGesture: true, count: backGestureCount }, // Unique state
-    document.title,
-    location.href
-  );
+  const state = playlistId
+    ? { backGesture: true, count: backGestureCount, playlistId }
+    : { backGesture: true, count: backGestureCount };
+
+  window.history.pushState(state, document.title, location.href);
 }
 
-// Update the popstate event listener to check for the backGesture property
+// Consolidated popstate event listener
 window.addEventListener("popstate", function (event) {
   console.log("popstate event triggered", event.state);
-  if (event.state && event.state.backGesture) {
-    clearfavsong();
-    clearSearchResults();
-  }
-});
 
-window.addEventListener("popstate", function (event) {
-  if (event.state && event.state.playlistId) {
-    // Handle specific playlist state
-    revealSongs(event.state.playlistId);
-  } else {
-    clearSongListOnBackGesture();
+  if (event.state && event.state.backGesture) {
+    if (event.state.playlistId) {
+      // If a playlist ID is in the state, reveal the corresponding playlist
+      revealSongs(event.state.playlistId);
+    } else {
+      // Clear the song list and reset visibility
+      clearSongListOnBackGesture();
+    }
   }
 });
 
 // Function to clear the song list container
 function clearSongListOnBackGesture() {
-  var songListContainer = document.getElementById("songListContainer");
+  const songListContainer = document.getElementById("songListContainer");
   if (songListContainer) {
     songListContainer.innerHTML = "";
     isPlaylistContainerVisible = true;
@@ -38,9 +36,12 @@ function clearSongListOnBackGesture() {
     isFavoriteArtistsContainerVisible = true;
     toggleFavoriteArtistsContainerVisibility();
   }
+
+  clearfavsong();
+  clearSearchResults();
 }
 
-// Function to navigate back in history and trigger the popstate event
+// Function to navigate back in history
 function goBack() {
   history.back();
 }
