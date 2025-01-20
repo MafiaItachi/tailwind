@@ -33,7 +33,7 @@ function toggleSection(section) {
   }
   clearSearchResults();
   clearplistsong();
-
+  clearfavsong();
   document.getElementById("genre-songs").innerHTML = "";
 }
 
