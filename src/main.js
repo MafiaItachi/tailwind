@@ -166,7 +166,7 @@ function search() {
   var url =
     "https://www.googleapis.com/youtube/v3/search?part=snippet&q=" +
     query +
-    "&type=video&maxResults=10&key=" +
+    "&type=video&videoCategoryId=10&maxResults=10&key="+
     apiKey;
 
   $.ajax({
