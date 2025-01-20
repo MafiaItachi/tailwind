@@ -1,6 +1,33 @@
 
 
-
+#lyrics-container {
+  font-family: "Arial", sans-serif;
+  line-height: 2.5; /* Spaced out lines */
+  font-weight: 600;
+  overflow-y: auto;
+  padding: 20px; /* Add padding to prevent clipping */
+  position: relative; /* Allow child scaling without clipping */
+}
+.lyric-line {
+  transition: transform 0.3s, font-size 0.3s, color 0.3s, opacity 0.3s;
+  font-size: 0.8rem;
+  text-align: center;
+  opacity: 1; /* Initial fade effect */
+  white-space: nowrap; /* Prevent line breaking */
+}
+.lyric-line.active {
+  color: #181c28; /* Highlighted active line color */
+  opacity: 1; /* Full opacity for active line */
+  filter: none; /* Remove blur for active line */
+}
+.lyric-line.zoom {
+  transform: scale(1.2);
+  font-size: 1rem; /* Slightly larger font size */
+}
+.lyric-line.blur {
+  filter: blur(0.6px);
+  opacity: 0.8;
+}
   
 
   .hidden {

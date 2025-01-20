@@ -170,9 +170,12 @@ function syncLyrics() {
       }
     }
 
-    lines.forEach((line) => line.classList.remove("active", "zoom"));
+    lines.forEach((line) => line.classList.remove("active", "blur", "zoom"));
+    lines.forEach((line) => line.classList.add("blur"));
+
     if (activeLine) {
       activeLine.classList.add("active", "zoom");
+      activeLine.classList.remove("blur");
       activeLine.scrollIntoView({ behavior: "smooth", block: "center" });
     }
   }
@@ -180,20 +183,13 @@ function syncLyrics() {
   setInterval(highlightLyric, 500);
 }
 
-/* Add styles for zoom effect */
+/* Add styles for modern look */
 const style = document.createElement("style");
 style.textContent = `
-  .lyric-line {
-    transition: transform 0.3s, font-size 0.3s;
-  }
-  .lyric-line.active {
-    color: #181c28;
-  }
-  .lyric-line.zoom {
-    transform: scale(1.2);
-    font-size: 0.9em;
-  }
+  
 `;
+document.head.appendChild(style);
+
 document.head.appendChild(style);
 
 function toggleLyrics() {
