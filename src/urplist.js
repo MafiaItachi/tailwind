@@ -347,7 +347,33 @@ function toggleDropdownfp(index, containerId) {
   });
 }
 
+// Handle the Back Gesture using popstate
+window.addEventListener("popstate", function (event) {
+  // Check the state to decide what to show
+  if (event.state && event.state.view === "playlist") {
+    // User navigated back to the playlist view
+    // Keep current state logic here if needed
+  } else {
+    // Show the default view and reveal all elements
+    const elementsToReveal = [
+      document.querySelector(".mixedforyou"), // Assuming 'mixedforyou' is the ID of the element
+      document.querySelector(".home-songs"),
+      document.querySelector(".backup-restore"),
+      document.querySelector(".h1"),
+      document.querySelector(".shuffle"),
+      document.querySelector(".bookmarklink"),
+      document.getElementById("playlist"),
+    ];
 
+    elementsToReveal.forEach((element) => {
+      if (element) {
+        element.classList.remove("hidden");
+      }
+    });
+
+    displayAddedSongs();
+  }
+});
 
 let isShuffleActive = false; // Tracks whether shuffle playback is active
 

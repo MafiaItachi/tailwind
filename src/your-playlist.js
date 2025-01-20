@@ -400,6 +400,8 @@ function clearplistsong() {
     // Restore the visibility of the favoriteArtistsContainer
     isFavoriteArtistsContainerVisible = true;
     toggleFavoriteArtistsContainerVisibility();
+    // Simulate the back gesture
+    simulateBackGesture();
   }
 }
 
