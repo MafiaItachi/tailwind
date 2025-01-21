@@ -2026,9 +2026,6 @@ body {
 }
 
 .modal-content {
-  position: fixed;
-  left: 0px;
-  top: 0px;
   height: 100%;
   width: 100%;
   border-top-left-radius: 1.5rem;
@@ -2096,6 +2093,7 @@ body {
 }
 
 .urplist {
+  margin: auto;
   display: flex;
   width: -moz-fit-content;
   width: fit-content;
@@ -2327,6 +2325,8 @@ body {
 
 /* select playlist option */
 
+/* ENTER PLAYLIST NAME */
+
 .selectp {
   padding: 0.5rem;
   /* Padding 2 */
@@ -2339,7 +2339,8 @@ body {
 }
 
 #newPlaylistName {
-  width: 85%;
+  margin-right: 0.5rem;
+  width: 100svw;
   border-radius: 0.25rem;
   --tw-bg-opacity: 1;
   background-color: rgb(69 81 116 / var(--tw-bg-opacity));

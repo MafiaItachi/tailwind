@@ -579,7 +579,7 @@ body {
   @apply hidden fixed z-13 left-0 top-0 w-full h-full overflow-auto  bg-opacity-10 ;
 }
 .modal-content {
-  @apply bg-body fixed left-0 top-0 w-full h-full rounded-t-3xl px-4  ;
+  @apply bg-body  w-full h-full rounded-t-3xl px-4  ;
 }
 .modal-content button {
   @apply bg-green pt-2 px-3 rounded-md text-body 
@@ -609,7 +609,7 @@ body {
   @apply pb-1 pl-1 WEB-FULL; /* Padding bottom and padding left */
 }
 .urplist{
-  @apply flex flex-col bg-secondary rounded-md p-1.5 w-fit
+  @apply flex flex-col bg-secondary rounded-md p-1.5 w-fit m-auto
 }
 .close {
   @apply to-white float-right size-6 font-bold;
@@ -717,7 +717,7 @@ body {
 
 
 /* select playlist option */
-
+/* ENTER PLAYLIST NAME */
 .selectp {
   @apply p-2; /* Padding 2 */
 }
@@ -725,5 +725,5 @@ body {
   @apply flex justify-between w-full
 }
 #newPlaylistName {
-  @apply w-[85%] rounded bg-secondary p-1; /* Width 85% */
+  @apply w-svw mr-2 rounded bg-secondary p-1; /* Width 85% */
 }

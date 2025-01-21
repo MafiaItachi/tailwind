@@ -45,5 +45,24 @@ function loadTrendingSongs() {
   });
 }
 
+
+async function fetchNewReleases() {
+  try {
+    const apiKey = getRandomAPIKey();
+    const response = await fetch(
+      `https://www.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&regionCode=US&maxResults=5&videoCategoryId=10&key=${apiKey}`
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch new releases");
+    }
+
+    const data = await response.json();
+    return data.items;
+  } catch (error) {
+    console.error("Error fetching new releases:", error);
+    return [];
+  }
+}
 // Call the function to load trending songs
 loadTrendingSongs();

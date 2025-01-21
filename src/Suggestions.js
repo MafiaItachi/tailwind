@@ -6,7 +6,7 @@ function fetchSuggestions(query) {
   }
 
   var apiKey = getRandomAPIKey();
-  var url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=50&q=${encodeURIComponent(
+  var url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&&videoCategoryId=10&maxResults=50&q=${encodeURIComponent(
     query
   )}&key=${apiKey}`;
 
@@ -31,12 +31,10 @@ function displaySuggestions(suggestions) {
     thumbnail.alt = suggestion.snippet.title;
     thumbnail.className = "suggestion-thumbnail";
 
-    // Trim the title to 5 words
+    // Use the truncateTitle function to process the title
     var title = suggestion.snippet.title;
-    var trimmedTitle = title.split(" ").slice(0, 5).join(" ");
-    if (title.split(" ").length > 5) {
-      trimmedTitle += ".";
-    }
+    var truncatedTitle = truncateTitle(title);
+
 
     // Create a span element for the title
     var titleSpan = document.createElement("span");
