@@ -809,6 +809,7 @@ controlsElement.addEventListener("touchend", function (e) {
   } else if (Math.abs(deltaY) > threshold) {
     if (deltaY < 0) {
       showMiniPlayer();
+      simulateBackGesture();
     }
   }
 });
