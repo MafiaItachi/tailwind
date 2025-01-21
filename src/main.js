@@ -809,7 +809,6 @@ controlsElement.addEventListener("touchend", function (e) {
   } else if (Math.abs(deltaY) > threshold) {
     if (deltaY < 0) {
       showMiniPlayer();
-      simulateBackGesture();
     }
   }
 });
@@ -825,6 +824,7 @@ controlsHammer.on("swipedown", function (event) {
 });
 
 controlsHammer.on("swipedown", function () {
+  hideMiniPlayer();
 });
 
 // Function to show the mini player
