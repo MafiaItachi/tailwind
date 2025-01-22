@@ -6,7 +6,7 @@ function fetchSuggestions(query) {
   }
 
   var apiKey = getRandomAPIKey();
-  var url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&&videoCategoryId=10&maxResults=50&q=${encodeURIComponent(
+  var url = `https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&videoCategoryId=10&maxResults=50&q=${encodeURIComponent(
     query
   )}&key=${apiKey}`;
 
