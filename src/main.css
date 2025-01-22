@@ -205,13 +205,13 @@ body {
 /* SEARCH SUGGETION */
 
 #suggestionsBox {
-  @apply max-h-screen overflow-y-auto absolute bg-mini shadow-sm z-50 rounded-md mt-1 no-scrollbar widthcal;
+  @apply max-h-screen overflow-y-auto absolute h-full bg-mini shadow-sm z-50 rounded-md mt-1 no-scrollbar widthcal;
 }
 .suggestion {
-  @apply p-2 flex items-center;
+  @apply px-2 pt-2 flex items-center;
 }
 .suggestion-thumbnail {
-  @apply w-12 h-auto mr-2 rounded-lg;
+  @apply w-14 h-auto mr-2 rounded-lg;
 }
 .suggestion:hover {
   @apply rounded-md bg-secondary;
