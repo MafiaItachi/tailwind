@@ -922,7 +922,6 @@ body {
   position: absolute;
   z-index: 50;
   margin-top: 0.25rem;
-  height: 100%;
   max-height: 100vh;
   overflow-y: auto;
   border-radius: 0.375rem;
