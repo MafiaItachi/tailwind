@@ -87,8 +87,8 @@ function hideSyncLoading() {
 
 
 async function syncPlaylists() {
-  const savedPlaylists =
-    JSON.parse(localStorage.getItem("savedPlaylists")) || {};
+  const savedPlaylists = JSON.parse(localStorage.getItem("savedPlaylists")) || {};
+  const playlists = JSON.parse(localStorage.getItem("playlists")) || {}; // <-- favorites
   const apiKey = getRandomAPIKey();
   let syncCount = 0;
 
@@ -98,14 +98,12 @@ async function syncPlaylists() {
 
     console.log(`Syncing playlist: ${playlistKey}`);
 
-    // Fetch all songs in the playlist
     const updatedSongs = await fetchAllPlaylistSongs(playlistId, apiKey);
     if (!updatedSongs || updatedSongs.length === 0) {
       console.warn(`No songs found for playlist: ${playlistKey}`);
       continue;
     }
 
-    // Compare and update local storage
     const existingSongs = savedPlaylists[playlistKey];
     const newSongs = updatedSongs.filter(
       (newSong) =>
@@ -113,20 +111,31 @@ async function syncPlaylists() {
     );
 
     if (newSongs.length > 0) {
-      savedPlaylists[playlistKey] = [...newSongs,...existingSongs];
+      // Update saved playlists (new songs at the beginning)
+      savedPlaylists[playlistKey] = [...newSongs, ...existingSongs];
       syncCount += newSongs.length;
-      console.log(
-        `Added ${newSongs.length} new songs to playlist: ${playlistKey}`
-      );
+      console.log(`Added ${newSongs.length} new songs to playlist: ${playlistKey}`);
+
+      // ALSO update Favorites if this playlist is favorited
+      const cleanedPlaylistKey = playlistKey.replace(/\s*\([^)]*\)/g, "").trim(); // remove (playlistId)
+
+      if (playlists[cleanedPlaylistKey]) {
+        playlists[cleanedPlaylistKey] = [...newSongs.map(song => ({
+          id: song.id,
+          title: song.title,
+        })), ...playlists[cleanedPlaylistKey]];
+      }
     }
   }
 
-  // Save updated playlists back to local storage
+  // Save updated playlists and favorites
   localStorage.setItem("savedPlaylists", JSON.stringify(savedPlaylists));
-  displaySavedPlaylists(); // Refresh UI
+  localStorage.setItem("playlists", JSON.stringify(playlists));
 
+  displaySavedPlaylists(); // Refresh UI
   showAlert(`${syncCount} new songs synced across all playlists.`);
 }
+
 
 // Helper function to extract playlist ID from the key
 function extractPlaylistId(playlistKey) {
