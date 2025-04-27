@@ -75,6 +75,17 @@ async function addPlaylist() {
   }
 }
 
+
+function showSyncLoading() {
+  // Show spinner
+  document.getElementById('syncLoader').style.display = 'block';
+}
+function hideSyncLoading() {
+  // Hide spinner
+  document.getElementById('syncLoader').style.display = 'none';
+}
+
+
 async function syncPlaylists() {
   const savedPlaylists =
     JSON.parse(localStorage.getItem("savedPlaylists")) || {};
@@ -102,7 +113,7 @@ async function syncPlaylists() {
     );
 
     if (newSongs.length > 0) {
-      savedPlaylists[playlistKey] = [...existingSongs, ...newSongs];
+      savedPlaylists[playlistKey] = [...newSongs,...existingSongs];
       syncCount += newSongs.length;
       console.log(
         `Added ${newSongs.length} new songs to playlist: ${playlistKey}`
