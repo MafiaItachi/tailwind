@@ -117,12 +117,12 @@ function addFavoriteArtist(channelName, channelId, channelImage) {
   // For example, save it as an array of objects
   var favoriteArtists =
     JSON.parse(localStorage.getItem("favoriteArtists")) || [];
-  favoriteArtists.push({
-    name: channelName,
-    id: channelId,
-    image: channelImage,
-  });
-  localStorage.setItem("favoriteArtists", JSON.stringify(favoriteArtists));
+    favoriteArtists.push({
+      name: channelName,
+      id: channelId
+    });
+    localStorage.setItem("favoriteArtists", JSON.stringify(favoriteArtists));
+    
 
   // Add event listener to load the channel's videos when clicked
   artistDiv.addEventListener("click", function () {
@@ -138,71 +138,76 @@ function playVideoFromId(videoId) {
   }
 }
 function loadFavoriteArtistsOnLoad() {
-  var favoriteArtists =
-    JSON.parse(localStorage.getItem("favoriteArtists")) || [];
+  var favoriteArtists = JSON.parse(localStorage.getItem("favoriteArtists")) || [];
   var favoriteArtistsDiv = document.getElementById("favoriteArtists");
   favoriteArtistsDiv.innerHTML = "";
+
   if (favoriteArtists.length === 0) {
-    // Display a message when no favorite artists are added
-    favoriteArtistsDiv.innerHTML =
-      "<p>Search Your Favorite Artists To Add Them Here.</p>";
+    favoriteArtistsDiv.innerHTML = "<p>Search Your Favorite Artists To Add Them Here.</p>";
   } else {
     for (var i = 0; i < favoriteArtists.length; i++) {
       var artist = favoriteArtists[i];
       var artistDiv = document.createElement("div");
       artistDiv.className = "favorite-artist";
 
-      var channelImg = document.createElement("img");
-      channelImg.src = artist.image;
-      channelImg.alt = "Channel Image";
-
-      var infoContainer = document.createElement("div"); // New container div
-
-      var channelParagraph = document.createElement("p");
-      var channelWords = artist.name.split(" ");
-      if (channelWords.length > 2) {
-        artist.name = channelWords.slice(0, -2).join(" ");
-      }
-      // Trim "VEVO" from the end of artist.name
-      if (artist.name.endsWith("VEVO")) {
-        artist.name = artist.name.slice(0, -4).trim();
-      }
-      channelParagraph.textContent = artist.name;
-
-      var playButton = document.createElement("button");
-      playButton.innerHTML =
-        '<span class="material-symbols-outlined">play_arrow</span>';
-      playButton.className = "play-artist-videos";
-      playButton.title = "Play All Videos";
-      playButton.addEventListener(
-        "click",
-        (function (id) {
-          return function () {
-            playFavoriteArtistVideos(id);
-          };
-        })(artist.id)
-      );
-
-      infoContainer.appendChild(channelParagraph); // Append channelParagraph to the new container div
-      infoContainer.appendChild(playButton); // Append playButton to the new container div
-
-      // Add click event to load the channel's videos when clicked
-      channelImg.addEventListener(
-        "click",
-        (function (artistId, artistItem) {
-          return function () {
-            loadFavoriteArtistSongs(artistId, artistItem);
-          };
-        })(artist.id, artist)
-      );
-
-      artistDiv.appendChild(channelImg);
-      artistDiv.appendChild(infoContainer); // Append the new container div to artistDiv
+      // Fetch latest channel info
+      fetchChannelDetailsAndDisplay(artist, artistDiv);
 
       favoriteArtistsDiv.appendChild(artistDiv);
     }
   }
 }
+
+function fetchChannelDetailsAndDisplay(artist, artistDiv) {
+  var apiKey = getRandomAPIKey();
+  var apiUrl = `https://www.googleapis.com/youtube/v3/channels?part=snippet&id=${artist.id}&key=${apiKey}`;
+
+  fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
+      if (data.items && data.items.length > 0) {
+        var channelData = data.items[0].snippet;
+
+        var channelImg = document.createElement("img");
+        channelImg.src = channelData.thumbnails.medium.url; // Fresh image
+        channelImg.alt = "Channel Image";
+
+        var infoContainer = document.createElement("div");
+        var channelParagraph = document.createElement("p");
+
+        var channelWords = artist.name.split(" ");
+        if (channelWords.length > 2) {
+          artist.name = channelWords.slice(0, -2).join(" ");
+        }
+        if (artist.name.endsWith("VEVO")) {
+          artist.name = artist.name.slice(0, -4).trim();
+        }
+        channelParagraph.textContent = artist.name;
+
+        var playButton = document.createElement("button");
+        playButton.innerHTML = '<span class="material-symbols-outlined">play_arrow</span>';
+        playButton.className = "play-artist-videos";
+        playButton.title = "Play All Videos";
+        playButton.addEventListener("click", function () {
+          playFavoriteArtistVideos(artist.id);
+        });
+
+        infoContainer.appendChild(channelParagraph);
+        infoContainer.appendChild(playButton);
+
+        channelImg.addEventListener("click", function () {
+          loadFavoriteArtistSongs(artist.id, artist);
+        });
+
+        artistDiv.appendChild(channelImg);
+        artistDiv.appendChild(infoContainer);
+      }
+    })
+    .catch(error => {
+      console.error("Error fetching channel details:", error);
+    });
+}
+
 
 function loadFavoriteArtistSongs(channelId, artist) {
   var apiKey = getRandomAPIKey(); // Replace with your YouTube API key
